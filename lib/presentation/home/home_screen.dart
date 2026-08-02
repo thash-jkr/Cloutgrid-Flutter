@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
         icon: HeaderAction(
-          icon: Icons.rocket_rounded,
+          image: const AssetImage('assets/images/cloutgrid_logo.png'),
           contentDescription: "Cloutgrid",
           onClick: () {},
         ),

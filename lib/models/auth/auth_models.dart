@@ -73,13 +73,15 @@ class HeaderMenuItem {
 }
 
 class HeaderAction {
-  final IconData icon;
+  final IconData? icon;
+  final ImageProvider? image;
   final String contentDescription;
   final VoidCallback onClick;
   final List<HeaderMenuItem>? menuItems;
 
   const HeaderAction({
-    required this.icon,
+    this.icon,
+    this.image,
     required this.contentDescription,
     this.onClick = _noop,
     this.menuItems,

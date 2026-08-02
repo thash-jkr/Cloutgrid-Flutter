@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/auth/auth_models.dart';
-
-const _solidFadeTitles = ['Notifications', 'Comments', 'Questions', 'Answers'];
 
 class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -24,20 +23,16 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
     var offWhite = theme.colorScheme.surface;
 
-    final gradientColors = _solidFadeTitles.contains(title)
-        ? [
-            offWhite.withValues(alpha: 1.0),
-            offWhite.withValues(alpha: 0.8),
-            offWhite.withValues(alpha: 0.0),
-          ]
-        : [
-            offWhite.withValues(alpha: 0.5),
-            offWhite.withValues(alpha: 0.4),
-            offWhite.withValues(alpha: 0.3),
-            offWhite.withValues(alpha: 0.2),
-            offWhite.withValues(alpha: 0.1),
-            offWhite.withValues(alpha: 0.0),
-          ];
+    final gradientColors = [
+      offWhite.withValues(alpha: 1.0),
+      offWhite.withValues(alpha: 0.7),
+      offWhite.withValues(alpha: 0.4),
+      offWhite.withValues(alpha: 0.2),
+      offWhite.withValues(alpha: 0.15),
+      offWhite.withValues(alpha: 0.1),
+      offWhite.withValues(alpha: 0.05),
+      offWhite.withValues(alpha: 0.0),
+    ];
 
     return Container(
       decoration: BoxDecoration(
@@ -51,7 +46,16 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
         elevation: 0,
-        centerTitle: true,
+        centerTitle: icon == null && actions.isEmpty,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness
+              .light, // iOS uses this instead of statusBarIconBrightness
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarContrastEnforced: false,
+        ),
         leadingWidth: 60,
         title: title != null
             ? Text(title!, style: const TextStyle(fontWeight: FontWeight.bold))
@@ -97,7 +101,11 @@ class _ToolbarButton extends StatelessWidget {
         ],
       ),
       child: IconButton(
-        icon: Icon(action.icon, size: 25),
+        icon: action.image != null
+            ? Image(image: action.image!, width: 50, height: 50)
+            : action.icon != null
+            ? Icon(action.icon, size: 25)
+            : const SizedBox.shrink(),
         tooltip: action.contentDescription,
         onPressed: action.onClick,
         padding: EdgeInsets.zero,
