@@ -25,6 +25,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     Future(() {
       final home = ref.read(homeProvider.notifier);
+
       if (ref.read(homeProvider).posts.isEmpty) {
         home.fetchPosts(isFirstPage: true);
       }
@@ -96,6 +97,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeProvider);
     final authState = ref.watch(authProvider);
+
     final UserContainer? user = authState.value?.user;
 
     return Scaffold(
@@ -104,12 +106,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         icon: HeaderAction(
           icon: Icons.rocket_rounded,
           contentDescription: "Cloutgrid",
+          onClick: () {},
         ),
         actions: [
           HeaderAction(
             icon: Icons.notifications_none_rounded,
             contentDescription: "Notifications",
             onClick: () {}, // _openNotifications,
+          ),
+          HeaderAction(
+            icon: Icons.message_rounded,
+            contentDescription: "Chats",
           ),
         ],
       ),

@@ -52,6 +52,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
+        leadingWidth: 60,
         title: title != null
             ? Text(title!, style: const TextStyle(fontWeight: FontWeight.bold))
             : null,
@@ -81,8 +82,8 @@ class _ToolbarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
+      width: 45,
+      height: 45,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -112,7 +113,9 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (action.menuItems == null) {
+    final hasMenu = action.menuItems != null && action.menuItems!.isNotEmpty;
+
+    if (!hasMenu) {
       return _ToolbarButton(action: action);
     }
 

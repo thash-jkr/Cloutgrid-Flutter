@@ -149,7 +149,7 @@ class _FeedPostState extends State<FeedPost>
       color: theme.colorScheme.surface,
       shape:
           const RoundedRectangleBorder(), // RectangleShape — no rounded corners
-      elevation: 1,
+      elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
