@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter/gestures.dart';
 
 import '../../../models/home/home_models.dart';
 
@@ -29,10 +31,6 @@ class FeedPost extends StatefulWidget {
 
 class _FeedPostState extends State<FeedPost>
     with SingleTickerProviderStateMixin {
-  // AnimationController's value IS the scale factor directly (1.0-1.4),
-  // via custom lowerBound/upperBound — avoids the usual 0.0-1.0 normalized
-  // range + a separate Tween, since here the controller's raw value is
-  // exactly what we want to feed into Transform.scale.
   late final AnimationController _scaleController = AnimationController(
     vsync: this,
     lowerBound: 1.0,
@@ -40,11 +38,6 @@ class _FeedPostState extends State<FeedPost>
     value: 1.0,
   );
 
-  /// Kotlin used `spring(dampingRatio = HighBouncy, stiffness = Low)` for
-  /// the settle-back phase — Flutter has no direct dampingRatio/stiffness
-  /// preset pair, so this SpringDescription approximates the same "quick
-  /// overshoot then bouncy settle" feel. Tune `damping` lower for more
-  /// bounce, higher for less, if it doesn't feel right on device.
   Future<void> _triggerBounce() async {
     _scaleController.value = 1.0;
     await _scaleController.animateTo(
@@ -57,9 +50,12 @@ class _FeedPostState extends State<FeedPost>
     await _scaleController.animateWith(simulation);
   }
 
+  TapGestureRecognizer? _collabTapRecognizer;
+
   @override
   void dispose() {
     _scaleController.dispose();
+    _collabTapRecognizer?.dispose();
     super.dispose();
   }
 
@@ -154,61 +150,35 @@ class _FeedPostState extends State<FeedPost>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header row: avatar, name (+ collaborator), overflow menu
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Row(
               children: [
                 ClipOval(
-                  child: Image.network(
-                    post.author.profilePhoto,
+                  child: CachedNetworkImage(
+                    imageUrl: post.author.profilePhoto,
                     width: 30,
                     height: 30,
                     fit: BoxFit.cover,
-                    // TODO: consider the cached_network_image package for
-                    // Coil-equivalent disk caching — Image.network re-fetches
-                    // on every rebuild without it.
-                    errorBuilder: (context, error, stackTrace) =>
+                    placeholder: (context, url) =>
+                        const CircleAvatar(radius: 15),
+                    errorWidget: (context, url, error) =>
                         const CircleAvatar(radius: 15),
                   ),
                 ),
+
                 const SizedBox(width: 10),
-                Flexible(
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () => widget.onUserClick(post.author.username),
-                        child: Text(
-                          post.author.name,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                      if (post.collaboration != null) ...[
-                        const Text(
-                          ' with ',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        GestureDetector(
-                          onTap: () => widget.onUserClick(
-                            post.collaboration!.profile.username,
-                          ),
-                          child: Text(
-                            post.collaboration!.profile.name,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.onSurface,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
+
+                Text(
+                  post.author.name,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
+
                 const Spacer(),
+
                 _OverflowMenu(
                   isOwner: widget.isOwner,
                   post: post,
@@ -220,20 +190,30 @@ class _FeedPostState extends State<FeedPost>
             ),
           ),
 
-          // Post image with double-tap-to-like
           GestureDetector(
             onDoubleTap: () {
               _triggerBounce();
               if (!post.isLiked) widget.onLikeClick();
             },
-            child: Image.network(
-              post.image,
+            child: CachedNetworkImage(
+              imageUrl: post.image,
               width: double.infinity,
               fit: BoxFit.fitWidth,
+              placeholder: (context, url) => AspectRatio(
+                aspectRatio:
+                    1.334, // adjust to your typical post image ratio if known
+                child: Container(color: Colors.grey.shade200),
+              ),
+              errorWidget: (context, url, error) => AspectRatio(
+                aspectRatio: 1.334,
+                child: Container(
+                  color: Colors.grey.shade200,
+                  child: const Icon(Icons.broken_image_outlined),
+                ),
+              ),
             ),
           ),
 
-          // Like / comment count row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
             child: Row(
@@ -318,16 +298,34 @@ class _FeedPostState extends State<FeedPost>
           ),
 
           // Caption
+          // Caption
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 2, 12, 8),
             child: Text.rich(
               TextSpan(
-                style: const TextStyle(height: 1.3),
+                style: const TextStyle(height: 1.3, color: Colors.black),
                 children: [
                   TextSpan(
-                    text: '${post.author.username} ',
+                    text: post.author.username,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  if (post.collaboration != null) ...[
+                    const TextSpan(
+                      text: ' collaborating with ',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextSpan(
+                      text: post.collaboration!.profile.username,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      recognizer: _collabTapRecognizer = TapGestureRecognizer()
+                        ..onTap = () => widget.onUserClick(
+                          post.collaboration!.profile.username,
+                        ),
+                    ),
+                  ],
+                  const TextSpan(
+                    text: '\n',
+                  ), // forces the caption onto its own line
                   TextSpan(text: post.caption),
                 ],
               ),
@@ -339,9 +337,6 @@ class _FeedPostState extends State<FeedPost>
   }
 }
 
-/// Overflow ("...") menu — mirrors the Box + DropdownMenu pattern, but
-/// using PopupMenuButton (same approach as CloutHeader's _ActionButton)
-/// so there's no manual expanded/collapsed state to track.
 class _OverflowMenu extends StatelessWidget {
   final bool isOwner;
   final PostModel post;
@@ -362,6 +357,7 @@ class _OverflowMenu extends StatelessWidget {
     return PopupMenuButton<VoidCallback>(
       icon: const Icon(Icons.more_horiz, color: Colors.black),
       color: Colors.white,
+      padding: EdgeInsets.zero,
       onSelected: (action) => action(),
       itemBuilder: (context) {
         if (isOwner) {
