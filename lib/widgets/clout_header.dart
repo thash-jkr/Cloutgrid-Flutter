@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gradient_blur/gradient_blur.dart';
 
 import '../models/auth/auth_models.dart';
 

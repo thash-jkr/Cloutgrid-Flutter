@@ -29,10 +29,9 @@ class CloutEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const offWhite = Color(0xFFF5F5F0);
 
     return Container(
-      color: offWhite,
+      color: theme.colorScheme.surface,
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

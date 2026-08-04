@@ -142,8 +142,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   controller: _scrollController,
                   padding: EdgeInsets.only(
                     top: kToolbarHeight + MediaQuery.of(context).padding.top,
-                    bottom:
-                        100, // clears TabNavigator's floating pill bar (~70 height + margin)
+                    bottom: 100,
                   ),
                   itemCount:
                       homeState.posts.length +
