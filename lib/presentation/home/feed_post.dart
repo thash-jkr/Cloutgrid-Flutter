@@ -309,8 +309,6 @@ class _FeedPostState extends State<FeedPost>
             ),
           ),
 
-          // Caption
-          // Caption
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 2, 12, 8),
             child: Text.rich(
@@ -370,6 +368,10 @@ class _OverflowMenu extends StatelessWidget {
       icon: const Icon(Icons.more_horiz, color: Colors.black),
       color: Colors.white,
       padding: EdgeInsets.zero,
+      menuPadding: EdgeInsets.zero,
+      offset: const Offset(0, 52),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      clipBehavior: Clip.antiAlias,
       onSelected: (action) => action(),
       itemBuilder: (context) {
         if (isOwner) {
