@@ -31,6 +31,7 @@ _PostModel _$PostModelFromJson(Map<String, dynamic> json) => _PostModel(
   commentCount: (json['comment_count'] as num).toInt(),
   isLiked: json['is_liked'] as bool,
   image: json['image'] as String,
+  aspect: json['aspect'] as String,
   caption: json['caption'] as String,
 );
 
@@ -44,6 +45,7 @@ Map<String, dynamic> _$PostModelToJson(_PostModel instance) =>
       'comment_count': instance.commentCount,
       'is_liked': instance.isLiked,
       'image': instance.image,
+      'aspect': instance.aspect,
       'caption': instance.caption,
     };
 

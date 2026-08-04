@@ -1,4 +1,7 @@
+import 'package:cloutgrid_flutter/presentation/home/comments.dart';
 import 'package:cloutgrid_flutter/presentation/home/feed_post.dart';
+import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
+import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:cloutgrid_flutter/widgets/feed_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,9 +18,13 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final _scrollController = ScrollController();
-  // int? _selectedPostId;
+  int? _selectedPostId;
 
   @override
   void initState() {
@@ -61,40 +68,44 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ]);
   }
 
-  // void _openNotifications() {
-  //   showCloutSheet(context, content: (context) => const Notifications());
-  // }
+  void _openNotifications() {
+    cloutSheet(context, content: const Notifications());
+  }
 
-  // void _openComments(int postId) {
-  //   ref.read(homeProvider.notifier).fetchComments(postId);
-  //   setState(() => _selectedPostId = postId);
+  void _openComments(int postId) {
+    if (_selectedPostId != null) return;
+    _selectedPostId = postId;
 
-  //   showCloutSheet(
-  //     context,
-  //     content: (context) => Consumer(
-  //       builder: (context, ref, _) {
-  //         final homeState = ref.watch(homeNotifierProvider);
-  //         final authState = ref.watch(authProvider);
-  //         final user = authState.value?.user;
+    ref.read(homeProvider.notifier).fetchComments(postId);
 
-  //         return Comments(
-  //           comments: homeState.comments,
-  //           isLoading: homeState.isLoading,
-  //           user: user,
-  //           onAddComment: (content) => ref
-  //               .read(homeNotifierProvider.notifier)
-  //               .addComment(postId, content),
-  //           onDeleteComment: (commentId) => ref
-  //               .read(homeNotifierProvider.notifier)
-  //               .deleteComment(postId, commentId),
-  //         );
-  //       },
-  //     ),
-  //   ).whenComplete(() => setState(() => _selectedPostId = null));
-  // }
+    cloutSheet(
+      context,
+      content: Consumer(
+        builder: (context, ref, _) {
+          final homeState = ref.watch(homeProvider);
+          final user = ref.watch(authProvider).value?.user;
+
+          return Comments(
+            comments: homeState.comments,
+            isLoading: homeState.isLoading,
+            user: user,
+            onAddComment: (content) =>
+                ref.read(homeProvider.notifier).addComment(postId, content),
+            onDeleteComment: (commentId) => ref
+                .read(homeProvider.notifier)
+                .deleteComment(postId, commentId),
+          );
+        },
+      ),
+    ).whenComplete(() {
+      _selectedPostId = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final homeState = ref.watch(homeProvider);
     final authState = ref.watch(authProvider);
 
@@ -112,7 +123,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           HeaderAction(
             icon: Icons.notifications_none_rounded,
             contentDescription: "Notifications",
-            onClick: () {}, // _openNotifications,
+            onClick: _openNotifications,
           ),
           HeaderAction(
             icon: Icons.message_rounded,
@@ -158,7 +169,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       post: post,
                       onLikeClick: () =>
                           ref.read(homeProvider.notifier).likePost(post.id),
-                      onCommentClick: () {}, //() => _openComments(post.id),
+                      onCommentClick: () => _openComments(post.id),
                       onUserClick: (username) {
                         if (username == user?.profile.username) {
                           // TODO: onSelectTab(TabItem.profile) equivalent —

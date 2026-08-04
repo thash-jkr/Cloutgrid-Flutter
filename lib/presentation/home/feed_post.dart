@@ -38,6 +38,19 @@ class _FeedPostState extends State<FeedPost>
     value: 1.0,
   );
 
+  double getAspect(PostModel post) {
+    switch (post.aspect) {
+      case "1:1":
+        return 1;
+      case "4:3":
+        return 1.334;
+      case "3:4":
+        return 0.75;
+      default:
+        return 1;
+    }
+  }
+
   Future<void> _triggerBounce() async {
     _scaleController.value = 1.0;
     await _scaleController.animateTo(
@@ -200,12 +213,11 @@ class _FeedPostState extends State<FeedPost>
               width: double.infinity,
               fit: BoxFit.fitWidth,
               placeholder: (context, url) => AspectRatio(
-                aspectRatio:
-                    1.334, // adjust to your typical post image ratio if known
+                aspectRatio: getAspect(post),
                 child: Container(color: Colors.grey.shade200),
               ),
               errorWidget: (context, url, error) => AspectRatio(
-                aspectRatio: 1.334,
+                aspectRatio: getAspect(post),
                 child: Container(
                   color: Colors.grey.shade200,
                   child: const Icon(Icons.broken_image_outlined),

@@ -28,6 +28,7 @@ abstract class PostModel with _$PostModel {
     @JsonKey(name: 'comment_count') required int commentCount,
     @JsonKey(name: 'is_liked') required bool isLiked,
     required String image,
+    required String aspect,
     required String caption,
   }) = _PostModel;
 

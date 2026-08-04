@@ -160,7 +160,7 @@ class HomeNotifier extends _$HomeNotifier {
   // HomeScreen reads `home.comments` off shared state (Comments composable
   // takes `comments = home.comments`), not a return value.
   Future<void> fetchComments(int postId) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(comments: [], isLoading: true);
     final results = await ref
         .read(apiServiceProvider)
         .request<List<CommentModel>>(
