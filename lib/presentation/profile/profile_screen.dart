@@ -1,4 +1,6 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
+import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
@@ -6,6 +8,7 @@ import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
+import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,8 +47,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     if (tab.selectable) {
       setState(() => _selectedTab = tab);
     } else {
-      // Instagram / YouTube — open the connected account view instead
+      if (tab.label == "Instagram") {
+        _openInstagram();
+      } else if (tab.label == "YouTube") {
+        _openYouTube();
+      }
     }
+  }
+
+  void _openInstagram() {
+    cloutSheet(context, content: const Instagram());
+  }
+
+  void _openYouTube() {
+    cloutSheet(context, content: const Youtube());
   }
 
   List<Widget> _buildTabContent() {
@@ -118,7 +133,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             SliverPadding(
               padding: EdgeInsets.only(
                 top: kToolbarHeight + MediaQuery.of(context).padding.top,
-                bottom: 150,
+                bottom: kBottomNavigationBarHeight + 70,
               ),
               sliver: SliverMainAxisGroup(
                 slivers: [
