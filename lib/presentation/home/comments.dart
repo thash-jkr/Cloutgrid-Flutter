@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/network/api_config.dart';
@@ -91,13 +92,10 @@ class _CommentsState extends State<Comments> {
               },
             )
           else
-            Center(
-              child: widget.isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text(
-                      'No comments yet!',
-                      style: TextStyle(color: Colors.grey),
-                    ),
+            CloutEmpty(
+              type: .comment,
+              message: "No comments yet!",
+              isLoading: widget.isLoading,
             ),
 
           // Floating input bar at bottom

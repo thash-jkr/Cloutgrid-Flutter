@@ -1,3 +1,4 @@
+import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,7 +33,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: 'Notifications'),
       body: notifications.isEmpty
-          ? const _Empty(message: 'No new notifications!')
+          ? CloutEmpty(type: .general, message: "No new notifications")
           : ListView.separated(
               controller: widget.scrollController,
               padding: const EdgeInsets.fromLTRB(15, kToolbarHeight, 15, 100),
@@ -80,17 +81,5 @@ class _NotificationsState extends ConsumerState<Notifications> {
     if (isFirst) return const BorderRadius.vertical(top: radius);
     if (isLast) return const BorderRadius.vertical(bottom: radius);
     return BorderRadius.zero;
-  }
-}
-
-class _Empty extends StatelessWidget {
-  final String message;
-  const _Empty({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(message, style: const TextStyle(color: Colors.grey)),
-    );
   }
 }
