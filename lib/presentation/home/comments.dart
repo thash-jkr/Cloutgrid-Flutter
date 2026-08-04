@@ -185,13 +185,10 @@ class _CommentRow extends StatelessWidget {
                     const CircleAvatar(radius: 20),
               ),
             ),
-            title: Text(
-              '${comment.user.username} • ${comment.timeAgo}',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+            title: Text(comment.content),
+            subtitle: Text(
+              '${comment.user.username} • ${timeAgo(comment.commentedAt)}',
             ),
-            subtitle: Text(comment.content),
           ),
           Divider(
             height: 0.5,

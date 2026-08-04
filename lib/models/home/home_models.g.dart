@@ -12,6 +12,7 @@ _NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String,
       photo: json['photo'] as String,
       isRead: json['is_read'] as bool,
+      createdAt: json['created_at'] as String,
     );
 
 Map<String, dynamic> _$NotificationModelToJson(_NotificationModel instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$NotificationModelToJson(_NotificationModel instance) =>
       'message': instance.message,
       'photo': instance.photo,
       'is_read': instance.isRead,
+      'created_at': instance.createdAt,
     };
 
 _PostModel _$PostModelFromJson(Map<String, dynamic> json) => _PostModel(

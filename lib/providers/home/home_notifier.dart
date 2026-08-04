@@ -73,11 +73,6 @@ class HomeNotifier extends _$HomeNotifier {
     );
   }
 
-  // NOTE: `isLoading` wasn't part of the original HomeRepository you
-  // shared — it's referenced by HomeScreen (home.isLoading) but must live
-  // on whatever wraps HomeRepository in Kotlin (a HomeManager, presumably,
-  // same relationship AuthManager has to AuthRepository). Added here so
-  // this single merged Notifier can serve HomeScreen's needs directly.
   Future<void> fetchPosts({required bool isFirstPage}) async {
     final url = isFirstPage ? '/posts/' : state.nextCursor;
     if (url == null || url.isEmpty) return;
@@ -125,11 +120,6 @@ class HomeNotifier extends _$HomeNotifier {
           requireAuth: true,
         );
 
-    // Kotlin's `var likeCount`/`isLiked` update in place on the PostModel
-    // instance; here we rebuild the matching post immutably instead —
-    // this is the one behavioral gap flagged back when home_notifier was
-    // first translated, now actually addressed since HomeScreen needs the
-    // list to visually reflect a like without a full refetch.
     state = state.copyWith(
       posts: state.posts.map((p) {
         if (p.id != postId) return p;
@@ -171,6 +161,7 @@ class HomeNotifier extends _$HomeNotifier {
               .toList(),
           requireAuth: true,
         );
+
     state = state.copyWith(comments: results, isLoading: false);
   }
 
@@ -185,7 +176,13 @@ class HomeNotifier extends _$HomeNotifier {
           requireAuth: true,
         );
 
-    state = state.copyWith(comments: [...state.comments, comment]);
+    state = state.copyWith(comments: [comment, ...state.comments]);
+    state = state.copyWith(
+      posts: state.posts.map((p) {
+        if (p.id != postId) return p;
+        return p.copyWith(commentCount: p.commentCount + 1);
+      }).toList(),
+    );
   }
 
   Future<void> deleteComment(int postId, int commentId) async {
@@ -200,6 +197,12 @@ class HomeNotifier extends _$HomeNotifier {
 
     state = state.copyWith(
       comments: state.comments.where((c) => c.id != commentId).toList(),
+    );
+    state = state.copyWith(
+      posts: state.posts.map((p) {
+        if (p.id != postId) return p;
+        return p.copyWith(commentCount: p.commentCount - 1);
+      }).toList(),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/core/network/api_config.dart';
+import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,6 +69,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
                     ),
                     child: ListTile(
                       title: Text(item.message),
+                      subtitle: Text(timeAgo(item.createdAt)),
                       leading: ClipOval(
                         child: CachedNetworkImage(
                           imageUrl: ApiConfig.current.baseUrl + item.photo,
