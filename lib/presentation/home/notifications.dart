@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/core/network/api_config.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,10 +63,24 @@ class _NotificationsState extends ConsumerState<Notifications> {
                       borderRadius: _segmentRadius(index, notifications.length),
                     ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 15,
+                      horizontal: 5,
+                      vertical: 5,
                     ),
-                    child: Text(item.message),
+                    child: ListTile(
+                      title: Text(item.message),
+                      leading: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: ApiConfig.current.baseUrl + item.photo,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const CircleAvatar(radius: 20),
+                          errorWidget: (context, url, error) =>
+                              const CircleAvatar(radius: 20),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },

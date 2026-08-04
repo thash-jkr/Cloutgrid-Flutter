@@ -10,6 +10,7 @@ abstract class NotificationModel with _$NotificationModel {
   const factory NotificationModel({
     required int id,
     required String message,
+    required String photo,
     @JsonKey(name: 'is_read') required bool isRead,
   }) = _NotificationModel;
 
