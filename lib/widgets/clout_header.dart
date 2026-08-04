@@ -3,30 +3,37 @@ import 'package:flutter/services.dart';
 
 import '../models/auth/auth_models.dart';
 
-LinearGradient createEasedGradient({
-  required Color beginColor,
-  required Color endColor,
-  Curve curve = Curves.easeIn,
-  int steps = 16,
-  AlignmentGeometry begin = Alignment.topCenter,
-  AlignmentGeometry end = Alignment.bottomCenter,
-}) {
-  final List<Color> colors = [];
-  final List<double> stops = [];
+class OutlinedText extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+  final Color outlineColor;
+  final double outlineWidth;
 
-  for (int i = 0; i <= steps; i++) {
-    // 1. Calculate linear ratio (0.0 to 1.0)
-    final double t = i / steps;
+  const OutlinedText({
+    super.key,
+    required this.text,
+    required this.style,
+    this.outlineColor = Colors.white,
+    this.outlineWidth = 3,
+  });
 
-    // 2. Transform the ratio using Flutter's native Curve class
-    final double curvedT = curve.transform(t);
-
-    // 3. Linearly interpolate the color using the curved value
-    colors.add(Color.lerp(beginColor, endColor, curvedT)!);
-    stops.add(t);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Text(
+          text,
+          style: style.copyWith(
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = outlineWidth
+              ..color = outlineColor,
+          ),
+        ),
+        Text(text, style: style),
+      ],
+    );
   }
-
-  return LinearGradient(begin: begin, end: end, colors: colors, stops: stops);
 }
 
 class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -50,11 +57,14 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
     var offWhite = theme.colorScheme.surface;
 
     final gradientColors = [
-      offWhite.withValues(alpha: 1.0),
-      offWhite.withValues(alpha: 0.8),
-      offWhite.withValues(alpha: 0.6),
-      offWhite.withValues(alpha: 0.5),
-      offWhite.withValues(alpha: 0.4),
+      // offWhite.withValues(alpha: 0.7),
+      // offWhite.withValues(alpha: 0.65),
+      // offWhite.withValues(alpha: 0.6),
+      // offWhite.withValues(alpha: 0.55),
+      // offWhite.withValues(alpha: 0.5),
+      // offWhite.withValues(alpha: 0.45),
+      // offWhite.withValues(alpha: 0.4),
+      // offWhite.withValues(alpha: 0.35),
       offWhite.withValues(alpha: 0.3),
       offWhite.withValues(alpha: 0.25),
       offWhite.withValues(alpha: 0.2),
@@ -63,56 +73,6 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
       offWhite.withValues(alpha: 0.05),
       offWhite.withValues(alpha: 0.0),
     ];
-
-    // return GradientBlur(
-    //   maxBlur: 10.0,
-    //   minBlur: 0.0,
-    //   slices: 10,
-    //   curve: Curves.linear,
-    //   edgeBlur: null,
-    //   gradient: LinearGradient(
-    //     colors: [
-    //       Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.1),
-    //       Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.0),
-    //     ],
-    //     begin: Alignment.topCenter,
-    //     end: Alignment.bottomCenter,
-    //   ),
-    //   child: AppBar(
-    //     backgroundColor: Colors.transparent,
-    //     scrolledUnderElevation: 0,
-    //     automaticallyImplyLeading: false,
-    //     elevation: 0,
-    //     centerTitle: icon == null && actions.isEmpty,
-    //     systemOverlayStyle: const SystemUiOverlayStyle(
-    //       statusBarColor: Colors.transparent,
-    //       statusBarIconBrightness: Brightness.dark,
-    //       statusBarBrightness: Brightness
-    //           .light, // iOS uses this instead of statusBarIconBrightness
-    //       systemNavigationBarColor: Colors.transparent,
-    //       systemNavigationBarIconBrightness: Brightness.dark,
-    //       systemNavigationBarContrastEnforced: false,
-    //     ),
-    //     leadingWidth: 60,
-    //     title: title != null
-    //         ? Text(title!, style: const TextStyle(fontWeight: FontWeight.bold))
-    //         : null,
-    //     leading: icon != null
-    //         ? Padding(
-    //             padding: const EdgeInsets.only(left: 15),
-    //             child: _ToolbarButton(action: icon!),
-    //           )
-    //         : null,
-    //     actions: actions
-    //         .map(
-    //           (action) => Padding(
-    //             padding: const EdgeInsets.only(right: 15),
-    //             child: _ActionButton(action: action),
-    //           ),
-    //         )
-    //         .toList(),
-    //   ),
-    // );
 
     return Container(
       decoration: BoxDecoration(
@@ -139,7 +99,12 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
         ),
         leadingWidth: 60,
         title: title != null
-            ? Text(title!, style: const TextStyle(fontWeight: FontWeight.bold))
+            ? OutlinedText(
+                text: title!,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                outlineColor: theme.colorScheme.surface,
+                outlineWidth: 3,
+              )
             : null,
         leading: icon != null
             ? Padding(
