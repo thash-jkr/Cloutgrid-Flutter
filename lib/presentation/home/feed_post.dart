@@ -38,6 +38,8 @@ class _FeedPostState extends State<FeedPost>
     value: 1.0,
   );
 
+  final TextEditingController _reportField = TextEditingController();
+
   double getAspect(PostModel post) {
     switch (post.aspect) {
       case "1:1":
@@ -126,8 +128,21 @@ class _FeedPostState extends State<FeedPost>
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         title: const Text('Report'),
-        content: const Text(
-          'Tell us why you want to report this. Our team will take appropriate action',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Tell us why you want to report this. Our team will take appropriate action',
+            ),
+
+            TextField(
+              controller: _reportField,
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: "Write your complaint here",
+              ),
+            ),
+          ],
         ),
         actions: [
           TextButton(

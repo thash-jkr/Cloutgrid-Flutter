@@ -31,6 +31,7 @@ class Comments extends StatefulWidget {
 
 class _CommentsState extends State<Comments> {
   final _commentController = TextEditingController();
+  final TextEditingController _reportField = TextEditingController();
 
   @override
   void dispose() {
@@ -51,8 +52,21 @@ class _CommentsState extends State<Comments> {
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         title: const Text('Report Content'),
-        content: const Text(
-          'Let us know what you think should be reported. Our team will review it shortly',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Tell us why you want to report this comment. Our team will take appropriate action',
+            ),
+
+            TextField(
+              controller: _reportField,
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: "Write your complaint here",
+              ),
+            ),
+          ],
         ),
         actions: [
           TextButton(
