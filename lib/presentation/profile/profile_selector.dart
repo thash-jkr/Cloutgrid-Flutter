@@ -69,9 +69,10 @@ class ProfileSelector extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(100)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
+                color: Colors.black.withValues(alpha: 0.07),
+                blurRadius: 0,
+                spreadRadius: 1,
+                offset: const Offset(0, 0),
               ),
             ],
           ),

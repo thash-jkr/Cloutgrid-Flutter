@@ -15,11 +15,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ProfileScreen extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
+  final VoidCallback onNavigateToEditProfile;
 
   const ProfileScreen({
     super.key,
     required this.onNavigateToSettings,
     required this.onNavigateToPostDetail,
+    required this.onNavigateToEditProfile,
   });
 
   @override
@@ -132,6 +134,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           HeaderAction(
             icon: Icons.edit_rounded,
             contentDescription: "Edit Profile",
+            onClick: widget.onNavigateToEditProfile,
           ),
           HeaderAction(
             icon: Icons.settings_rounded,

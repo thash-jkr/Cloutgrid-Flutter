@@ -228,14 +228,6 @@ class _CommentInputBar extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: theme.colorScheme.outline),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: theme.colorScheme.primary),
-        ),
         prefixIcon: photoUrl != null
             ? Padding(
                 padding: const EdgeInsets.only(left: 12, right: 8),

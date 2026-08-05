@@ -1,7 +1,9 @@
+import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
 import 'package:cloutgrid_flutter/presentation/profile/security.dart';
 import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -43,6 +45,7 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToSettings: () => SettingsRoute().push(context),
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
+    onNavigateToEditProfile: () => EditProfileRoute().push(context),
   );
 }
 
@@ -78,11 +81,23 @@ class PostDetailRoute extends GoRouteData with $PostDetailRoute {
       PostDetail(onNavigateBack: () => context.pop(), id: id, other: other);
 }
 
+@TypedGoRoute<EditProfileRoute>(path: "/edit-profile")
+class EditProfileRoute extends GoRouteData with $EditProfileRoute {
+  const EditProfileRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      EditProfile(onNavigateBack: () => context.pop());
+}
+
 const _publicPaths = ['/', '/login', '/register', '/reset-password'];
 
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {
-  final authState = ref.watch(authProvider);
+  final isLoading = ref.watch(authProvider.select((s) => s.isLoading));
+  final isAuth = ref.watch(
+    authProvider.select((s) => s.value?.isAuth ?? false),
+  );
 
   return GoRouter(
     routes: $appRoutes,
@@ -90,9 +105,8 @@ GoRouter appRouter(Ref ref) {
     redirect: (context, state) {
       final path = state.uri.path;
 
-      if (authState.isLoading) return null;
+      if (isLoading) return null;
 
-      final isAuth = authState.value?.isAuth ?? false;
       final isPublicRoute = _publicPaths.contains(path);
 
       if (!isAuth && !isPublicRoute) {

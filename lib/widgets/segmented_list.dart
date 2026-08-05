@@ -7,6 +7,8 @@ class SegmentedListItem extends StatelessWidget {
   final Widget? trailing;
   final Widget child;
   final VoidCallback? onTap;
+  final bool selected;
+  final Color? selectedColor;
 
   const SegmentedListItem({
     super.key,
@@ -16,6 +18,8 @@ class SegmentedListItem extends StatelessWidget {
     this.trailing,
     required this.child,
     this.onTap,
+    this.selected = false,
+    this.selectedColor,
   });
 
   @override
@@ -33,8 +37,14 @@ class SegmentedListItem extends StatelessWidget {
       borderRadius = BorderRadius.zero;
     }
 
+    final theme = Theme.of(context);
+    final backgroundColor = selected
+        ? (selectedColor ?? theme.colorScheme.secondary)
+        : Colors.white;
+
     return Material(
-      color: Colors.white,
+      color: backgroundColor,
+      elevation: 0.1,
       borderRadius: borderRadius,
       clipBehavior: Clip.antiAlias,
       child: InkWell(

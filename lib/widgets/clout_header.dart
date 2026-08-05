@@ -141,9 +141,10 @@ class _ToolbarButton extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.07),
+            blurRadius: 0,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
           ),
         ],
       ),

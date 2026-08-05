@@ -8,39 +8,48 @@ class CloutToast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth:
+            MediaQuery.of(context).size.width - 40, // cap width, leaves margin
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            isSuccess ? Icons.check_circle : Icons.warning_rounded,
-            color: isSuccess ? Colors.green : Colors.red,
-            size: 20,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            message,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 0,
+              offset: const Offset(1, 1),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // keeps icon aligned to first line, not vertically centered against a tall block
+          children: [
+            Icon(
+              isSuccess ? Icons.check_circle : Icons.warning_rounded,
+              color: isSuccess ? Colors.green : Colors.red,
+              size: 20,
+            ),
+            const SizedBox(width: 5),
+            Flexible(
+              // ADD THIS — gives Text a bounded width to wrap within
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -123,7 +132,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
     final topInset = MediaQuery.of(context).padding.top;
 
     return Positioned(
-      top: topInset + 12,
+      top: topInset + 15,
       left: 0,
       right: 0,
       child: SlideTransition(

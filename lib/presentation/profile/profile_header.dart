@@ -96,7 +96,7 @@ class ProfileHeader extends StatelessWidget {
                         width: 25,
                         height: 25,
                         colorFilter: ColorFilter.mode(
-                          Colors.red,
+                          Colors.pink,
                           BlendMode.srcIn,
                         ),
                       ),

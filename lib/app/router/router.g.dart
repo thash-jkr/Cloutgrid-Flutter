@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
   $settingsRoute,
   $securityRoute,
   $postDetailRoute,
+  $editProfileRoute,
 ];
 
 RouteBase get $landingRoute => GoRouteData.$route(
@@ -190,6 +191,33 @@ bool _$boolConverter(String value) {
   }
 }
 
+RouteBase get $editProfileRoute => GoRouteData.$route(
+  path: '/edit-profile',
+  hasOverriddenOnExit: false,
+  factory: $EditProfileRoute._fromState,
+);
+
+mixin $EditProfileRoute on GoRouteData {
+  static EditProfileRoute _fromState(GoRouterState state) =>
+      const EditProfileRoute();
+
+  @override
+  String get location => GoRouteData.$location('/edit-profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
@@ -236,4 +264,4 @@ final class AppRouterProvider
   }
 }
 
-String _$appRouterHash() => r'00623af455af0f81448d630e63408a0576bc2686';
+String _$appRouterHash() => r'd58291c4b32f82a21362a036a60bf5fd005cf348';

@@ -22,11 +22,13 @@ enum TabItem {
 class TabNavigator extends StatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
+  final VoidCallback onNavigateToEditProfile;
 
   const TabNavigator({
     super.key,
     required this.onNavigateToSettings,
     required this.onNavigateToPostDetail,
+    required this.onNavigateToEditProfile,
   });
 
   @override
@@ -60,11 +62,10 @@ class _TabNavigatorState extends State<TabNavigator> {
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      extendBody: true, // lets PageView draw behind the floating bottom bar
+      extendBody: true,
       body: PageView(
         controller: _pageController,
-        physics:
-            const AlwaysScrollableScrollPhysics(), // matches userScrollEnabled = true
+        physics: const AlwaysScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() => _selectedTab = TabItem.values[index]);
         },
@@ -76,6 +77,7 @@ class _TabNavigatorState extends State<TabNavigator> {
           ProfileScreen(
             onNavigateToSettings: widget.onNavigateToSettings,
             onNavigateToPostDetail: widget.onNavigateToPostDetail,
+            onNavigateToEditProfile: widget.onNavigateToEditProfile,
           ),
         ],
       ),
@@ -114,8 +116,10 @@ class _PillBottomBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(35),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 6,
+              color: Colors.black.withValues(alpha: 0.07),
+              blurRadius: 0,
+              spreadRadius: 1,
+              offset: const Offset(0, 0),
             ),
           ],
         ),
