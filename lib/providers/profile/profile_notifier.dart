@@ -1,3 +1,4 @@
+import 'package:cloutgrid_flutter/providers/home/home_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/providers/core_providers.dart';
@@ -192,6 +193,25 @@ class ProfileNotifier extends _$ProfileNotifier {
           ),
         );
       }
+    } catch (e) {
+      state = state.copyWith(errorMessage: e.toString());
+    }
+  }
+
+  Future<void> likePost(int postId) async {
+    try {
+      final response = await ref.read(homeProvider.notifier).likePost(postId);
+
+      PostModel updateIfMatch(PostModel p) => p.id == postId
+          ? p.copyWith(likeCount: response.likeCount, isLiked: response.liked)
+          : p;
+
+      state = state.copyWith(
+        posts: state.posts.map(updateIfMatch).toList(),
+        collabs: state.collabs.map(updateIfMatch).toList(),
+        otherPosts: state.otherPosts.map(updateIfMatch).toList(),
+        otherCollabs: state.otherCollabs.map(updateIfMatch).toList(),
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString());
     }

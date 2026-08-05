@@ -109,7 +109,7 @@ class HomeNotifier extends _$HomeNotifier {
     state = state.copyWith(posts: [post, ...state.posts]);
   }
 
-  Future<void> likePost(int postId) async {
+  Future<LikeResponse> likePost(int postId) async {
     final response = await ref
         .read(apiServiceProvider)
         .request<LikeResponse>(
@@ -129,6 +129,8 @@ class HomeNotifier extends _$HomeNotifier {
         );
       }).toList(),
     );
+
+    return response;
   }
 
   Future<void> deletePost(int postId) async {
@@ -146,9 +148,6 @@ class HomeNotifier extends _$HomeNotifier {
     );
   }
 
-  // Populates `state.comments` directly rather than just returning a list —
-  // HomeScreen reads `home.comments` off shared state (Comments composable
-  // takes `comments = home.comments`), not a return value.
   Future<void> fetchComments(int postId) async {
     state = state.copyWith(comments: [], isLoading: true);
     final results = await ref

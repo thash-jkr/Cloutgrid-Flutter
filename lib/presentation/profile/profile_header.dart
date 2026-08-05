@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/widgets/clout_capsule.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../core/network/api_config.dart';
 import '../../models/auth/auth_models.dart';
@@ -52,11 +53,11 @@ class ProfileHeader extends StatelessWidget {
                 const SizedBox(height: 4),
 
                 Row(
+                  spacing: 10,
                   children: [
                     CloutCapsule(user.area ?? user.targetAudience ?? 'Creator'),
 
                     if (user.website != null && user.website!.isNotEmpty) ...[
-                      const SizedBox(width: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -85,6 +86,30 @@ class ProfileHeader extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ],
+
+                    if (user.instagramConnected == true) ...[
+                      SvgPicture.asset(
+                        "assets/icons/instagram.svg",
+                        width: 25,
+                        height: 25,
+                        colorFilter: ColorFilter.mode(
+                          Colors.red,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ],
+
+                    if (user.youtubeConnected == true) ...[
+                      SvgPicture.asset(
+                        "assets/icons/youtube.svg",
+                        width: 25,
+                        height: 25,
+                        colorFilter: ColorFilter.mode(
+                          Colors.red,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ],

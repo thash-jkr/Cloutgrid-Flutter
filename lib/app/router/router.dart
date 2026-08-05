@@ -1,3 +1,4 @@
+import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
 import 'package:cloutgrid_flutter/presentation/profile/security.dart';
 import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
@@ -38,8 +39,11 @@ class TabsRoute extends GoRouteData with $TabsRoute {
   const TabsRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      TabNavigator(onNavigateToSettings: () => SettingsRoute().push(context));
+  Widget build(BuildContext context, GoRouterState state) => TabNavigator(
+    onNavigateToSettings: () => SettingsRoute().push(context),
+    onNavigateToPostDetail: (int id, bool other) =>
+        PostDetailRoute(id: id, other: other).push(context),
+  );
 }
 
 @TypedGoRoute<SettingsRoute>(path: "/settings")
@@ -60,6 +64,18 @@ class SecurityRoute extends GoRouteData with $SecurityRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       Security(onNavigateBack: () => context.pop());
+}
+
+@TypedGoRoute<PostDetailRoute>(path: "/post-detail")
+class PostDetailRoute extends GoRouteData with $PostDetailRoute {
+  final int id;
+  final bool other;
+
+  const PostDetailRoute({required this.id, required this.other});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      PostDetail(onNavigateBack: () => context.pop(), id: id, other: other);
 }
 
 const _publicPaths = ['/', '/login', '/register', '/reset-password'];

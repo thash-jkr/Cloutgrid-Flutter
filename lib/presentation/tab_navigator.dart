@@ -21,8 +21,13 @@ enum TabItem {
 
 class TabNavigator extends StatefulWidget {
   final VoidCallback onNavigateToSettings;
+  final void Function(int id, bool other) onNavigateToPostDetail;
 
-  const TabNavigator({super.key, required this.onNavigateToSettings});
+  const TabNavigator({
+    super.key,
+    required this.onNavigateToSettings,
+    required this.onNavigateToPostDetail,
+  });
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();
@@ -68,7 +73,10 @@ class _TabNavigatorState extends State<TabNavigator> {
           SearchScreen(),
           CreateScreen(),
           JobsScreen(),
-          ProfileScreen(onNavigateToSettings: widget.onNavigateToSettings),
+          ProfileScreen(
+            onNavigateToSettings: widget.onNavigateToSettings,
+            onNavigateToPostDetail: widget.onNavigateToPostDetail,
+          ),
         ],
       ),
       bottomNavigationBar: _PillBottomBar(

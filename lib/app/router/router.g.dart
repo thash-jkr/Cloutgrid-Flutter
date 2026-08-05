@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $tabsRoute,
   $settingsRoute,
   $securityRoute,
+  $postDetailRoute,
 ];
 
 RouteBase get $landingRoute => GoRouteData.$route(
@@ -142,6 +143,51 @@ mixin $SecurityRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $postDetailRoute => GoRouteData.$route(
+  path: '/post-detail',
+  hasOverriddenOnExit: false,
+  factory: $PostDetailRoute._fromState,
+);
+
+mixin $PostDetailRoute on GoRouteData {
+  static PostDetailRoute _fromState(GoRouterState state) => PostDetailRoute(
+    id: int.parse(state.uri.queryParameters['id']!),
+    other: _$boolConverter(state.uri.queryParameters['other']!),
+  );
+
+  PostDetailRoute get _self => this as PostDetailRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/post-detail',
+    queryParams: {'id': _self.id.toString(), 'other': _self.other.toString()},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }
 
 // **************************************************************************

@@ -14,8 +14,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
+  final void Function(int id, bool other) onNavigateToPostDetail;
 
-  const ProfileScreen({super.key, required this.onNavigateToSettings});
+  const ProfileScreen({
+    super.key,
+    required this.onNavigateToSettings,
+    required this.onNavigateToPostDetail,
+  });
 
   @override
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
@@ -82,7 +87,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             ),
           ];
         }
-        return [PostGrid(posts: profile.posts, onPostTap: (post) {})];
+        return [
+          PostGrid(
+            posts: profile.posts,
+            onPostTap: (post) {
+              widget.onNavigateToPostDetail(post.id, false);
+            },
+          ),
+        ];
 
       case ProfileTab.collabs:
         if (profile.collabs.isEmpty) {
