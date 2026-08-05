@@ -40,12 +40,14 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final HeaderAction? icon;
   final List<HeaderAction> actions;
+  final bool center;
 
   const CloutHeader({
     super.key,
     this.title,
     this.icon,
     this.actions = const [],
+    this.center = true,
   });
 
   @override
@@ -87,12 +89,11 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         elevation: 0,
-        centerTitle: icon == null && actions.isEmpty,
+        centerTitle: center,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness
-              .light, // iOS uses this instead of statusBarIconBrightness
+          statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.dark,
           systemNavigationBarContrastEnforced: false,

@@ -20,7 +20,9 @@ enum TabItem {
 }
 
 class TabNavigator extends StatefulWidget {
-  const TabNavigator({super.key});
+  final VoidCallback onNavigateToSettings;
+
+  const TabNavigator({super.key, required this.onNavigateToSettings});
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();
@@ -61,12 +63,12 @@ class _TabNavigatorState extends State<TabNavigator> {
         onPageChanged: (index) {
           setState(() => _selectedTab = TabItem.values[index]);
         },
-        children: const [
+        children: [
           HomeScreen(),
           SearchScreen(),
           CreateScreen(),
           JobsScreen(),
-          ProfileScreen(),
+          ProfileScreen(onNavigateToSettings: widget.onNavigateToSettings),
         ],
       ),
       bottomNavigationBar: _PillBottomBar(

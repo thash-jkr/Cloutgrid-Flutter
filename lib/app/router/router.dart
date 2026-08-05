@@ -1,3 +1,5 @@
+import 'package:cloutgrid_flutter/presentation/profile/security.dart';
+import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,27 @@ class TabsRoute extends GoRouteData with $TabsRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const TabNavigator();
+      TabNavigator(onNavigateToSettings: () => SettingsRoute().push(context));
+}
+
+@TypedGoRoute<SettingsRoute>(path: "/settings")
+class SettingsRoute extends GoRouteData with $SettingsRoute {
+  const SettingsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Settings(
+    onNavigateBack: () => context.pop(),
+    onNavigateToSecurity: () => SecurityRoute().push(context),
+  );
+}
+
+@TypedGoRoute<SecurityRoute>(path: "/security")
+class SecurityRoute extends GoRouteData with $SecurityRoute {
+  const SecurityRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      Security(onNavigateBack: () => context.pop());
 }
 
 const _publicPaths = ['/', '/login', '/register', '/reset-password'];

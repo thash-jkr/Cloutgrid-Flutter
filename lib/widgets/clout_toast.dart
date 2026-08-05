@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Visual translation of the SwiftUI `CloutToast` — pill-shaped, icon + message,
-/// white background, soft shadow. Pure UI, no animation/positioning logic —
-/// that lives in [showToast] below, same separation as Swift's
-/// CloutToast (view) vs. whatever presents it (logic).
 class CloutToast extends StatelessWidget {
   final String message;
   final bool isSuccess;
@@ -38,7 +34,11 @@ class CloutToast extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             message,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
@@ -46,14 +46,6 @@ class CloutToast extends StatelessWidget {
   }
 }
 
-/// Shows a [CloutToast] near the top of the screen, sliding down + fading in,
-/// then reversing out automatically after [duration].
-///
-/// Equivalent job to however the Swift side presents `CloutToast` — Flutter
-/// has no built-in top-toast primitive, so this uses an [OverlayEntry]
-/// (renders above everything, including the current route) with a manually
-/// driven slide+fade animation matching `.transition(.move(edge: .top)
-/// .combined(with: .opacity))`.
 void showToast(
   BuildContext context, {
   required String message,
@@ -113,7 +105,6 @@ class _ToastOverlayState extends State<_ToastOverlay>
 
     _controller.forward();
 
-    // Auto-dismiss: reverse the animation, then remove the OverlayEntry.
     Future.delayed(widget.duration, () async {
       if (!mounted) return;
       await _controller.reverse();
@@ -140,9 +131,12 @@ class _ToastOverlayState extends State<_ToastOverlay>
         child: FadeTransition(
           opacity: _fade,
           child: Center(
-            child: CloutToast(
-              message: widget.message,
-              isSuccess: widget.isSuccess,
+            child: Material(
+              color: Colors.transparent, // ADD THIS wrapper
+              child: CloutToast(
+                message: widget.message,
+                isSuccess: widget.isSuccess,
+              ),
             ),
           ),
         ),
