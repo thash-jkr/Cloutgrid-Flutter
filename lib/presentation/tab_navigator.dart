@@ -72,7 +72,10 @@ class _TabNavigatorState extends State<TabNavigator> {
           setState(() => _selectedTab = TabItem.values[index]);
         },
         children: [
-          HomeScreen(),
+          HomeScreen(
+            onSelectTab: _selectTab,
+            onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
+          ),
           SearchScreen(
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
             onSelectTab: _selectTab,

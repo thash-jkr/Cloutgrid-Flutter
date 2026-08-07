@@ -1,6 +1,7 @@
 import 'package:cloutgrid_flutter/presentation/home/comments.dart';
 import 'package:cloutgrid_flutter/presentation/home/feed_post.dart';
 import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
+import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
 import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:cloutgrid_flutter/widgets/feed_loading.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,14 @@ import '../../providers/auth/auth_notifier.dart';
 import '../../providers/home/home_notifier.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+  final ValueChanged<TabItem> onSelectTab;
+  final void Function(String username, String type) onNavigateToOtherProfile;
+
+  const HomeScreen({
+    super.key,
+    required this.onSelectTab,
+    required this.onNavigateToOtherProfile,
+  });
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -126,7 +134,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             onClick: _openNotifications,
           ),
           HeaderAction(
-            icon: Icons.message_rounded,
+            icon: Icons.messenger_outline_rounded,
             contentDescription: "Chats",
           ),
         ],
@@ -171,11 +179,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       onCommentClick: () => _openComments(post.id),
                       onUserClick: (username) {
                         if (username == user?.profile.username) {
-                          // TODO: onSelectTab(TabItem.profile) equivalent —
-                          // wire once TabNavigator exposes a page-select
-                          // callback down to HomeScreen.
+                          widget.onSelectTab(.profile);
                         } else {
-                          // TODO: onNavigateToOtherProfile(username)
+                          widget.onNavigateToOtherProfile(
+                            username,
+                            post.postedBy.profile.userType,
+                          );
                         }
                       },
                       onBlockClick: () => ref

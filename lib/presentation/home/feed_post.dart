@@ -31,6 +31,37 @@ class FeedPost extends StatefulWidget {
   State<FeedPost> createState() => _FeedPostState();
 }
 
+class _ScalePressText extends StatefulWidget {
+  final String text;
+  final TextStyle? style;
+  final VoidCallback onTap;
+
+  const _ScalePressText({required this.text, this.style, required this.onTap});
+
+  @override
+  State<_ScalePressText> createState() => _ScalePressTextState();
+}
+
+class _ScalePressTextState extends State<_ScalePressText> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) => setState(() => _pressed = false),
+      onTapCancel: () => setState(() => _pressed = false),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: _pressed ? 1.08 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeOut,
+        child: Text(widget.text, style: widget.style),
+      ),
+    );
+  }
+}
+
 class _FeedPostState extends State<FeedPost>
     with SingleTickerProviderStateMixin {
   late final AnimationController _scaleController = AnimationController(
@@ -108,12 +139,15 @@ class _FeedPostState extends State<FeedPost>
 
                 const SizedBox(width: 10),
 
-                Text(
-                  post.author.name,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onSurface,
+                GestureDetector(
+                  child: Text(
+                    post.author.name,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
+                  onTap: () => widget.onUserClick(post.author.username),
                 ),
 
                 const Spacer(),
@@ -263,6 +297,8 @@ class _FeedPostState extends State<FeedPost>
                   TextSpan(
                     text: post.author.username,
                     style: const TextStyle(fontWeight: FontWeight.bold),
+                    recognizer: _collabTapRecognizer = TapGestureRecognizer()
+                      ..onTap = () => widget.onUserClick(post.author.username),
                   ),
                   if (post.collaboration != null) ...[
                     const TextSpan(
