@@ -78,6 +78,7 @@ class HeaderAction {
   final String contentDescription;
   final VoidCallback onClick;
   final List<HeaderMenuItem>? menuItems;
+  final bool disabled;
 
   const HeaderAction({
     this.icon,
@@ -85,6 +86,7 @@ class HeaderAction {
     required this.contentDescription,
     this.onClick = _noop,
     this.menuItems,
+    this.disabled = false,
   });
 
   static void _noop() {}

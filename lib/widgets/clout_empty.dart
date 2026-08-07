@@ -8,7 +8,8 @@ enum EmptyType {
   instagram('assets/images/instagram_insight.png'),
   youtube('assets/images/youtube_analytics.png'),
   chat('assets/images/chat.png'),
-  general('assets/images/box.png');
+  general('assets/images/box.png'),
+  profile('assets/images/delete.png');
 
   final String assetPath;
   const EmptyType(this.assetPath);

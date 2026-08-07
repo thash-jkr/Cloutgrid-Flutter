@@ -64,7 +64,6 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   Future<void> fetchProfile(String username, {required bool other}) async {
     state = state.copyWith(isLoading: true, clearErrorMessage: true);
-    if (other) state = state.copyWith(clearOtherProfile: true);
 
     try {
       final result = await ref

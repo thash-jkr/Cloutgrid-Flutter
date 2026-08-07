@@ -23,12 +23,14 @@ class TabNavigator extends StatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
+  final void Function(String username, String type) onNavigateToOtherProfile;
 
   const TabNavigator({
     super.key,
     required this.onNavigateToSettings,
     required this.onNavigateToPostDetail,
     required this.onNavigateToEditProfile,
+    required this.onNavigateToOtherProfile,
   });
 
   @override
@@ -71,7 +73,10 @@ class _TabNavigatorState extends State<TabNavigator> {
         },
         children: [
           HomeScreen(),
-          SearchScreen(),
+          SearchScreen(
+            onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
+            onSelectTab: _selectTab,
+          ),
           CreateScreen(),
           JobsScreen(),
           ProfileScreen(

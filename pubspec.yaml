@@ -90,6 +90,8 @@ flutter:
     - assets/images/delete.png
     - assets/images/instagram_insight.png
     - assets/images/youtube_analytics.png
+    - assets/images/delete.png
+
     - assets/icons/instagram.svg
     - assets/icons/youtube.svg
 

@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
   $securityRoute,
   $postDetailRoute,
   $editProfileRoute,
+  $otherProfileRoute,
 ];
 
 RouteBase get $landingRoute => GoRouteData.$route(
@@ -203,6 +204,40 @@ mixin $EditProfileRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/edit-profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $otherProfileRoute => GoRouteData.$route(
+  path: '/other-profile',
+  hasOverriddenOnExit: false,
+  factory: $OtherProfileRoute._fromState,
+);
+
+mixin $OtherProfileRoute on GoRouteData {
+  static OtherProfileRoute _fromState(GoRouterState state) => OtherProfileRoute(
+    username: state.uri.queryParameters['username']!,
+    type: state.uri.queryParameters['type']!,
+  );
+
+  OtherProfileRoute get _self => this as OtherProfileRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/other-profile',
+    queryParams: {'username': _self.username, 'type': _self.type},
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

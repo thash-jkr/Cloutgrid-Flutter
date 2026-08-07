@@ -1,4 +1,5 @@
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
+import 'package:cloutgrid_flutter/presentation/profile/other_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
 import 'package:cloutgrid_flutter/presentation/profile/security.dart';
 import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
@@ -46,6 +47,8 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
     onNavigateToEditProfile: () => EditProfileRoute().push(context),
+    onNavigateToOtherProfile: (String username, String type) =>
+        OtherProfileRoute(username: username, type: type).push(context),
   );
 }
 
@@ -88,6 +91,23 @@ class EditProfileRoute extends GoRouteData with $EditProfileRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       EditProfile(onNavigateBack: () => context.pop());
+}
+
+@TypedGoRoute<OtherProfileRoute>(path: "/other-profile")
+class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
+  final String username;
+  final String type;
+
+  const OtherProfileRoute({required this.username, required this.type});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => OtherProfile(
+    onNavigateBack: () => context.pop(),
+    onNavigateToPostDetail: (int id, bool other) =>
+        PostDetailRoute(id: id, other: other).push(context),
+    username: username,
+    type: type,
+  );
 }
 
 const _publicPaths = ['/', '/login', '/register', '/reset-password'];

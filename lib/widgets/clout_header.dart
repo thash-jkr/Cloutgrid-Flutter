@@ -128,6 +128,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
 
 class _ToolbarButton extends StatelessWidget {
   final HeaderAction action;
+
   const _ToolbarButton({required this.action});
 
   @override
@@ -155,7 +156,7 @@ class _ToolbarButton extends StatelessWidget {
             ? Icon(action.icon, size: 25)
             : const SizedBox.shrink(),
         tooltip: action.contentDescription,
-        onPressed: action.onClick,
+        onPressed: action.disabled ? null : action.onClick,
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(),
       ),
@@ -175,21 +176,48 @@ class _ActionButton extends StatelessWidget {
       return _ToolbarButton(action: action);
     }
 
-    return PopupMenuButton<void>(
-      icon: Icon(action.icon),
-      tooltip: action.contentDescription,
-      color: Colors.white,
-      offset: const Offset(0, 5),
-      itemBuilder: (context) => action.menuItems!
-          .map(
-            (item) => PopupMenuItem<void>(
-              onTap: item.onClick,
-              child: Row(
-                children: [Icon(item.icon, size: 25), Text(item.title)],
+    return Container(
+      width: 45,
+      height: 45,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.07),
+            blurRadius: 0,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
+          ),
+        ],
+      ),
+      child: PopupMenuButton<void>(
+        icon: Icon(action.icon),
+        tooltip: action.contentDescription,
+        color: Colors.white,
+        offset: const Offset(0, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        clipBehavior: Clip.antiAlias,
+        padding: EdgeInsets.zero,
+        menuPadding: EdgeInsets.zero,
+        itemBuilder: (context) => action.menuItems!
+            .map(
+              (item) => PopupMenuItem<void>(
+                onTap: item.onClick,
+                child: Row(
+                  children: [
+                    Icon(item.icon, size: 25),
+                    SizedBox(width: 12),
+                    Text(item.title),
+                  ],
+                ),
               ),
-            ),
-          )
-          .toList(),
+            )
+            .toList(),
+      ),
     );
   }
 }

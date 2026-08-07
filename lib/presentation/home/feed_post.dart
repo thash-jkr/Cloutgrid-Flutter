@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
+import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/gestures.dart';
@@ -38,8 +40,6 @@ class _FeedPostState extends State<FeedPost>
     value: 1.0,
   );
 
-  final TextEditingController _reportField = TextEditingController();
-
   double getAspect(PostModel post) {
     switch (post.aspect) {
       case "1:1":
@@ -72,95 +72,6 @@ class _FeedPostState extends State<FeedPost>
     _scaleController.dispose();
     _collabTapRecognizer?.dispose();
     super.dispose();
-  }
-
-  void _showBlockDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('Block user?'),
-        content: const Text('Are you sure you want to block this user?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              widget.onBlockClick();
-            },
-            child: const Text('Block'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showDeleteDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('Delete post?'),
-        content: const Text('Are you sure you want to delete this post?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              widget.onDeleteClick();
-            },
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showReportDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('Report'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Tell us why you want to report this. Our team will take appropriate action',
-            ),
-
-            TextField(
-              controller: _reportField,
-              autofocus: true,
-              decoration: const InputDecoration(
-                hintText: "Write your complaint here",
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Reported')));
-            },
-            child: const Text('Submit'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -210,9 +121,28 @@ class _FeedPostState extends State<FeedPost>
                 _OverflowMenu(
                   isOwner: widget.isOwner,
                   post: post,
-                  onDelete: _showDeleteDialog,
-                  onReport: _showReportDialog,
-                  onBlock: _showBlockDialog,
+                  onDelete: () => CloutAlert.show(
+                    context,
+                    title: 'Delete post?',
+                    body: 'Are you sure you want to delete this post?',
+                    onSubmit: (_) => widget.onDeleteClick(),
+                  ),
+                  onReport: () => CloutAlert.show(
+                    context,
+                    title: 'Report',
+                    body:
+                        'Tell us why you want to report this. Our team will take appropriate action',
+                    hasTextField: true,
+                    onSubmit: (_) {
+                      showToast(context, message: "Reported");
+                    },
+                  ),
+                  onBlock: () => CloutAlert.show(
+                    context,
+                    title: 'Block user?',
+                    body: 'Are you sure you want to block this user?',
+                    onSubmit: (_) => widget.onBlockClick(),
+                  ),
                 ),
               ],
             ),
@@ -385,7 +315,7 @@ class _OverflowMenu extends StatelessWidget {
       padding: EdgeInsets.zero,
       menuPadding: EdgeInsets.zero,
       offset: const Offset(0, 52),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       clipBehavior: Clip.antiAlias,
       onSelected: (action) => action(),
       itemBuilder: (context) {
