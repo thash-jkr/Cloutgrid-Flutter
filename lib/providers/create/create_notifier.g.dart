@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_notifier.dart';
+part of 'create_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,51 +9,51 @@ part of 'profile_notifier.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ProfileNotifier)
-final profileProvider = ProfileNotifierProvider._();
+@ProviderFor(CreateNotifier)
+final createProvider = CreateNotifierProvider._();
 
-final class ProfileNotifierProvider
-    extends $NotifierProvider<ProfileNotifier, ProfileState> {
-  ProfileNotifierProvider._()
+final class CreateNotifierProvider
+    extends $NotifierProvider<CreateNotifier, CreateState> {
+  CreateNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'profileProvider',
+        name: r'createProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$profileNotifierHash();
+  String debugGetCreateSourceHash() => _$createNotifierHash();
 
   @$internal
   @override
-  ProfileNotifier create() => ProfileNotifier();
+  CreateNotifier create() => CreateNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ProfileState value) {
+  Override overrideWithValue(CreateState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ProfileState>(value),
+      providerOverride: $SyncValueProvider<CreateState>(value),
     );
   }
 }
 
-String _$profileNotifierHash() => r'b137592df4d5eb3b99dcfd83765d9bdb67d33598';
+String _$createNotifierHash() => r'ede8c3f9aa1e26d546037f81f24e259310b7b8c6';
 
-abstract class _$ProfileNotifier extends $Notifier<ProfileState> {
-  ProfileState build();
+abstract class _$CreateNotifier extends $Notifier<CreateState> {
+  CreateState build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<ProfileState, ProfileState>;
+    final ref = this.ref as $Ref<CreateState, CreateState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<ProfileState, ProfileState>,
-              ProfileState,
+              AnyNotifier<CreateState, CreateState>,
+              CreateState,
               Object?,
               Object?
             >;

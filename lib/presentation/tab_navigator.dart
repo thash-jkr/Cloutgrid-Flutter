@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import './create/create_screen.dart';
@@ -24,6 +26,7 @@ class TabNavigator extends StatefulWidget {
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
   final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(Uint8List selectedImage) onNavigateToCreatePost;
 
   const TabNavigator({
     super.key,
@@ -31,6 +34,7 @@ class TabNavigator extends StatefulWidget {
     required this.onNavigateToPostDetail,
     required this.onNavigateToEditProfile,
     required this.onNavigateToOtherProfile,
+    required this.onNavigateToCreatePost,
   });
 
   @override
@@ -80,7 +84,7 @@ class _TabNavigatorState extends State<TabNavigator> {
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
             onSelectTab: _selectTab,
           ),
-          CreateScreen(),
+          CreateScreen(onNavigateToCreatePost: widget.onNavigateToCreatePost),
           JobsScreen(),
           ProfileScreen(
             onNavigateToSettings: widget.onNavigateToSettings,

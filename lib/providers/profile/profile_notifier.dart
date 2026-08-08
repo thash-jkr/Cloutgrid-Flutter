@@ -216,11 +216,13 @@ class ProfileNotifier extends _$ProfileNotifier {
     }
   }
 
-  /// Local-only removal (mirrors Kotlin's handlePostDelete) — the actual
-  /// delete API call lives in HomeNotifier.deletePost.
   void removePost(int postId) {
     state = state.copyWith(
       posts: state.posts.where((p) => p.id != postId).toList(),
     );
+  }
+
+  void addNewPost(PostModel post) {
+    state = state.copyWith(posts: [post, ...state.posts]);
   }
 }
