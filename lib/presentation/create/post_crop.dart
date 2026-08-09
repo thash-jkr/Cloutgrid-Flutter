@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class PostCrop extends StatefulWidget {
   final Uint8List imageBytes;
-  final ValueChanged<Uint8List?> onCropCompleted;
+  final void Function(Uint8List?, String) onCropCompleted;
   final VoidCallback onCancelled;
 
   const PostCrop({
@@ -23,6 +23,7 @@ class PostCrop extends StatefulWidget {
 class _PostCropState extends State<PostCrop> {
   late final CropController _controller;
   double _ratio = 1;
+  String _ratioLabel = '1:1';
 
   @override
   void initState() {
@@ -38,8 +39,8 @@ class _PostCropState extends State<PostCrop> {
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
     final ui.Image image = frameInfo.image;
 
-    final width = image.width; // capture BEFORE dispose
-    final height = image.height; // capture BEFORE dispose
+    final width = image.width;
+    final height = image.height;
 
     image.dispose();
     codec.dispose();
@@ -65,13 +66,15 @@ class _PostCropState extends State<PostCrop> {
     return Rect.fromLTWH(left, top, widthFraction, heightFraction);
   }
 
-  Future<void> _setRatio(double ratio) async {
+  Future<void> _setRatio(String label, double ratio) async {
     final (imgWidth, imgHeight) = await getImageDimensions(widget.imageBytes);
     final rect = _maximizedRectFor(ratio, imgWidth, imgHeight);
 
     if (!mounted) return;
+
     setState(() {
       _ratio = ratio;
+      _ratioLabel = label;
       _controller.aspectRatio = ratio;
       _controller.crop = rect;
     });
@@ -81,9 +84,9 @@ class _PostCropState extends State<PostCrop> {
     try {
       final ui.Image bitmap = await _controller.croppedBitmap();
       final byteData = await bitmap.toByteData(format: ui.ImageByteFormat.png);
-      widget.onCropCompleted(byteData?.buffer.asUint8List());
+      widget.onCropCompleted(byteData?.buffer.asUint8List(), _ratioLabel);
     } catch (_) {
-      widget.onCropCompleted(null);
+      widget.onCropCompleted(null, "1:1");
     }
   }
 
@@ -106,17 +109,17 @@ class _PostCropState extends State<PostCrop> {
               _RatioToggle(
                 label: '1:1',
                 selected: _ratio == 1,
-                onTap: () => _setRatio(1),
+                onTap: () => _setRatio("1:1", 1),
               ),
               _RatioToggle(
                 label: '4:3',
                 selected: _ratio == 4 / 3,
-                onTap: () => _setRatio(4 / 3),
+                onTap: () => _setRatio("4:3", 4 / 3),
               ),
               _RatioToggle(
                 label: '3:4',
                 selected: _ratio == 3 / 4,
-                onTap: () => _setRatio(3 / 4),
+                onTap: () => _setRatio("3:4", 3 / 4),
               ),
             ],
           ),

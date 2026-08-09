@@ -13,7 +13,6 @@ import '../../widgets/clout_empty.dart';
 import '../../widgets/clout_header.dart';
 import '../../widgets/clout_sheet.dart';
 import '../../widgets/clout_toast.dart';
-import '../../widgets/segmented_list.dart';
 import 'post_crop.dart';
 
 class CreatePost extends ConsumerStatefulWidget {
@@ -37,14 +36,18 @@ class _CreatePostState extends ConsumerState<CreatePost> {
 
   UserContainer? _collab;
   Uint8List? _croppedImage;
+  String _aspect = "1:1";
   bool _showImageViewer = false;
 
-  void _onCropCompleted(Uint8List? bytes) {
+  void _onCropCompleted(Uint8List? bytes, String aspect) {
     if (bytes == null) {
       widget.onNavigateBack();
       return;
     }
-    setState(() => _croppedImage = bytes);
+    setState(() {
+      _croppedImage = bytes;
+      _aspect = aspect;
+    });
   }
 
   @override
@@ -94,6 +97,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
         .handlePostImage(
           imageBytes: _croppedImage!,
           caption: _captionController.text.trim(),
+          aspect: _aspect,
           collab: _collab?.profile.username,
         );
 
@@ -134,7 +138,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
           body: SingleChildScrollView(
             controller: _scrollController,
             child: Column(
-              spacing: 10,
+              spacing: 15,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (_croppedImage != null) ...[
@@ -155,43 +159,59 @@ class _CreatePostState extends ConsumerState<CreatePost> {
                 ],
 
                 Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 0,
+                  ),
                   child: TextField(
                     controller: _captionController,
                     focusNode: _captionFocusNode,
+                    minLines: 1,
                     maxLines: 5,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Caption',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
                     ),
+                    onTapOutside: (PointerDownEvent event) {
+                      FocusManager.instance.primaryFocus
+                          ?.unfocus(); // Dismisses the keyboard
+                    },
                   ),
                 ),
 
                 if (isCreator)
                   Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: GestureDetector(
-                      onTap: _openCollabSheet,
-                      child: AbsorbPointer(
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                            labelText: 'Collaboration',
-                            border: const OutlineInputBorder(),
-                            helperText:
-                                'Optional – If you collaborated with any businesses for this post, mention them',
-                            helperMaxLines: 2,
-                            suffixIcon: _collab != null
-                                ? IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () =>
-                                        setState(() => _collab = null),
-                                  )
-                                : null,
-                          ),
-                          child: Text(
-                            _collab != null
-                                ? '@${_collab!.profile.username}'
-                                : '',
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 0,
+                    ),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        helperText:
+                            'Optional – If you collaborated with any brands for this post, mention them',
+                        helperMaxLines: 2,
+                        suffixIcon: _collab != null
+                            ? IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () => setState(() => _collab = null),
+                              )
+                            : null,
+                      ),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: _openCollabSheet,
+                        child: Text(
+                          _collab != null
+                              ? '@${_collab!.profile.username}'
+                              : 'Collaboration',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -283,19 +303,21 @@ class _CollabSheetState extends ConsumerState<_CollabSheet> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: 'Search Collaboration'),
       body: ListView(
-        padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 20),
+        padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
         children: [
           TextField(
             controller: _queryController,
             onChanged: _onQueryChanged,
             decoration: InputDecoration(
-              labelText: 'Search for Businesses',
+              labelText: 'Search for Brands',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
           ),
-          const SizedBox(height: 10),
+
+          const SizedBox(height: 15),
+
           if (createState.collabs.isEmpty)
             CloutEmpty(
               type: EmptyType.general,
@@ -305,61 +327,85 @@ class _CollabSheetState extends ConsumerState<_CollabSheet> {
               isLoading: createState.isLoading,
             )
           else
-            ...createState.collabs.asMap().entries.map((entry) {
-              final index = entry.key;
-              final collab = entry.value;
-              final isSelected =
-                  collab.profile.username ==
-                  widget.selectedCollab?.profile.username;
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: createState.collabs.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 1),
+              itemBuilder: (context, index) {
+                final collab = createState.collabs[index];
+                final isSelected =
+                    collab.profile.username ==
+                    widget.selectedCollab?.profile.username;
 
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: SegmentedListItem(
-                  index: index,
-                  count: createState.collabs.length,
-                  selected: isSelected,
-                  leading: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          ApiConfig.current.baseUrl +
-                          collab.profile.profilePhoto,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const CircleAvatar(radius: 25),
-                      errorWidget: (context, url, error) =>
-                          const CircleAvatar(radius: 25),
+                return Material(
+                  elevation: 1,
+                  borderRadius: _segmentRadius(
+                    index,
+                    createState.collabs.length,
+                  ),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: _segmentRadius(
+                        index,
+                        createState.collabs.length,
+                      ),
                     ),
-                  ),
-                  onTap: () {
-                    widget.onCollabSelected(collab);
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        collab.profile.name,
-                        style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    selected: isSelected,
+                    tileColor: Colors.white,
+                    selectedTileColor: Theme.of(context).colorScheme.secondary,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 0,
+                    ),
+                    leading: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            ApiConfig.current.baseUrl +
+                            collab.profile.profilePhoto,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircleAvatar(radius: 20),
+                        errorWidget: (context, url, error) =>
+                            const CircleAvatar(radius: 20),
                       ),
-                      Text(
-                        CategoryList.labelFor(collab.targetAudience ?? ''),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isSelected ? Colors.white70 : Colors.grey,
-                        ),
+                    ),
+                    title: Text(
+                      collab.profile.name,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.black,
                       ),
-                    ],
+                    ),
+                    subtitle: Text(
+                      CategoryList.labelFor(collab.targetAudience ?? ''),
+                      style: TextStyle(
+                        color: isSelected ? Colors.white70 : Colors.grey,
+                      ),
+                    ),
+                    onTap: () {
+                      widget.onCollabSelected(collab);
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
         ],
       ),
     );
+  }
+
+  BorderRadius _segmentRadius(int index, int count) {
+    const radius = Radius.circular(12);
+    final isFirst = index == 0;
+    final isLast = index == count - 1;
+
+    if (count == 1) return BorderRadius.all(radius);
+    if (isFirst) return const BorderRadius.vertical(top: radius);
+    if (isLast) return const BorderRadius.vertical(bottom: radius);
+    return BorderRadius.zero;
   }
 }

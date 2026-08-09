@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloutgrid_flutter/core/network/api_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/providers/core_providers.dart';
@@ -66,12 +67,13 @@ class CreateNotifier extends _$CreateNotifier {
   Future<bool> handlePostImage({
     required Uint8List imageBytes,
     required String caption,
+    required String aspect,
     String? collab,
   }) async {
     state = state.copyWith(isLoading: true, clearErrorMessage: true);
 
     try {
-      final newPost = await ref
+      PostModel newPost = await ref
           .read(apiServiceProvider)
           .multipartRequest<PostModel>(
             '/posts/',
@@ -79,13 +81,18 @@ class CreateNotifier extends _$CreateNotifier {
             fromJson: (json) => PostModel.fromJson(json),
             imageBytes: imageBytes,
             imageKey: 'image',
-            params: {'caption': caption, 'collaboration': collab ?? 'null'},
+            params: {
+              'caption': caption,
+              'aspect': aspect,
+              'collaboration': collab ?? 'null',
+            },
             requireAuth: true,
           );
 
-      // Keep Home's feed and Profile's own post grid in sync with the
-      // newly created post — same cross-notifier sync pattern used for
-      // likePost earlier.
+      newPost = newPost.copyWith(
+        image: ApiConfig.current.baseUrl + newPost.image,
+      );
+
       ref.read(homeProvider.notifier).addNewPost(newPost);
       ref.read(profileProvider.notifier).addNewPost(newPost);
 
