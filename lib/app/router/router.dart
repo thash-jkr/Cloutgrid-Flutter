@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
+import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/other_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
@@ -54,6 +55,7 @@ class TabsRoute extends GoRouteData with $TabsRoute {
         OtherProfileRoute(username: username, type: type).push(context),
     onNavigateToCreatePost: (Uint8List bytes) =>
         CreatePostRoute($extra: bytes).push(context),
+    onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
   );
 }
 
@@ -124,6 +126,17 @@ class CreatePostRoute extends GoRouteData with $CreatePostRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       CreatePost(selectedImage: $extra, onNavigateBack: () => context.pop());
+}
+
+@TypedGoRoute<QuestionsRoute>(path: "/questions")
+class QuestionsRoute extends GoRouteData with $QuestionsRoute {
+  final int id;
+
+  const QuestionsRoute({required this.id});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      Questions(onNavigateBack: () => context.pop(), id: id);
 }
 
 const _publicPaths = ['/', '/login', '/register', '/reset-password'];

@@ -27,6 +27,7 @@ class TabNavigator extends StatefulWidget {
   final VoidCallback onNavigateToEditProfile;
   final void Function(String username, String type) onNavigateToOtherProfile;
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
+  final void Function(int id) onNavigateToQuestions;
 
   const TabNavigator({
     super.key,
@@ -35,6 +36,7 @@ class TabNavigator extends StatefulWidget {
     required this.onNavigateToEditProfile,
     required this.onNavigateToOtherProfile,
     required this.onNavigateToCreatePost,
+    required this.onNavigateToQuestions,
   });
 
   @override
@@ -85,7 +87,10 @@ class _TabNavigatorState extends State<TabNavigator> {
             onSelectTab: _selectTab,
           ),
           CreateScreen(onNavigateToCreatePost: widget.onNavigateToCreatePost),
-          JobScreen(),
+          JobScreen(
+            onNavigateToQuestions: widget.onNavigateToQuestions,
+            onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
+          ),
           ProfileScreen(
             onNavigateToSettings: widget.onNavigateToSettings,
             onNavigateToPostDetail: widget.onNavigateToPostDetail,

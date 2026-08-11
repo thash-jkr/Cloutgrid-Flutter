@@ -13,13 +13,13 @@ import '../../widgets/segmented_list.dart';
 import 'job_detail.dart';
 
 class JobScreen extends ConsumerStatefulWidget {
-  // final ValueChanged<int> onNavigateToQuestions;
-  // final ValueChanged<String> onNavigateToOtherProfile;
+  final ValueChanged<int> onNavigateToQuestions;
+  final void Function(String username, String type) onNavigateToOtherProfile;
 
   const JobScreen({
     super.key,
-    // required this.onNavigateToQuestions,
-    // required this.onNavigateToOtherProfile,
+    required this.onNavigateToQuestions,
+    required this.onNavigateToOtherProfile,
   });
 
   @override
@@ -27,8 +27,6 @@ class JobScreen extends ConsumerStatefulWidget {
 }
 
 class _JobScreenState extends ConsumerState<JobScreen> {
-  JobModel? _selectedJob;
-
   @override
   void initState() {
     super.initState();
@@ -56,18 +54,15 @@ class _JobScreenState extends ConsumerState<JobScreen> {
   }
 
   void _openJob(JobModel job, String? type) {
-    setState(() => _selectedJob = job);
-
     cloutSheet(
       context,
       content: JobDetail(
         job: job,
-        onNavigateToQuestions: (int _) {}, // widget.onNavigateToQuestions,
-        onNavigateToOtherProfile:
-            (String _) {}, //widget.onNavigateToOtherProfile,
+        onNavigateToQuestions: widget.onNavigateToQuestions,
+        onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
         onClose: () => Navigator.pop(context),
       ),
-    ).whenComplete(() => setState(() => _selectedJob = null));
+    );
   }
 
   @override

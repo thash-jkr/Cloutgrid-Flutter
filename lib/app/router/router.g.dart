@@ -16,6 +16,7 @@ List<RouteBase> get $appRoutes => [
   $editProfileRoute,
   $otherProfileRoute,
   $createPostRoute,
+  $questionsRoute,
 ];
 
 RouteBase get $landingRoute => GoRouteData.$route(
@@ -283,6 +284,38 @@ mixin $CreatePostRoute on GoRouteData {
   @override
   void replace(BuildContext context) =>
       context.replace(location, extra: _self.$extra);
+}
+
+RouteBase get $questionsRoute => GoRouteData.$route(
+  path: '/questions',
+  hasOverriddenOnExit: false,
+  factory: $QuestionsRoute._fromState,
+);
+
+mixin $QuestionsRoute on GoRouteData {
+  static QuestionsRoute _fromState(GoRouterState state) =>
+      QuestionsRoute(id: int.parse(state.uri.queryParameters['id']!));
+
+  QuestionsRoute get _self => this as QuestionsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/questions',
+    queryParams: {'id': _self.id.toString()},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }
 
 // **************************************************************************

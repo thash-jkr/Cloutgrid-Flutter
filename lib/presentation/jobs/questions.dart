@@ -9,7 +9,7 @@ import '../../widgets/clout_header.dart';
 import '../../widgets/clout_toast.dart';
 
 class Questions extends ConsumerStatefulWidget {
-  final int id; // job id
+  final int id;
   final VoidCallback onNavigateBack;
 
   const Questions({super.key, required this.id, required this.onNavigateBack});

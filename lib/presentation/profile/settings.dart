@@ -111,7 +111,7 @@ class Settings extends ConsumerWidget {
           right: 15,
         ),
         child: Column(
-          spacing: 3,
+          spacing: 1,
           children: [
             // First group: Help, Privacy, EULA, Feedback
             SegmentedListItem(

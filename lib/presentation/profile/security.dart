@@ -107,18 +107,17 @@ class Security extends ConsumerWidget {
           right: 16,
         ),
         child: Column(
-          spacing: 3,
+          spacing: 1,
           children: [
-            SegmentedListItem(
-              index: 0,
-              count: 1,
-              leading: const Icon(Icons.lock_rounded),
-              onTap: () {},
-              title: 'Change Password',
-            ),
+            // SegmentedListItem(
+            //   index: 0,
+            //   count: 1,
+            //   leading: const Icon(Icons.lock_rounded),
+            //   onTap: () {},
+            //   title: 'Change Password',
+            // ),
 
-            const SizedBox(height: 22),
-
+            // const SizedBox(height: 25),
             SegmentedListItem(
               index: 0,
               count: 3,

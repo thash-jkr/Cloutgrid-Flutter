@@ -52,45 +52,52 @@ class _NotificationsState extends ConsumerState<Notifications> {
               controller: widget.scrollController,
               padding: const EdgeInsets.fromLTRB(15, kToolbarHeight, 15, 100),
               itemCount: notifications.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 2),
+              separatorBuilder: (context, index) => const SizedBox(height: 1),
               itemBuilder: (context, index) {
                 final item = notifications[index];
 
-                return Dismissible(
-                  key: ValueKey(item.id),
-                  direction: DismissDirection.endToStart,
-                  background: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.centerRight,
-                    color: Colors.red,
-                    child: const Icon(Icons.delete, color: Colors.white),
-                  ),
-                  onDismissed: (direction) {
-                    ref.read(homeProvider.notifier).readNotification(item.id);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: segmentRadius(index, notifications.length),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 5,
-                      vertical: 5,
-                    ),
-                    child: ListTile(
-                      title: Text(item.message),
-                      subtitle: Text(timeAgo(item.createdAt)),
-                      leading: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: ApiConfig.current.baseUrl + item.photo,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              const CircleAvatar(radius: 20),
-                          errorWidget: (context, url, error) =>
-                              const CircleAvatar(radius: 20),
+                return Material(
+                  elevation: 1,
+                  borderRadius: segmentRadius(index, notifications.length),
+                  child: ClipRRect(
+                    borderRadius: segmentRadius(index, notifications.length),
+                    child: Dismissible(
+                      key: ValueKey(item.id),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        decoration: BoxDecoration(color: Colors.red),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        alignment: Alignment.centerRight,
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (direction) {
+                        ref
+                            .read(homeProvider.notifier)
+                            .readNotification(item.id);
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(color: Colors.white),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 5,
+                        ),
+                        child: ListTile(
+                          title: Text(item.message),
+                          subtitle: Text(timeAgo(item.createdAt)),
+                          leading: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: ApiConfig.current.baseUrl + item.photo,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  const CircleAvatar(radius: 20),
+                              errorWidget: (context, url, error) =>
+                                  const CircleAvatar(radius: 20),
+                            ),
+                          ),
                         ),
                       ),
                     ),
