@@ -10,8 +10,7 @@ class CloutToast extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth:
-            MediaQuery.of(context).size.width - 40, // cap width, leaves margin
+        maxWidth: MediaQuery.of(context).size.width - 40,
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -22,14 +21,13 @@ class CloutToast extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 0,
-              offset: const Offset(1, 1),
+              spreadRadius: 1,
             ),
           ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment
-              .start, // keeps icon aligned to first line, not vertically centered against a tall block
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               isSuccess ? Icons.check_circle : Icons.warning_rounded,

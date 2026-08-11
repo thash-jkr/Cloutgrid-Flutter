@@ -34,7 +34,6 @@ enum ProfileTab {
   final String? asset;
   final bool selectable;
 
-  /// Which user type this tab is restricted to. `null` means always shown.
   final String? userType;
 
   bool isVisibleFor(String type) => userType == null || userType == type;
@@ -60,7 +59,7 @@ class ProfileSelector extends StatelessWidget {
     final tabs = ProfileTab.visibleFor(type);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(6),

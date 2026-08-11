@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-Future<void> cloutSheet(BuildContext context, {required Widget content}) {
+Future<void> cloutSheet(
+  BuildContext context, {
+  required Widget content,
+  bool short = false,
+}) {
   final topInset = MediaQuery.of(context).padding.top;
 
   return showModalBottomSheet<void>(
@@ -11,7 +15,9 @@ Future<void> cloutSheet(BuildContext context, {required Widget content}) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
     ),
     constraints: BoxConstraints(
-      maxHeight: MediaQuery.of(context).size.height - topInset,
+      maxHeight: short
+          ? MediaQuery.of(context).size.height / 2
+          : MediaQuery.of(context).size.height - topInset,
     ),
     builder: (context) => content,
   );

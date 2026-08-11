@@ -1,5 +1,7 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
+import 'package:cloutgrid_flutter/presentation/integration/other_instagram.dart';
+import 'package:cloutgrid_flutter/presentation/integration/other_youtube.dart';
 import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
@@ -65,11 +67,19 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   }
 
   void _openInstagram() {
-    cloutSheet(context, content: const Instagram());
+    cloutSheet(
+      context,
+      content: OtherInstagram(username: widget.username),
+      short: true,
+    );
   }
 
   void _openYouTube() {
-    cloutSheet(context, content: const Youtube());
+    cloutSheet(
+      context,
+      content: OtherYoutube(username: widget.username),
+      short: true,
+    );
   }
 
   void _handleBlock(bool block) async {
