@@ -1,4 +1,5 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,44 +27,6 @@ class Settings extends ConsumerWidget {
       if (!context.mounted) return;
       showToast(context, message: "Failed to open $url", isSuccess: false);
     }
-  }
-
-  void _showReportDialog(
-    BuildContext context, {
-    required String title,
-    required String body,
-  }) {
-    final controller = TextEditingController();
-
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text(title),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(body),
-            const SizedBox(height: 12),
-            TextField(
-              controller: controller,
-              autofocus: true,
-              decoration: const InputDecoration(hintText: 'Write here...'),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Submit'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _showLogoutDialog(BuildContext context, WidgetRef ref) {
@@ -118,11 +81,13 @@ class Settings extends ConsumerWidget {
               index: 0,
               count: 4,
               leading: const Icon(Icons.help_outline_rounded),
-              onTap: () => _showReportDialog(
+              onTap: () => CloutAlert.show(
                 context,
-                title: 'Need Help?',
+                title: "Need Help?",
                 body:
-                    'If you are facing any issue, let us know and our team will reach out to you soon',
+                    "If you are facing any issue, let us know and our team will reach out to you soon",
+                onSubmit: (_) {},
+                hasTextField: true,
               ),
               title: "Help",
             ),
@@ -136,6 +101,7 @@ class Settings extends ConsumerWidget {
                   _openUrl(context, 'https://cloutgrid.com/privacypolicy'),
               title: 'Privacy Policy',
             ),
+
             SegmentedListItem(
               index: 2,
               count: 4,
@@ -144,22 +110,24 @@ class Settings extends ConsumerWidget {
               onTap: () => _openUrl(context, 'https://cloutgrid.com/eula'),
               title: "EULA",
             ),
+
             SegmentedListItem(
               index: 3,
               count: 4,
               leading: const Icon(Icons.feedback_rounded),
-              onTap: () => _showReportDialog(
+              onTap: () => CloutAlert.show(
                 context,
                 title: 'Feedback',
                 body:
                     'If you have any suggestions or feedback, let us know and our team will improve our services',
+                onSubmit: (_) {},
+                hasTextField: true,
               ),
               title: "Feedback",
             ),
 
-            const SizedBox(height: 22),
+            const SizedBox(height: 15),
 
-            // Second group: Security, Logout
             SegmentedListItem(
               index: 0,
               count: 2,
@@ -167,11 +135,19 @@ class Settings extends ConsumerWidget {
               onTap: onNavigateToSecurity,
               title: "Security",
             ),
+
             SegmentedListItem(
               index: 1,
               count: 2,
               leading: const Icon(Icons.logout_rounded, color: Colors.red),
-              onTap: () => _showLogoutDialog(context, ref),
+              onTap: () => CloutAlert.show(
+                context,
+                title: 'Logout',
+                body: "Are you sure you want to logout?",
+                onSubmit: (_) {
+                  ref.read(authProvider.notifier).logout();
+                },
+              ),
               title: "Logout",
             ),
           ],
