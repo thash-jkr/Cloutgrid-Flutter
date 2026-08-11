@@ -1,8 +1,6 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
 import 'package:cloutgrid_flutter/presentation/integration/other_instagram.dart';
 import 'package:cloutgrid_flutter/presentation/integration/other_youtube.dart';
-import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';

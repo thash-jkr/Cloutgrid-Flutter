@@ -1,9 +1,9 @@
 import 'package:cloutgrid_flutter/presentation/home/comments.dart';
+import 'package:cloutgrid_flutter/presentation/home/feed_loading.dart';
 import 'package:cloutgrid_flutter/presentation/home/feed_post.dart';
 import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
 import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
-import 'package:cloutgrid_flutter/widgets/feed_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';

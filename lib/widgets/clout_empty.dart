@@ -36,7 +36,6 @@ class CloutEmpty extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             type.assetPath,
