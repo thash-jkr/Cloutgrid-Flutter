@@ -85,7 +85,7 @@ class _TabNavigatorState extends State<TabNavigator> {
             onSelectTab: _selectTab,
           ),
           CreateScreen(onNavigateToCreatePost: widget.onNavigateToCreatePost),
-          JobsScreen(),
+          JobScreen(),
           ProfileScreen(
             onNavigateToSettings: widget.onNavigateToSettings,
             onNavigateToPostDetail: widget.onNavigateToPostDetail,

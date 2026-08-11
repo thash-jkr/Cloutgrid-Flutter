@@ -114,7 +114,7 @@ class Security extends ConsumerWidget {
               count: 1,
               leading: const Icon(Icons.lock_rounded),
               onTap: () {},
-              child: const Text('Change Password'),
+              title: 'Change Password',
             ),
 
             const SizedBox(height: 22),
@@ -138,11 +138,10 @@ class Security extends ConsumerWidget {
                   isSuccess: false,
                 ),
               },
-              child: const Text(
-                'Delete Instagram Data',
-                style: TextStyle(color: Colors.red),
-              ),
+              title: 'Delete Instagram Data',
+              danger: true,
             ),
+
             SegmentedListItem(
               index: 1,
               count: 3,
@@ -162,20 +161,17 @@ class Security extends ConsumerWidget {
                   isSuccess: false,
                 ),
               },
-              child: const Text(
-                'Delete YouTube Data',
-                style: TextStyle(color: Colors.red),
-              ),
+              title: 'Delete YouTube Data',
+              danger: true,
             ),
+
             SegmentedListItem(
               index: 2,
               count: 3,
               leading: const Icon(Icons.delete_rounded, color: Colors.red),
               onTap: () => _showDeleteDialog(context, ref),
-              child: const Text(
-                'Delete Account',
-                style: TextStyle(color: Colors.red),
-              ),
+              title: 'Delete Account',
+              danger: true,
             ),
           ],
         ),

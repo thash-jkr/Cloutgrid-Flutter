@@ -16,6 +16,17 @@ class Notifications extends ConsumerStatefulWidget {
   ConsumerState<Notifications> createState() => _NotificationsState();
 }
 
+BorderRadius segmentRadius(int index, int count) {
+  const radius = Radius.circular(12);
+  final isFirst = index == 0;
+  final isLast = index == count - 1;
+
+  if (count == 1) return BorderRadius.all(radius);
+  if (isFirst) return const BorderRadius.vertical(top: radius);
+  if (isLast) return const BorderRadius.vertical(bottom: radius);
+  return BorderRadius.zero;
+}
+
 class _NotificationsState extends ConsumerState<Notifications> {
   @override
   void initState() {
@@ -61,7 +72,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: _segmentRadius(index, notifications.length),
+                      borderRadius: segmentRadius(index, notifications.length),
                     ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 5,
@@ -88,16 +99,5 @@ class _NotificationsState extends ConsumerState<Notifications> {
               },
             ),
     );
-  }
-
-  BorderRadius _segmentRadius(int index, int count) {
-    const radius = Radius.circular(12);
-    final isFirst = index == 0;
-    final isLast = index == count - 1;
-
-    if (count == 1) return BorderRadius.all(radius);
-    if (isFirst) return const BorderRadius.vertical(top: radius);
-    if (isLast) return const BorderRadius.vertical(bottom: radius);
-    return BorderRadius.zero;
   }
 }

@@ -8,7 +8,7 @@ Future<void> cloutSheet(BuildContext context, {required Widget content}) {
     isScrollControlled: true,
     clipBehavior: Clip.antiAlias,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
     ),
     constraints: BoxConstraints(
       maxHeight: MediaQuery.of(context).size.height - topInset,

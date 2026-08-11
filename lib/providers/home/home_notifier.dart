@@ -101,7 +101,6 @@ class HomeNotifier extends _$HomeNotifier {
       );
     } catch (_) {
       state = state.copyWith(isLoading: false);
-      rethrow;
     }
   }
 

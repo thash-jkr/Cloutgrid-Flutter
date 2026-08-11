@@ -124,8 +124,9 @@ class Settings extends ConsumerWidget {
                 body:
                     'If you are facing any issue, let us know and our team will reach out to you soon',
               ),
-              child: const Text('Help'),
+              title: "Help",
             ),
+
             SegmentedListItem(
               index: 1,
               count: 4,
@@ -133,7 +134,7 @@ class Settings extends ConsumerWidget {
               trailing: const Icon(Icons.open_in_new_rounded),
               onTap: () =>
                   _openUrl(context, 'https://cloutgrid.com/privacypolicy'),
-              child: const Text('Privacy Policy'),
+              title: 'Privacy Policy',
             ),
             SegmentedListItem(
               index: 2,
@@ -141,7 +142,7 @@ class Settings extends ConsumerWidget {
               leading: const Icon(Icons.gavel_rounded),
               trailing: const Icon(Icons.open_in_new_rounded),
               onTap: () => _openUrl(context, 'https://cloutgrid.com/eula'),
-              child: const Text('EULA'),
+              title: "EULA",
             ),
             SegmentedListItem(
               index: 3,
@@ -153,7 +154,7 @@ class Settings extends ConsumerWidget {
                 body:
                     'If you have any suggestions or feedback, let us know and our team will improve our services',
               ),
-              child: const Text('Feedback'),
+              title: "Feedback",
             ),
 
             const SizedBox(height: 22),
@@ -164,14 +165,14 @@ class Settings extends ConsumerWidget {
               count: 2,
               leading: const Icon(Icons.security_rounded),
               onTap: onNavigateToSecurity,
-              child: const Text('Security'),
+              title: "Security",
             ),
             SegmentedListItem(
               index: 1,
               count: 2,
               leading: const Icon(Icons.logout_rounded, color: Colors.red),
               onTap: () => _showLogoutDialog(context, ref),
-              child: const Text('Logout', style: TextStyle(color: Colors.red)),
+              title: "Logout",
             ),
           ],
         ),

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_notifier.dart';
+part of 'job_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,51 +9,51 @@ part of 'create_notifier.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(CreateNotifier)
-final createProvider = CreateNotifierProvider._();
+@ProviderFor(JobNotifier)
+final jobProvider = JobNotifierProvider._();
 
-final class CreateNotifierProvider
-    extends $NotifierProvider<CreateNotifier, CreateState> {
-  CreateNotifierProvider._()
+final class JobNotifierProvider
+    extends $NotifierProvider<JobNotifier, JobState> {
+  JobNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'createProvider',
+        name: r'jobProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$createNotifierHash();
+  String debugGetCreateSourceHash() => _$jobNotifierHash();
 
   @$internal
   @override
-  CreateNotifier create() => CreateNotifier();
+  JobNotifier create() => JobNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(CreateState value) {
+  Override overrideWithValue(JobState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<CreateState>(value),
+      providerOverride: $SyncValueProvider<JobState>(value),
     );
   }
 }
 
-String _$createNotifierHash() => r'9fb9ac4a14e9fca9491b57fead42f655976e3414';
+String _$jobNotifierHash() => r'68d04f88b3c760f43c7949868275683015ab2fb7';
 
-abstract class _$CreateNotifier extends $Notifier<CreateState> {
-  CreateState build();
+abstract class _$JobNotifier extends $Notifier<JobState> {
+  JobState build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<CreateState, CreateState>;
+    final ref = this.ref as $Ref<JobState, JobState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<CreateState, CreateState>,
-              CreateState,
+              AnyNotifier<JobState, JobState>,
+              JobState,
               Object?,
               Object?
             >;

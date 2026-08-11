@@ -41,13 +41,7 @@ class CategorySheet extends StatelessWidget {
               category.icon,
               color: isSelected ? Colors.white : Colors.black,
             ),
-            child: Text(
-              category.label,
-              style: TextStyle(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? Colors.white : Colors.black,
-              ),
-            ),
+            title: category.label,
           );
         },
       ),

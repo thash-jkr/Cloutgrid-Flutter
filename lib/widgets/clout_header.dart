@@ -41,6 +41,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
   final HeaderAction? icon;
   final List<HeaderAction> actions;
   final bool center;
+  final bool isSheet;
 
   const CloutHeader({
     super.key,
@@ -48,6 +49,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
     this.icon,
     this.actions = const [],
     this.center = true,
+    this.isSheet = false,
   });
 
   @override
@@ -116,7 +118,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
         actions: actions
             .map(
               (action) => Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding: EdgeInsets.only(right: isSheet ? 5.5 : 15),
                 child: _ActionButton(action: action),
               ),
             )
