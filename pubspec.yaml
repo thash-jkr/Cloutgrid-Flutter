@@ -277,7 +277,7 @@ flutter_native_splash:
     # image_dark: assets/images/logo/logo-splash2.png  
 
     # center-logo background color
-    icon_background_color: "#ffffff"
+    icon_background_color: "#F2F0EF"
     # icon_background_color_dark: "#eeeeee"
 
     # branding:
