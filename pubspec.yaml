@@ -68,6 +68,16 @@ dev_dependencies:
   riverpod_generator: ^4.0.4
   freezed: ^3.2.6-dev.1
   json_serializable: ^6.8.0
+  flutter_launcher_icons: "^0.14.4"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/cloutgrid_logo_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/cloutgrid_logo_icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,6 +94,7 @@ flutter:
   assets:
     - assets/images/cloutgrid_logo.png
     - assets/images/cloutgrid_logo_splash.png
+    - assets/images/cloutgrid_logo_icon.png
     - assets/images/box.png
     - assets/images/photo.png
     - assets/images/office.png

@@ -14,7 +14,7 @@ class LandingScreen extends StatelessWidget {
     'Unlimited campaigns',
     'Instagram & YouTube analytics',
     'Safe escrow payments',
-    'AI-powered creator search',
+    'AI-powered brand matching',
   ];
 
   @override
@@ -32,8 +32,7 @@ class LandingScreen extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // vertical centering
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text.rich(

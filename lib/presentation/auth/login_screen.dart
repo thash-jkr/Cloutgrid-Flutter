@@ -128,7 +128,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   height: 48,
                   child: Center(
                     child: _isLoading
-                        ? LoadingAnimationWidget.threeArchedCircle(
+                        ? LoadingAnimationWidget.staggeredDotsWave(
                             color: theme.colorScheme.secondary,
                             size: 25,
                           )

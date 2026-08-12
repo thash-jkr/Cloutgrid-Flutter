@@ -133,10 +133,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             contentDescription: "Notifications",
             onClick: _openNotifications,
           ),
-          HeaderAction(
-            icon: Icons.messenger_outline_rounded,
-            contentDescription: "Chats",
-          ),
+          // HeaderAction(
+          //   icon: Icons.messenger_outline_rounded,
+          //   contentDescription: "Chats",
+          // ),
         ],
       ),
       body: SafeArea(

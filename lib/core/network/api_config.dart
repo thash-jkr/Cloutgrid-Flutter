@@ -13,7 +13,5 @@ enum ApiConfig {
 
   const ApiConfig({required this.baseUrl, required this.socketUrl});
 
-  // Dart enums support static members directly — no separate
-  // "companion object" needed the way Kotlin requires one.
-  static const ApiConfig current = ApiConfig.development;
+  static const ApiConfig current = ApiConfig.production;
 }
