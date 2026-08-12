@@ -123,8 +123,6 @@ class JobNotifier extends _$JobNotifier {
     }
   }
 
-  /// Returns true on success, false on failure or validation error —
-  /// return-value equivalent of Kotlin's Channel<Boolean> events.
   Future<bool> createJob({
     required String title,
     required String description,

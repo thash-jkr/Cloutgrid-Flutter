@@ -36,7 +36,6 @@ class CloutToast extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             Flexible(
-              // ADD THIS — gives Text a bounded width to wrap within
               child: Text(
                 message,
                 style: const TextStyle(
@@ -130,7 +129,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
     final topInset = MediaQuery.of(context).padding.top;
 
     return Positioned(
-      top: topInset + 15,
+      top: topInset + kToolbarHeight,
       left: 0,
       right: 0,
       child: SlideTransition(

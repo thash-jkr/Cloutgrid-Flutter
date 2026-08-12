@@ -225,7 +225,13 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: Text(CategoryList.labelFor(_category)),
+                        child: Text(
+                          CategoryList.labelFor(_category),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
                       ),
                     ),
                   ),

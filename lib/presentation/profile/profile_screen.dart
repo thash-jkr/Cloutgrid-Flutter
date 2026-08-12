@@ -72,6 +72,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     cloutSheet(context, content: const Youtube());
   }
 
+  Future<void> _onRefresh() async {
+    final profile = ref.read(profileProvider.notifier);
+    final username = ref.read(authProvider).value?.user?.profile.username;
+    if (username == null) return;
+
+    await Future.wait([
+      profile.fetchProfile(username, other: false),
+      profile.fetchPosts(username),
+    ]);
+  }
+
   List<Widget> _buildTabContent() {
     final profile = ref.watch(profileProvider);
 
@@ -147,31 +158,34 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       body: SafeArea(
         top: false,
         bottom: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: EdgeInsets.only(
-                top: kToolbarHeight + MediaQuery.of(context).padding.top,
-                bottom: kBottomNavigationBarHeight + 70,
-              ),
-              sliver: SliverMainAxisGroup(
-                slivers: [
-                  if (user != null)
-                    SliverToBoxAdapter(child: ProfileHeader(user: user)),
+        child: RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: EdgeInsets.only(
+                  top: kToolbarHeight + MediaQuery.of(context).padding.top,
+                  bottom: kBottomNavigationBarHeight + 70,
+                ),
+                sliver: SliverMainAxisGroup(
+                  slivers: [
+                    if (user != null)
+                      SliverToBoxAdapter(child: ProfileHeader(user: user)),
 
-                  SliverToBoxAdapter(
-                    child: ProfileSelector(
-                      selectedTab: _selectedTab,
-                      onTabSelected: _onTabSelected,
-                      type: user?.profile.userType ?? 'creator',
+                    SliverToBoxAdapter(
+                      child: ProfileSelector(
+                        selectedTab: _selectedTab,
+                        onTabSelected: _onTabSelected,
+                        type: user?.profile.userType ?? 'creator',
+                      ),
                     ),
-                  ),
 
-                  ..._buildTabContent(),
-                ],
+                    ..._buildTabContent(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

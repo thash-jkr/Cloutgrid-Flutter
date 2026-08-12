@@ -23,8 +23,9 @@ class _QuestionsState extends ConsumerState<Questions> {
   List<QuestionModel>? _initializedFor;
 
   void _ensureControllers(List<QuestionModel> questions) {
-    if (_initializedFor != null)
-      return; // only build once per entry into this screen
+    if (_initializedFor != null) {
+      return;
+    }
     _initializedFor = questions;
     for (final q in questions) {
       _controllers[q.id] = TextEditingController();
@@ -67,7 +68,7 @@ class _QuestionsState extends ConsumerState<Questions> {
         .read(jobProvider.notifier)
         .submitApplication(widget.id, answers);
 
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     if (success) {
       showToast(context, message: 'Application submitted');
@@ -115,7 +116,12 @@ class _QuestionsState extends ConsumerState<Questions> {
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.fromLTRB(16, kToolbarHeight + topInset, 16, 100),
+        padding: EdgeInsets.fromLTRB(
+          15,
+          kToolbarHeight + topInset + 15,
+          15,
+          100,
+        ),
         children: [
           ...questions.asMap().entries.map((entry) {
             final index = entry.key;
@@ -128,9 +134,11 @@ class _QuestionsState extends ConsumerState<Questions> {
                 const SizedBox(height: 8),
                 TextField(
                   controller: _controllers[question.id],
-                  decoration: const InputDecoration(
-                    labelText: 'Your answer',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: 'Response',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),

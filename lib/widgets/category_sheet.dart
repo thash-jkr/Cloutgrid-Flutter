@@ -26,7 +26,7 @@ class CategorySheet extends StatelessWidget {
       body: ListView.separated(
         padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
         itemCount: categories.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 3),
+        separatorBuilder: (context, index) => const SizedBox(height: 1),
         itemBuilder: (context, index) {
           final category = categories[index];
           final isSelected = category.value == selectedCategory;

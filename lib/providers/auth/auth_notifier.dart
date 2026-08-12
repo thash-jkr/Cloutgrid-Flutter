@@ -47,6 +47,7 @@ class AuthNotifier extends _$AuthNotifier {
 
   Future<void> logout() async {
     final refreshToken = await _storage.refresh ?? '';
+
     try {
       await _api.request<dynamic>(
         '/logout/',
@@ -56,8 +57,6 @@ class AuthNotifier extends _$AuthNotifier {
         requireAuth: true,
       );
     } catch (_) {
-      // Matches Kotlin's swallow-and-continue: logout should clear
-      // local session regardless of whether the server call succeeded.
     } finally {
       await clearSession();
     }
@@ -98,10 +97,10 @@ class AuthNotifier extends _$AuthNotifier {
       requireAuth: true,
     );
 
-    await _saveUser(updatedUser);
+    await saveUser(updatedUser);
   }
 
-  Future<void> _saveUser(UserContainer user) async {
+  Future<void> saveUser(UserContainer user) async {
     await _storage.saveUser(jsonEncode(user.toJson()));
     final current = state.value;
     state = AsyncValue.data(
@@ -112,13 +111,13 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> setInstagramConnected(bool connected) async {
     final currentUser = state.value?.user;
     if (currentUser == null) return;
-    await _saveUser(currentUser.copyWith(instagramConnected: connected));
+    await saveUser(currentUser.copyWith(instagramConnected: connected));
   }
 
   Future<void> setYoutubeConnected(bool connected) async {
     final currentUser = state.value?.user;
     if (currentUser == null) return;
-    await _saveUser(currentUser.copyWith(youtubeConnected: connected));
+    await saveUser(currentUser.copyWith(youtubeConnected: connected));
   }
 
   Future<void> register(Map<String, String> data, String type) async {

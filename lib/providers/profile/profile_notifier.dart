@@ -1,9 +1,10 @@
+import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/home/home_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/providers/core_providers.dart';
-import '../../models/home/home_models.dart'; // PostModel, EmptyResponse, LikeResponse — adjust if these live elsewhere
-import '../../models/auth/auth_models.dart'; // UserContainer — adjust to actual path
+import '../../models/home/home_models.dart';
+import '../../models/auth/auth_models.dart';
 
 part 'profile_notifier.g.dart';
 
@@ -78,6 +79,8 @@ class ProfileNotifier extends _$ProfileNotifier {
 
       if (other) {
         state = state.copyWith(otherProfile: result);
+      } else {
+        await ref.read(authProvider.notifier).saveUser(result);
       }
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString());
