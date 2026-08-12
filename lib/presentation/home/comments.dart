@@ -118,7 +118,7 @@ class _CommentsState extends State<Comments> {
             right: 15,
             bottom: MediaQuery.of(context).viewInsets.bottom > 0
                 ? 15
-                : MediaQuery.of(context).padding.bottom + 15,
+                : MediaQuery.of(context).padding.bottom,
             child: _CommentInputBar(
               user: widget.user,
               controller: _commentController,

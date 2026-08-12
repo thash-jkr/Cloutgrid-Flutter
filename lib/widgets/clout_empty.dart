@@ -35,8 +35,9 @@ class CloutEmpty extends StatelessWidget {
       color: theme.colorScheme.surface,
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(height: kToolbarHeight),
           Image.asset(
             type.assetPath,
             width: 150,
@@ -45,8 +46,9 @@ class CloutEmpty extends StatelessWidget {
                 const SizedBox(width: 150, height: 150),
           ),
           const SizedBox(height: 10),
+
           if (isLoading)
-            LoadingAnimationWidget.threeArchedCircle(
+            LoadingAnimationWidget.staggeredDotsWave(
               color: theme.colorScheme.secondary,
               size: 25,
             )
