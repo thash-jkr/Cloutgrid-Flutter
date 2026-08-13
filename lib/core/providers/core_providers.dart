@@ -12,3 +12,8 @@ SecureStorage secureStorage(Ref ref) => SecureStorage();
 ApiService apiService(Ref ref) {
   return ApiService(ref.watch(secureStorageProvider));
 }
+
+@riverpod
+Stream<void> secureStorageForceLogout(Ref ref) {
+  return ref.watch(secureStorageProvider).onForceLogout;
+}

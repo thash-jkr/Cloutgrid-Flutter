@@ -90,3 +90,37 @@ final class ApiServiceProvider
 }
 
 String _$apiServiceHash() => r'e1f712608541e203d62fdd1d6b941cc6d05a74f5';
+
+@ProviderFor(secureStorageForceLogout)
+final secureStorageForceLogoutProvider = SecureStorageForceLogoutProvider._();
+
+final class SecureStorageForceLogoutProvider
+    extends $FunctionalProvider<AsyncValue<void>, void, Stream<void>>
+    with $FutureModifier<void>, $StreamProvider<void> {
+  SecureStorageForceLogoutProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'secureStorageForceLogoutProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$secureStorageForceLogoutHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<void> create(Ref ref) {
+    return secureStorageForceLogout(ref);
+  }
+}
+
+String _$secureStorageForceLogoutHash() =>
+    r'e46084fcf526c1001d4bd597b39f48c018cfd812';

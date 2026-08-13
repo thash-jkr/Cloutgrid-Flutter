@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../network/api_service.dart';
@@ -11,6 +13,8 @@ class _Keys {
 
 class SecureStorage implements AuthTokenStore {
   final _store = const FlutterSecureStorage();
+  final _forceLogoutController = StreamController<void>.broadcast();
+  Stream<void> get onForceLogout => _forceLogoutController.stream;
 
   @override
   Future<String?> get access => _store.read(key: _Keys.access);
@@ -44,5 +48,8 @@ class SecureStorage implements AuthTokenStore {
   }
 
   @override
-  Future<void> clearSession() => _store.deleteAll();
+  Future<void> clearSession() async {
+    await _store.deleteAll();
+    _forceLogoutController.add(null);
+  }
 }

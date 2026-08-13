@@ -18,6 +18,10 @@ class AuthNotifier extends _$AuthNotifier {
 
   @override
   Future<AuthState> build() async {
+    ref.listen(secureStorageForceLogoutProvider, (_, _) {
+      state = const AsyncValue.data(AuthState.unauthenticated);
+    });
+
     final access = await _storage.access;
     final userJsonString = await _storage.userJson;
     final userType = await _storage.userType;
