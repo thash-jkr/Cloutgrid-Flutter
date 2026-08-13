@@ -3,11 +3,13 @@ import 'package:cloutgrid_flutter/presentation/home/feed_loading.dart';
 import 'package:cloutgrid_flutter/presentation/home/feed_post.dart';
 import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
+import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../providers/auth/auth_notifier.dart';
 import '../../providers/home/home_notifier.dart';
@@ -146,6 +148,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           onRefresh: _onRefresh,
           child: (homeState.posts.isEmpty && homeState.isLoading)
               ? const FeedLoading()
+              : homeState.posts.isEmpty
+              ? CloutEmpty(type: .post, message: "No new posts!")
               : ListView.builder(
                   controller: _scrollController,
                   padding: EdgeInsets.only(
@@ -160,9 +164,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   itemBuilder: (context, index) {
                     if (index >= homeState.posts.length) {
                       // Trailing loading indicator while paginating.
-                      return const Padding(
+                      return Padding(
                         padding: EdgeInsets.symmetric(vertical: 24),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                            color: Theme.of(context).colorScheme.secondary,
+                            size: 25,
+                          ),
+                        ),
                       );
                     }
 
