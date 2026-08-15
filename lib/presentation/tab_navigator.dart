@@ -118,8 +118,6 @@ class _PillBottomBar extends StatelessWidget {
     final bottomInset = MediaQuery.of(context).padding.bottom;
 
     return Padding(
-      // Kotlin's .navigationBarsPadding() equivalent — pushes the pill
-      // above the system nav bar/gesture area instead of behind it.
       padding: EdgeInsets.fromLTRB(
         15,
         0,
