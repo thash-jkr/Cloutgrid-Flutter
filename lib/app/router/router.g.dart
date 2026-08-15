@@ -8,6 +8,8 @@ part of 'router.dart';
 
 List<RouteBase> get $appRoutes => [
   $landingRoute,
+  $registerBeginRoute,
+  $registerEndRoute,
   $loginRoute,
   $tabsRoute,
   $settingsRoute,
@@ -43,6 +45,64 @@ mixin $LandingRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $registerBeginRoute => GoRouteData.$route(
+  path: '/register-begin',
+  hasOverriddenOnExit: false,
+  factory: $RegisterBeginRoute._fromState,
+);
+
+mixin $RegisterBeginRoute on GoRouteData {
+  static RegisterBeginRoute _fromState(GoRouterState state) =>
+      const RegisterBeginRoute();
+
+  @override
+  String get location => GoRouteData.$location('/register-begin');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $registerEndRoute => GoRouteData.$route(
+  path: '/register-end',
+  hasOverriddenOnExit: false,
+  factory: $RegisterEndRoute._fromState,
+);
+
+mixin $RegisterEndRoute on GoRouteData {
+  static RegisterEndRoute _fromState(GoRouterState state) =>
+      RegisterEndRoute($extra: state.extra as Map<String, String>);
+
+  RegisterEndRoute get _self => this as RegisterEndRoute;
+
+  @override
+  String get location => GoRouteData.$location('/register-end');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

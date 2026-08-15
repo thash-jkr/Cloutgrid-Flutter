@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:cloutgrid_flutter/presentation/auth/register_begin.dart';
+import 'package:cloutgrid_flutter/presentation/auth/register_end.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
@@ -26,7 +28,33 @@ class LandingRoute extends GoRouteData with $LandingRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => LandingScreen(
     onNavigateToLogin: () => const LoginRoute().push(context),
-    onNavigateToRegister: () {},
+    onNavigateToRegister: () => RegisterBeginRoute().push(context),
+  );
+}
+
+@TypedGoRoute<RegisterBeginRoute>(path: '/register-begin')
+class RegisterBeginRoute extends GoRouteData with $RegisterBeginRoute {
+  const RegisterBeginRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => RegisterBegin(
+    onNavigateBack: () => context.pop(),
+    onNavigateToMoreInfo: (Map<String, String> basicInfo) =>
+        RegisterEndRoute($extra: basicInfo).push(context),
+  );
+}
+
+@TypedGoRoute<RegisterEndRoute>(path: '/register-end')
+class RegisterEndRoute extends GoRouteData with $RegisterEndRoute {
+  final Map<String, String> $extra;
+
+  const RegisterEndRoute({required this.$extra});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => RegisterEnd(
+    basicInfo: $extra,
+    onNavigateBack: () => context.pop(),
+    onNavigateToLogin: () => const LoginRoute().go(context),
   );
 }
 
@@ -36,7 +64,10 @@ class LoginRoute extends GoRouteData with $LoginRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => LoginScreen(
-    onNavigateBack: () => context.pop(),
+    onNavigateBack: () {
+      const LandingRoute().go(context);
+      const LoginRoute().push(context);
+    },
     onNavigateToResetPassword: () {},
   );
 }
@@ -139,7 +170,13 @@ class QuestionsRoute extends GoRouteData with $QuestionsRoute {
       Questions(onNavigateBack: () => context.pop(), id: id);
 }
 
-const _publicPaths = ['/', '/login', '/register', '/reset-password'];
+const _publicPaths = [
+  '/',
+  '/login',
+  '/register-begin',
+  '/register-end',
+  '/reset-password',
+];
 
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {

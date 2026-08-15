@@ -68,7 +68,7 @@ class LandingScreen extends StatelessWidget {
                         const SizedBox(height: 15),
 
                         FilledButton(
-                          onPressed: () {},
+                          onPressed: onNavigateToRegister,
                           style: FilledButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 15),
                           ),

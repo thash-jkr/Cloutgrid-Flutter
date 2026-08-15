@@ -15,7 +15,7 @@ class CategoryList {
     for (final option in allOptions) {
       if (option.value == value) return option.label;
     }
-    return '';
+    return "Choose a category";
   }
 
   static IconData iconFor(String value) {

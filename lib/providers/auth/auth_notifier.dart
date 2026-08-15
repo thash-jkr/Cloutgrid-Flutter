@@ -37,19 +37,44 @@ class AuthNotifier extends _$AuthNotifier {
     );
   }
 
-  Future<void> login(String email, String password, String userType) async {
-    final response = await _api.request<LoginResponse>(
-      '/login/$userType/',
-      method: 'POST',
-      fromJson: (json) => LoginResponse.fromJson(json),
-      body: {'email': email, 'password': password},
-      requireAuth: false,
+  void _setLoading(bool loading, {bool clearError = false}) {
+    final current = state.value;
+    if (current == null) {
+      return;
+    }
+    state = AsyncValue.data(
+      current.copyWith(isLoading: loading, clearErrorMessage: clearError),
     );
+  }
 
-    await _saveSession(response, userType);
+  void _setError(String message) {
+    final current = state.value;
+    if (current == null) return;
+    state = AsyncValue.data(
+      current.copyWith(isLoading: false, errorMessage: message),
+    );
+  }
+
+  Future<void> login(String email, String password, String userType) async {
+    _setLoading(true, clearError: true);
+    try {
+      final response = await _api.request<LoginResponse>(
+        '/login/$userType/',
+        method: 'POST',
+        fromJson: (json) => LoginResponse.fromJson(json),
+        body: {'email': email, 'password': password},
+        requireAuth: false,
+      );
+
+      await _saveSession(response, userType);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> logout() async {
+    _setLoading(true, clearError: true);
     final refreshToken = await _storage.refresh ?? '';
 
     try {
@@ -91,17 +116,24 @@ class AuthNotifier extends _$AuthNotifier {
     required Map<String, String> data,
     Uint8List? imageBytes,
   }) async {
-    final updatedUser = await _api.multipartRequest<UserContainer>(
-      '/profile/$userType/',
-      method: 'PUT',
-      fromJson: (json) => UserContainer.fromJson(json),
-      imageBytes: imageBytes,
-      imageKey: 'user[profile_photo]',
-      params: data,
-      requireAuth: true,
-    );
+    _setLoading(true, clearError: true);
+    try {
+      final updatedUser = await _api.multipartRequest<UserContainer>(
+        '/profile/$userType/',
+        method: 'PUT',
+        fromJson: (json) => UserContainer.fromJson(json),
+        imageBytes: imageBytes,
+        imageKey: 'user[profile_photo]',
+        params: data,
+        requireAuth: true,
+      );
 
-    await saveUser(updatedUser);
+      await saveUser(updatedUser);
+      _setLoading(false);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> saveUser(UserContainer user) async {
@@ -125,46 +157,77 @@ class AuthNotifier extends _$AuthNotifier {
   }
 
   Future<void> register(Map<String, String> data, String type) async {
-    await _api.multipartRequest<dynamic>(
-      '/register/$type/',
-      method: 'POST',
-      fromJson: (json) => json,
-      imageBytes: null,
-      imageKey: null,
-      params: data,
-      requireAuth: false,
-    );
+    _setLoading(true, clearError: true);
+
+    try {
+      await _api.multipartRequest<dynamic>(
+        '/register/$type/',
+        method: 'POST',
+        fromJson: (json) => json,
+        imageBytes: null,
+        imageKey: null,
+        params: data,
+        requireAuth: false,
+      );
+      _setLoading(false);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> handleOTP(Map<String, String> data, String type) async {
-    await _api.multipartRequest<dynamic>(
-      '/otp/$type/',
-      method: 'POST',
-      fromJson: (json) => json,
-      imageBytes: null,
-      imageKey: null,
-      params: data,
-      requireAuth: false,
-    );
+    _setLoading(true, clearError: true);
+
+    try {
+      await _api.multipartRequest<dynamic>(
+        '/otp/$type/',
+        method: 'POST',
+        fromJson: (json) => json,
+        imageBytes: null,
+        imageKey: null,
+        params: data,
+        requireAuth: false,
+      );
+      _setLoading(false);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> resetPassword(String email) async {
-    await _api.request<dynamic>(
-      '/password-reset/',
-      method: 'POST',
-      fromJson: (json) => json,
-      body: {'email': email},
-      requireAuth: false,
-    );
+    _setLoading(true, clearError: true);
+
+    try {
+      await _api.request<dynamic>(
+        '/password-reset/',
+        method: 'POST',
+        fromJson: (json) => json,
+        body: {'email': email},
+        requireAuth: false,
+      );
+      _setLoading(false);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> deleteAccount(String type) async {
-    await _api.request<dynamic>(
-      '/delete/$type/',
-      method: 'DELETE',
-      fromJson: (json) => json,
-      requireAuth: true,
-    );
-    await clearSession();
+    _setLoading(true, clearError: true);
+
+    try {
+      await _api.request<dynamic>(
+        '/delete/$type/',
+        method: 'DELETE',
+        fromJson: (json) => json,
+        requireAuth: true,
+      );
+      await clearSession();
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
   }
 }

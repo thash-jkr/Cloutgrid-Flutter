@@ -1,32 +1,32 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../providers/auth/auth_notifier.dart';
 import '../../../widgets/clout_header.dart';
 import '../../../widgets/clout_toast.dart';
 
-class BasicInfoScreen extends ConsumerStatefulWidget {
-  final ValueChanged<String> onNavigateToMoreInfo;
+class RegisterBegin extends ConsumerStatefulWidget {
+  final ValueChanged<Map<String, String>> onNavigateToMoreInfo;
   final VoidCallback onNavigateBack;
 
-  const BasicInfoScreen({
+  const RegisterBegin({
     super.key,
     required this.onNavigateToMoreInfo,
     required this.onNavigateBack,
   });
 
   @override
-  ConsumerState<BasicInfoScreen> createState() => _BasicInfoScreenState();
+  ConsumerState<RegisterBegin> createState() => _RegisterBeginState();
 }
 
-class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
+class _RegisterBeginState extends ConsumerState<RegisterBegin> {
   final _nameController = TextEditingController();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _otpController = TextEditingController();
 
-  bool _isLoading = false;
   bool _emailSent = false;
   bool _emailVerified = false;
 
@@ -40,23 +40,44 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
   }
 
   Future<void> _handleSubmit() async {
+    final name = _nameController.text.trim();
+    final username = _usernameController.text.trim();
+    final email = _emailController.text.trim();
+
     if (_emailVerified) {
-      widget.onNavigateToMoreInfo;
+      widget.onNavigateToMoreInfo({
+        'user.name': name,
+        'user.username': username,
+        'user.email': email,
+      });
+      return;
+    }
+
+    if (name.isEmpty || email.isEmpty || username.isEmpty) {
+      if (!mounted) return;
+      showToast(context, message: "Fields cannot be empty", isSuccess: false);
       return;
     }
 
     final action = (_emailSent && !_emailVerified) ? 'verify' : 'send';
 
+    if (action == "verify" && _otpController.text.isEmpty) {
+      if (!mounted) return;
+      showToast(context, message: "OTP cannot be empty", isSuccess: false);
+      return;
+    }
+
     final data = {
-      'name': _nameController.text.trim(),
-      'username': _usernameController.text.trim(),
-      'email': _emailController.text.trim(),
+      'name': name,
+      'username': username,
+      'email': email,
       if (action == 'verify') 'otp': _otpController.text.trim(),
     };
 
-    setState(() => _isLoading = true);
     try {
-      await ref.read(authProvider.notifier).handleOTP(data, action);
+      await ref
+          .read(authProvider.notifier)
+          .handleOTP(data, action == 'verify' ? 'verify' : 'send');
 
       if (!mounted) return;
       if (action == 'send') {
@@ -65,24 +86,28 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
       } else {
         setState(() => _emailVerified = true);
         showToast(context, message: 'Email verified');
-        widget.onNavigateToMoreInfo;
+        widget.onNavigateToMoreInfo({
+          'name': _nameController.text.trim(),
+          'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
+        });
       }
     } catch (e) {
       if (!mounted) return;
       showToast(context, message: e.toString(), isSuccess: false);
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final topInset = MediaQuery.of(context).padding.top;
+    final isLoading = ref.watch(authProvider).value?.isLoading ?? false;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'Onboarding',
+        title: 'Registration',
         icon: HeaderAction(
           icon: Icons.arrow_back,
           contentDescription: 'Back',
@@ -94,6 +119,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(15),
           child: Column(
+            spacing: 15,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
@@ -101,12 +127,14 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                 textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Name',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
+
               TextField(
                 controller: _usernameController,
                 enabled: !_emailVerified,
@@ -114,12 +142,14 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                 autocorrect: false,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
+
               TextField(
                 controller: _emailController,
                 enabled: !_emailVerified,
@@ -127,27 +157,36 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              if (_emailSent && !_emailVerified) ...[
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _otpController,
-                  decoration: const InputDecoration(
-                    labelText: 'OTP',
-                    hintText: 'Enter the OTP sent to your email',
-                    border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
+              ),
+
+              if (_emailSent && !_emailVerified) ...[
+                TextField(
+                  controller: _otpController,
+                  decoration: InputDecoration(
+                    labelText: 'OTP',
+                    hintText: 'Enter the OTP sent to your email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                  keyboardType: .number,
+                ),
               ],
+
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Center(
-                  child: _isLoading
-                      ? const CircularProgressIndicator()
+                  child: isLoading
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: theme.colorScheme.secondary,
+                          size: 25,
+                        )
                       : FilledButton(
                           onPressed: _handleSubmit,
                           child: Text(_emailVerified ? 'Continue' : 'Submit'),
