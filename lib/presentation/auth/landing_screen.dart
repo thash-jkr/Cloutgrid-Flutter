@@ -19,124 +19,130 @@ class LandingScreen extends StatelessWidget {
       body: SafeArea(
         top: false,
         bottom: false,
-        child: Stack(
-          children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            15,
+            MediaQuery.of(context).padding.top,
+            15,
+            0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Pinned to top
+              Text.rich(
+                TextSpan(
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    height: 1.15,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Clout',
+                      style: TextStyle(color: theme.colorScheme.primary),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    TextSpan(
+                      text: 'grid',
+                      style: TextStyle(color: theme.colorScheme.secondary),
+                    ),
+                    const TextSpan(text: '\nWhere creators and brands\n'),
+                    TextSpan(
+                      text: 'connect.',
+                      style: TextStyle(color: theme.colorScheme.secondary),
+                    ),
+                  ],
+                ),
+              ),
+
+              Expanded(
+                child: Center(
+                  child: Image(
+                    image: const AssetImage('assets/images/kid.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+
+              FilledButton(
+                onPressed: onNavigateToRegister,
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(text: 'Join the '),
+                      TextSpan(
+                        text: 'grid',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: theme.colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              OutlinedButton(
+                onPressed: onNavigateToLogin,
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: const Text('Login'),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).padding.bottom,
+                  top: 15,
+                ),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Text.rich(
-                          TextSpan(
-                            style: theme.textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              height: 1.15,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'Clout',
-                                style: TextStyle(
-                                  color: theme.colorScheme.primary,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'grid',
-                                style: TextStyle(
-                                  color: theme.colorScheme.secondary,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: '\nWhere creators and brands\n',
-                              ),
-                              TextSpan(
-                                text: 'connect.',
-                                style: TextStyle(
-                                  color: theme.colorScheme.secondary,
-                                ),
-                              ),
-                            ],
+                        Expanded(
+                          child: _FeatureTile(
+                            label: 'Unlimited campaigns',
+                            color: theme.colorScheme.primary,
+                            icon: CupertinoIcons.rocket,
                           ),
                         ),
-
-                        const SizedBox(height: 15),
-
-                        FilledButton(
-                          onPressed: onNavigateToRegister,
-                          style: FilledButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: _FeatureTile(
+                            label: 'Instagram & YouTube analytics',
+                            color: theme.colorScheme.secondary,
+                            icon: CupertinoIcons.chart_bar_alt_fill,
                           ),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                const TextSpan(text: 'Join the '),
-                                TextSpan(
-                                  text: 'grid',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    color: theme.colorScheme.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        OutlinedButton(
-                          onPressed: onNavigateToLogin,
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                          ),
-                          child: const Text('Login'),
-                        ),
-
-                        GridView.count(
-                          padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).padding.bottom + 15,
-                            top: 15,
-                          ),
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          mainAxisSpacing: 15,
-                          crossAxisSpacing: 15,
-                          childAspectRatio: 1.5,
-                          children: [
-                            _FeatureTile(
-                              label: 'Unlimited campaigns',
-                              color: theme.colorScheme.primary,
-                              icon: CupertinoIcons.rocket,
-                            ),
-                            _FeatureTile(
-                              label: 'Instagram & YouTube analytics',
-                              color: theme.colorScheme.secondary,
-                              icon: CupertinoIcons.chart_bar_alt_fill,
-                            ),
-                            _FeatureTile(
-                              label: 'Safe escrow payments',
-                              color: theme.colorScheme.secondary,
-                              icon: CupertinoIcons.shield_lefthalf_fill,
-                            ),
-                            _FeatureTile(
-                              label: 'AI-powered brand matching',
-                              color: theme.colorScheme.primary,
-                              icon: CupertinoIcons.sparkles,
-                            ),
-                          ],
                         ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _FeatureTile(
+                            label: 'Safe escrow payments',
+                            color: theme.colorScheme.secondary,
+                            icon: CupertinoIcons.shield_lefthalf_fill,
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: _FeatureTile(
+                            label: 'AI-powered brand matching',
+                            color: theme.colorScheme.primary,
+                            icon: CupertinoIcons.sparkles,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -156,30 +162,33 @@ class _FeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 1,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        padding: const EdgeInsets.all(15),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: Colors.white, size: 25),
-            const SizedBox(height: 5),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+    return AspectRatio(
+      aspectRatio: 1.5,
+      child: Material(
+        elevation: 1,
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: const EdgeInsets.all(15),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: Colors.white, size: 25),
+              const SizedBox(height: 5),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -109,7 +109,7 @@ class _RegisterEndState extends ConsumerState<RegisterEnd> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'Registration',
+        title: 'Creator Registration',
         icon: HeaderAction(
           icon: Icons.arrow_back,
           contentDescription: 'Back',

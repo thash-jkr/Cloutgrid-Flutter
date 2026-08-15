@@ -2,6 +2,7 @@ import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/auth/auth_models.dart';
 import '../../widgets/clout_header.dart';
@@ -62,6 +63,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  Future<void> _openUrl(BuildContext context, String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      if (!context.mounted) return;
+      showToast(context, message: "Failed to open $url", isSuccess: false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -69,7 +80,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: CloutHeader(
-        title: 'Login',
+        title: "Creator Login",
         icon: HeaderAction(
           icon: Icons.arrow_back,
           contentDescription: 'Back',
@@ -88,6 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 TextField(
                   controller: _emailController,
+                  keyboardType: .emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
@@ -150,12 +162,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onTap: widget.onNavigateBack,
                 ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 15),
 
                 _LoginFooter(
                   question: 'Forgot Password?',
                   answer: 'Reset',
                   onTap: widget.onNavigateToResetPassword,
+                ),
+
+                const SizedBox(height: 15),
+
+                _LoginFooter(
+                  question: 'Are you a',
+                  answer: 'Brand?',
+                  onTap: () => _openUrl(context, 'https://cloutgrid.com'),
                 ),
               ],
             ),

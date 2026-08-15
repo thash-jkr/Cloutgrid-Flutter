@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloutgrid_flutter/presentation/auth/register_begin.dart';
 import 'package:cloutgrid_flutter/presentation/auth/register_end.dart';
+import 'package:cloutgrid_flutter/presentation/auth/reset_password.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
@@ -54,7 +55,10 @@ class RegisterEndRoute extends GoRouteData with $RegisterEndRoute {
   Widget build(BuildContext context, GoRouterState state) => RegisterEnd(
     basicInfo: $extra,
     onNavigateBack: () => context.pop(),
-    onNavigateToLogin: () => const LoginRoute().go(context),
+    onNavigateToLogin: () => () {
+      const LandingRoute().go(context);
+      const LoginRoute().push(context);
+    },
   );
 }
 
@@ -64,12 +68,18 @@ class LoginRoute extends GoRouteData with $LoginRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => LoginScreen(
-    onNavigateBack: () {
-      const LandingRoute().go(context);
-      const LoginRoute().push(context);
-    },
-    onNavigateToResetPassword: () {},
+    onNavigateBack: () => context.pop(),
+    onNavigateToResetPassword: () => ResetPasswordRoute().push(context),
   );
+}
+
+@TypedGoRoute<ResetPasswordRoute>(path: '/reset-password')
+class ResetPasswordRoute extends GoRouteData with $ResetPasswordRoute {
+  const ResetPasswordRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      ResetPassword(onNavigateBack: () => context.pop());
 }
 
 @TypedGoRoute<TabsRoute>(path: '/tabs')
