@@ -190,7 +190,7 @@ class _UserCard extends StatelessWidget {
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(20),
-      elevation: 2,
+      elevation: 1,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,

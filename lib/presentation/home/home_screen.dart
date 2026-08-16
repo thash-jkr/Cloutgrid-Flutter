@@ -17,11 +17,13 @@ import '../../providers/home/home_notifier.dart';
 class HomeScreen extends ConsumerStatefulWidget {
   final ValueChanged<TabItem> onSelectTab;
   final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function() onNavigateToConversations;
 
   const HomeScreen({
     super.key,
     required this.onSelectTab,
     required this.onNavigateToOtherProfile,
+    required this.onNavigateToConversations,
   });
 
   @override
@@ -135,10 +137,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             contentDescription: "Notifications",
             onClick: _openNotifications,
           ),
-          // HeaderAction(
-          //   icon: Icons.messenger_outline_rounded,
-          //   contentDescription: "Chats",
-          // ),
+          HeaderAction(
+            icon: Icons.messenger_outline_rounded,
+            contentDescription: "Chats",
+            onClick: widget.onNavigateToConversations,
+          ),
         ],
       ),
       body: SafeArea(

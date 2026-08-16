@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloutgrid_flutter/presentation/auth/register_begin.dart';
 import 'package:cloutgrid_flutter/presentation/auth/register_end.dart';
 import 'package:cloutgrid_flutter/presentation/auth/reset_password.dart';
+import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
@@ -97,6 +98,18 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToCreatePost: (Uint8List bytes) =>
         CreatePostRoute($extra: bytes).push(context),
     onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
+    onNavigateToConversations: () => ConversationsRoute().push(context),
+  );
+}
+
+@TypedGoRoute<ConversationsRoute>(path: '/conversations')
+class ConversationsRoute extends GoRouteData with $ConversationsRoute {
+  const ConversationsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Conversations(
+    onNavigateBack: () => context.pop(),
+    onNavigateToMessages: (_, _, _) {},
   );
 }
 

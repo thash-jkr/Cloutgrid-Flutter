@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
   $loginRoute,
   $resetPasswordRoute,
   $tabsRoute,
+  $conversationsRoute,
   $settingsRoute,
   $securityRoute,
   $postDetailRoute,
@@ -170,6 +171,33 @@ mixin $TabsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/tabs');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $conversationsRoute => GoRouteData.$route(
+  path: '/conversations',
+  hasOverriddenOnExit: false,
+  factory: $ConversationsRoute._fromState,
+);
+
+mixin $ConversationsRoute on GoRouteData {
+  static ConversationsRoute _fromState(GoRouterState state) =>
+      const ConversationsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/conversations');
 
   @override
   void go(BuildContext context) => context.go(location);

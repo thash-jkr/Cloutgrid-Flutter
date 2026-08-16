@@ -30,6 +30,7 @@ dependencies:
   crop_image: ^1.0.16
   image_size_getter: ^2.3.0
   flutter_native_splash: ^2.4.8
+  web_socket_channel: ^3.0.3
 
 dev_dependencies:
   flutter_test:

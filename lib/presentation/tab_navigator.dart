@@ -28,6 +28,7 @@ class TabNavigator extends StatefulWidget {
   final void Function(String username, String type) onNavigateToOtherProfile;
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
   final void Function(int id) onNavigateToQuestions;
+  final void Function() onNavigateToConversations;
 
   const TabNavigator({
     super.key,
@@ -37,6 +38,7 @@ class TabNavigator extends StatefulWidget {
     required this.onNavigateToOtherProfile,
     required this.onNavigateToCreatePost,
     required this.onNavigateToQuestions,
+    required this.onNavigateToConversations,
   });
 
   @override
@@ -81,6 +83,7 @@ class _TabNavigatorState extends State<TabNavigator> {
           HomeScreen(
             onSelectTab: _selectTab,
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
+            onNavigateToConversations: widget.onNavigateToConversations,
           ),
           SearchScreen(
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
