@@ -72,6 +72,7 @@ flutter:
     - assets/images/youtube_analytics.png
     - assets/images/delete.png
     - assets/images/kid.png
+    - assets/images/profile.png
 
     - assets/icons/instagram.svg
     - assets/icons/youtube.svg

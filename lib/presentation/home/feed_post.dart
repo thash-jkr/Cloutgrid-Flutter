@@ -99,10 +99,12 @@ class _FeedPostState extends State<FeedPost>
                     width: 30,
                     height: 30,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        const CircleAvatar(radius: 15),
-                    errorWidget: (context, url, error) =>
-                        const CircleAvatar(radius: 15),
+                    placeholder: (context, url) => const Image(
+                      image: AssetImage('assets/images/profile.png'),
+                    ),
+                    errorWidget: (context, url, error) => const Image(
+                      image: AssetImage('assets/images/profile.png'),
+                    ),
                   ),
                 ),
 
@@ -217,8 +219,8 @@ class _FeedPostState extends State<FeedPost>
                             text: '${post.likeCount} ',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          const TextSpan(
-                            text: 'Likes',
+                          TextSpan(
+                            text: post.likeCount == 1 ? "Like" : "Likes",
                             style: TextStyle(color: Colors.grey),
                           ),
                         ],
@@ -240,8 +242,10 @@ class _FeedPostState extends State<FeedPost>
                             text: '${post.commentCount} ',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          const TextSpan(
-                            text: 'Comments',
+                          TextSpan(
+                            text: post.commentCount == 1
+                                ? "Comment"
+                                : "Comments",
                             style: TextStyle(color: Colors.grey),
                           ),
                         ],

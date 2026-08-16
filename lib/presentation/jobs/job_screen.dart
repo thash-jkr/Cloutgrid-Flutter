@@ -109,10 +109,12 @@ class _JobScreenState extends ConsumerState<JobScreen> {
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const CircleAvatar(radius: 25),
-                        errorWidget: (context, url, error) =>
-                            const CircleAvatar(radius: 25),
+                        placeholder: (context, url) => const Image(
+                          image: AssetImage('assets/images/profile.png'),
+                        ),
+                        errorWidget: (context, url, error) => const Image(
+                          image: AssetImage('assets/images/profile.png'),
+                        ),
                       ),
                     ),
                     title: job.title,

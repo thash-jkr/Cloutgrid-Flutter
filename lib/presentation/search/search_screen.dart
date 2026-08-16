@@ -204,9 +204,9 @@ class _UserCard extends StatelessWidget {
                 imageUrl: ApiConfig.current.baseUrl + user.profile.profilePhoto,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
-                    Container(color: Colors.grey.shade200),
+                    const Image(image: AssetImage('assets/images/profile.png')),
                 errorWidget: (context, url, error) =>
-                    Container(color: Colors.grey.shade200),
+                    const Image(image: AssetImage('assets/images/profile.png')),
               ),
             ),
 

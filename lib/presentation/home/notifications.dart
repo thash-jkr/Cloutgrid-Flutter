@@ -92,10 +92,12 @@ class _NotificationsState extends ConsumerState<Notifications> {
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  const CircleAvatar(radius: 20),
-                              errorWidget: (context, url, error) =>
-                                  const CircleAvatar(radius: 20),
+                              placeholder: (context, url) => const Image(
+                                image: AssetImage('assets/images/profile.png'),
+                              ),
+                              errorWidget: (context, url, error) => const Image(
+                                image: AssetImage('assets/images/profile.png'),
+                              ),
                             ),
                           ),
                         ),
