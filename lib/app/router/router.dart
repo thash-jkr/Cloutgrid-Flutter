@@ -4,6 +4,7 @@ import 'package:cloutgrid_flutter/presentation/auth/register_begin.dart';
 import 'package:cloutgrid_flutter/presentation/auth/register_end.dart';
 import 'package:cloutgrid_flutter/presentation/auth/reset_password.dart';
 import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
+import 'package:cloutgrid_flutter/presentation/chats/messages.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
@@ -109,7 +110,33 @@ class ConversationsRoute extends GoRouteData with $ConversationsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => Conversations(
     onNavigateBack: () => context.pop(),
-    onNavigateToMessages: (_, _, _) {},
+    onNavigateToMessages: (String id, String username, String profilePhoto) =>
+        MessagesRoute(
+          id: id,
+          username: username,
+          profilePhoto: profilePhoto,
+        ).push(context),
+  );
+}
+
+@TypedGoRoute<MessagesRoute>(path: '/messages')
+class MessagesRoute extends GoRouteData with $MessagesRoute {
+  final String id;
+  final String username;
+  final String profilePhoto;
+
+  const MessagesRoute({
+    required this.id,
+    required this.username,
+    required this.profilePhoto,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Messages(
+    onNavigateBack: () => context.pop(),
+    id: id,
+    username: username,
+    profilePhoto: profilePhoto,
   );
 }
 

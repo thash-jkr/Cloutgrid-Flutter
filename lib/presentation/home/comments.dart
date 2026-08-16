@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
+import 'package:cloutgrid_flutter/widgets/clout_input.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/network/api_config.dart';
@@ -39,8 +40,7 @@ class _CommentsState extends State<Comments> {
     super.dispose();
   }
 
-  void _handleSend() {
-    final text = _commentController.text.trim();
+  void _handleSend(String text) {
     if (text.isEmpty) return;
     widget.onAddComment(text);
     _commentController.clear();
@@ -119,10 +119,12 @@ class _CommentsState extends State<Comments> {
             bottom: MediaQuery.of(context).viewInsets.bottom > 0
                 ? 15
                 : MediaQuery.of(context).padding.bottom,
-            child: _CommentInputBar(
-              user: widget.user,
-              controller: _commentController,
-              onSend: _handleSend,
+            child: CloutInput(
+              onSend: (text) => _handleSend(text),
+              avatarUrl: widget.user != null
+                  ? ApiConfig.current.baseUrl +
+                        widget.user!.profile.profilePhoto
+                  : null,
             ),
           ),
         ],
@@ -196,74 +198,6 @@ class _CommentRow extends StatelessWidget {
             color: theme.colorScheme.outlineVariant.withValues(alpha: 0.4),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CommentInputBar extends StatelessWidget {
-  final UserContainer? user;
-  final TextEditingController controller;
-  final VoidCallback onSend;
-
-  const _CommentInputBar({
-    required this.user,
-    required this.controller,
-    required this.onSend,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final photoUrl = user != null
-        ? ApiConfig.current.baseUrl + user!.profile.profilePhoto
-        : null;
-
-    return TextField(
-      controller: controller,
-      maxLines: 5,
-      minLines: 1,
-      decoration: InputDecoration(
-        hintText: 'Write something...',
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-        prefixIcon: photoUrl != null
-            ? Padding(
-                padding: const EdgeInsets.only(left: 12, right: 8),
-                child: ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: photoUrl,
-                    width: 30,
-                    height: 30,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        const CircleAvatar(radius: 15),
-                    errorWidget: (context, url, error) =>
-                        const CircleAvatar(radius: 15),
-                  ),
-                ),
-              )
-            : null,
-        prefixIconConstraints: const BoxConstraints(
-          minWidth: 50,
-          minHeight: 30,
-        ),
-        suffixIcon: ValueListenableBuilder<TextEditingValue>(
-          valueListenable: controller,
-          builder: (context, value, child) {
-            final hasText = value.text.trim().isNotEmpty;
-            return IconButton(
-              onPressed: hasText ? onSend : null,
-              icon: Icon(
-                Icons.send_rounded,
-                color: hasText
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.outline,
-              ),
-            );
-          },
-        ),
       ),
     );
   }

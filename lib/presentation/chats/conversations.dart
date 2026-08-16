@@ -132,15 +132,13 @@ class _ConversationsState extends ConsumerState<Conversations> {
             ),
 
           if (_query.isEmpty)
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: chatState.chats.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 1),
-              itemBuilder: (context, index) {
-                final conversation = chatState.chats[index];
+            ...chatState.chats.asMap().entries.map((entry) {
+              final index = entry.key;
+              final conversation = entry.value;
 
-                return SegmentedListItem(
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 1),
+                child: SegmentedListItem(
                   index: index,
                   count: chatState.chats.length,
                   leading: ClipOval(
@@ -168,9 +166,9 @@ class _ConversationsState extends ConsumerState<Conversations> {
                     conversation.user.profile.username,
                     conversation.user.profile.profilePhoto,
                   ),
-                );
-              },
-            )
+                ),
+              );
+            })
           else if (searchState.results.isEmpty)
             CloutEmpty(
               type: EmptyType.general,
@@ -178,15 +176,13 @@ class _ConversationsState extends ConsumerState<Conversations> {
               isLoading: searchState.isLoading,
             )
           else
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: searchState.results.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 2),
-              itemBuilder: (context, index) {
-                final user = searchState.results[index];
+            ...searchState.results.asMap().entries.map((entry) {
+              final index = entry.key;
+              final user = entry.value;
 
-                return SegmentedListItem(
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: SegmentedListItem(
                   index: index,
                   count: searchState.results.length,
                   leading: ClipOval(
@@ -209,9 +205,9 @@ class _ConversationsState extends ConsumerState<Conversations> {
                   onTap: () => ref
                       .read(chatProvider.notifier)
                       .createConversation(user.profile.id),
-                );
-              },
-            ),
+                ),
+              );
+            }),
         ],
       ),
     );

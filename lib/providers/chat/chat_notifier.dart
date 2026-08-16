@@ -173,7 +173,10 @@ class ChatNotifier extends _$ChatNotifier {
     _channelSubscription = null;
     _channel?.sink.close();
     _channel = null;
-    state = state.copyWith(socketConnected: false);
+
+    Future(() {
+      state = state.copyWith(socketConnected: false);
+    });
   }
 
   void sendLiveMessage(String content) {

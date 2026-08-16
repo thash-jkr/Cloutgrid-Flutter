@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
   $resetPasswordRoute,
   $tabsRoute,
   $conversationsRoute,
+  $messagesRoute,
   $settingsRoute,
   $securityRoute,
   $postDetailRoute,
@@ -198,6 +199,45 @@ mixin $ConversationsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/conversations');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $messagesRoute => GoRouteData.$route(
+  path: '/messages',
+  hasOverriddenOnExit: false,
+  factory: $MessagesRoute._fromState,
+);
+
+mixin $MessagesRoute on GoRouteData {
+  static MessagesRoute _fromState(GoRouterState state) => MessagesRoute(
+    id: state.uri.queryParameters['id']!,
+    username: state.uri.queryParameters['username']!,
+    profilePhoto: state.uri.queryParameters['profile-photo']!,
+  );
+
+  MessagesRoute get _self => this as MessagesRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/messages',
+    queryParams: {
+      'id': _self.id,
+      'username': _self.username,
+      'profile-photo': _self.profilePhoto,
+    },
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
