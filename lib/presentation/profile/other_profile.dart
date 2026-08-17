@@ -16,15 +16,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class OtherProfile extends ConsumerStatefulWidget {
   final VoidCallback onNavigateBack;
   final void Function(int id, bool other) onNavigateToPostDetail;
-  final String username;
-  final String type;
+  final UserContainer user;
 
   const OtherProfile({
     super.key,
     required this.onNavigateBack,
     required this.onNavigateToPostDetail,
-    required this.username,
-    required this.type,
+    required this.user,
   });
 
   @override
@@ -33,6 +31,9 @@ class OtherProfile extends ConsumerStatefulWidget {
 
 class _OtherProfileState extends ConsumerState<OtherProfile> {
   ProfileTab _selectedTab = ProfileTab.posts;
+
+  String get username => widget.user.profile.username;
+  String get type => widget.user.profile.userType;
 
   @override
   void initState() {
@@ -43,11 +44,11 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
 
       final profile = ref.read(profileProvider.notifier);
 
-      profile.fetchProfile(widget.username, other: true);
-      profile.fetchPosts(widget.username, other: true);
+      profile.fetchProfile(username, other: true);
+      profile.fetchPosts(username, other: true);
 
-      if (widget.type == "business") {
-        profile.fetchCollabs(widget.username, other: true);
+      if (widget.user.profile.userType == "business") {
+        profile.fetchCollabs(username, other: true);
       }
     });
   }
@@ -67,30 +68,24 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   void _openInstagram() {
     cloutSheet(
       context,
-      content: OtherInstagram(username: widget.username),
+      content: OtherInstagram(username: username),
       short: true,
     );
   }
 
   void _openYouTube() {
-    cloutSheet(
-      context,
-      content: OtherYoutube(username: widget.username),
-      short: true,
-    );
+    cloutSheet(context, content: OtherYoutube(username: username), short: true);
   }
 
   void _handleBlock(bool block) async {
     try {
-      await ref
-          .read(profileProvider.notifier)
-          .handleBlock(widget.username, block);
+      await ref.read(profileProvider.notifier).handleBlock(username, block);
 
       if (!mounted) return;
 
       showToast(
         context,
-        message: "${block ? "BLocked" : "Unblock"}ed @${widget.username}",
+        message: "${block ? "BLocked" : "Unblock"}ed @$username",
       );
     } catch (e) {
       if (!mounted) return;
@@ -164,7 +159,7 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
           contentDescription: 'Back',
           onClick: widget.onNavigateBack,
         ),
-        title: "@${widget.username}",
+        title: "@$username",
         center: false,
         actions: [
           HeaderAction(
@@ -176,8 +171,8 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                 ? user.isFollowing == true
                       ? CloutAlert.show(
                           context,
-                          title: "Unfollow @${widget.username}?",
-                          body: "Do you want to unfollow @${widget.username}?",
+                          title: "Unfollow @$username?",
+                          body: "Do you want to unfollow @$username?",
                           onSubmit: (_) => ref
                               .watch(profileProvider.notifier)
                               .handleFollow(user.profile.username, false),
@@ -208,11 +203,11 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                 ),
               ),
               HeaderMenuItem(
-                title: "Report @${widget.username}",
+                title: "Report @$username",
                 icon: Icons.report_gmailerrorred_rounded,
                 onClick: () => CloutAlert.show(
                   context,
-                  title: 'Report @${widget.username}?',
+                  title: 'Report @$username?',
                   body:
                       'Tell us why you want to report this user. Our team will take appropriate action',
                   hasTextField: true,
@@ -222,14 +217,13 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                 ),
               ),
               HeaderMenuItem(
-                title: "${isBlocked ? "Unblock" : "Block"} @${widget.username}",
+                title: "${isBlocked ? "Unblock" : "Block"} @$username",
                 icon: Icons.block_rounded,
                 onClick: () => CloutAlert.show(
                   context,
-                  title:
-                      '${isBlocked ? "Unblock" : "Block"} @${widget.username}?',
+                  title: '${isBlocked ? "Unblock" : "Block"} @$username?',
                   body:
-                      'Do you want to ${isBlocked ? "Unblock" : "Block"} @${widget.username}?',
+                      'Do you want to ${isBlocked ? "Unblock" : "Block"} @$username?',
                   hasTextField: false,
                   onSubmit: (_) => _handleBlock(isBlocked == false),
                 ),

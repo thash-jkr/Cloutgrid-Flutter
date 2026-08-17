@@ -15,7 +15,7 @@ import '../../widgets/clout_header.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   final ValueChanged<TabItem> onSelectTab;
-  final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(UserContainer user) onNavigateToOtherProfile;
 
   const SearchScreen({
     super.key,
@@ -162,10 +162,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                                       .username) {
                                 widget.onSelectTab(TabItem.profile);
                               } else {
-                                widget.onNavigateToOtherProfile(
-                                  user.profile.username,
-                                  user.profile.userType,
-                                );
+                                widget.onNavigateToOtherProfile(user);
                               }
                             },
                           );

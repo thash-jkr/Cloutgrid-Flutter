@@ -16,7 +16,7 @@ import '../../providers/home/home_notifier.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final ValueChanged<TabItem> onSelectTab;
-  final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(UserContainer user) onNavigateToOtherProfile;
   final void Function() onNavigateToConversations;
 
   const HomeScreen({
@@ -193,10 +193,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         if (username == user?.profile.username) {
                           widget.onSelectTab(.profile);
                         } else {
-                          widget.onNavigateToOtherProfile(
-                            username,
-                            post.postedBy.profile.userType,
-                          );
+                          widget.onNavigateToOtherProfile(post.postedBy);
                         }
                       },
                       onBlockClick: () => ref

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,7 @@ import 'job_detail.dart';
 
 class JobScreen extends ConsumerStatefulWidget {
   final ValueChanged<int> onNavigateToQuestions;
-  final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(UserContainer user) onNavigateToOtherProfile;
 
   const JobScreen({
     super.key,

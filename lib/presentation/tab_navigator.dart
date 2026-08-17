@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:flutter/material.dart';
 
 import './create/create_screen.dart';
@@ -25,7 +26,7 @@ class TabNavigator extends StatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
-  final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(UserContainer user) onNavigateToOtherProfile;
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
   final void Function(int id) onNavigateToQuestions;
   final void Function() onNavigateToConversations;

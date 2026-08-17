@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/presentation/auth/register_begin.dart';
 import 'package:cloutgrid_flutter/presentation/auth/register_end.dart';
 import 'package:cloutgrid_flutter/presentation/auth/reset_password.dart';
@@ -94,8 +95,8 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
     onNavigateToEditProfile: () => EditProfileRoute().push(context),
-    onNavigateToOtherProfile: (String username, String type) =>
-        OtherProfileRoute(username: username, type: type).push(context),
+    onNavigateToOtherProfile: (UserContainer user) =>
+        OtherProfileRoute($extra: user).push(context),
     onNavigateToCreatePost: (Uint8List bytes) =>
         CreatePostRoute($extra: bytes).push(context),
     onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
@@ -181,20 +182,18 @@ class EditProfileRoute extends GoRouteData with $EditProfileRoute {
       EditProfile(onNavigateBack: () => context.pop());
 }
 
-@TypedGoRoute<OtherProfileRoute>(path: "/other-profile")
+@TypedGoRoute<OtherProfileRoute>(path: '/other-profile')
 class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
-  final String username;
-  final String type;
+  final UserContainer $extra;
 
-  const OtherProfileRoute({required this.username, required this.type});
+  const OtherProfileRoute({required this.$extra});
 
   @override
   Widget build(BuildContext context, GoRouterState state) => OtherProfile(
     onNavigateBack: () => context.pop(),
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
-    username: username,
-    type: type,
+    user: $extra,
   );
 }
 

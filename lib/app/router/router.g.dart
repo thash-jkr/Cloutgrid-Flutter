@@ -384,31 +384,28 @@ RouteBase get $otherProfileRoute => GoRouteData.$route(
 );
 
 mixin $OtherProfileRoute on GoRouteData {
-  static OtherProfileRoute _fromState(GoRouterState state) => OtherProfileRoute(
-    username: state.uri.queryParameters['username']!,
-    type: state.uri.queryParameters['type']!,
-  );
+  static OtherProfileRoute _fromState(GoRouterState state) =>
+      OtherProfileRoute($extra: state.extra as UserContainer);
 
   OtherProfileRoute get _self => this as OtherProfileRoute;
 
   @override
-  String get location => GoRouteData.$location(
-    '/other-profile',
-    queryParams: {'username': _self.username, 'type': _self.type},
-  );
+  String get location => GoRouteData.$location('/other-profile');
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $createPostRoute => GoRouteData.$route(

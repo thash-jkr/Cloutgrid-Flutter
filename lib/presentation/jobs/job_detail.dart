@@ -11,7 +11,7 @@ import '../../widgets/clout_toast.dart';
 class JobDetail extends ConsumerWidget {
   final JobModel job;
   final ValueChanged<int> onNavigateToQuestions;
-  final void Function(String username, String type) onNavigateToOtherProfile;
+  final void Function(UserContainer user) onNavigateToOtherProfile;
   final VoidCallback onClose;
 
   const JobDetail({
@@ -104,10 +104,7 @@ class JobDetail extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FilledButton(
-                  onPressed: () => onNavigateToOtherProfile(
-                    job.postedBy.profile.username,
-                    "business",
-                  ),
+                  onPressed: () => onNavigateToOtherProfile(job.postedBy),
                   child: const Text('Business Profile'),
                 ),
                 FilledButton(
