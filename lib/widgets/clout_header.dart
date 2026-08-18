@@ -79,13 +79,15 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
     ];
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: gradientColors,
-        ),
-      ),
+      decoration: isSheet
+          ? null
+          : BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: gradientColors,
+              ),
+            ),
       child: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
@@ -119,7 +121,7 @@ class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
             .map(
               (action) => Padding(
                 padding: EdgeInsets.only(right: isSheet ? 5.5 : 15),
-                child: _ActionButton(action: action),
+                child: _ActionButton(action: action, isSheet: isSheet),
               ),
             )
             .toList(),
@@ -166,60 +168,107 @@ class _ToolbarButton extends StatelessWidget {
   }
 }
 
+Widget _badgedIcon(IconData? icon) {
+  const offWhite = Color(0xFFF2F0EF);
+
+  return Container(
+    padding: const EdgeInsets.all(6),
+    decoration: BoxDecoration(
+      color: offWhite.withValues(alpha: 0.4),
+      shape: BoxShape.circle,
+    ),
+    child: Icon(icon, color: Colors.black),
+  );
+}
+
 class _ActionButton extends StatelessWidget {
   final HeaderAction action;
-  const _ActionButton({required this.action});
+  final bool isSheet;
+
+  const _ActionButton({required this.action, required this.isSheet});
 
   @override
   Widget build(BuildContext context) {
     final hasMenu = action.menuItems != null && action.menuItems!.isNotEmpty;
 
     if (!hasMenu) {
-      return _ToolbarButton(action: action);
+      return isSheet
+          ? IconButton(
+              onPressed: action.onClick,
+              icon: _badgedIcon(action.icon),
+            )
+          : _ToolbarButton(action: action);
     }
 
-    return Container(
-      width: 45,
-      height: 45,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.07),
-            blurRadius: 0,
-            spreadRadius: 1,
-            offset: const Offset(0, 0),
-          ),
-        ],
-      ),
-      child: PopupMenuButton<void>(
-        icon: Icon(action.icon),
-        tooltip: action.contentDescription,
-        color: Colors.white,
-        offset: const Offset(0, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        clipBehavior: Clip.antiAlias,
-        padding: EdgeInsets.zero,
-        menuPadding: EdgeInsets.zero,
-        itemBuilder: (context) => action.menuItems!
-            .map(
-              (item) => PopupMenuItem<void>(
-                onTap: item.onClick,
-                child: Row(
-                  children: [
-                    Icon(item.icon, size: 25),
-                    SizedBox(width: 12),
-                    Text(item.title),
-                  ],
+    return isSheet
+        ? PopupMenuButton<void>(
+            icon: _badgedIcon(action.icon),
+            elevation: 1,
+            offset: const Offset(0, 50),
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            clipBehavior: Clip.antiAlias,
+            padding: EdgeInsets.zero,
+            menuPadding: EdgeInsets.zero,
+            itemBuilder: (context) => action.menuItems!
+                .map(
+                  (item) => PopupMenuItem<void>(
+                    onTap: item.onClick,
+                    child: Row(
+                      children: [
+                        Icon(item.icon, size: 25),
+                        SizedBox(width: 12),
+                        Text(item.title),
+                      ],
+                    ),
+                  ),
+                )
+                .toList(),
+          )
+        : Container(
+            width: 45,
+            height: 45,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.07),
+                  blurRadius: 0,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 0),
                 ),
+              ],
+            ),
+            child: PopupMenuButton<void>(
+              icon: Icon(action.icon),
+              tooltip: action.contentDescription,
+              color: Colors.white,
+              offset: const Offset(0, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
               ),
-            )
-            .toList(),
-      ),
-    );
+              clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.zero,
+              menuPadding: EdgeInsets.zero,
+              itemBuilder: (context) => action.menuItems!
+                  .map(
+                    (item) => PopupMenuItem<void>(
+                      onTap: item.onClick,
+                      child: Row(
+                        children: [
+                          Icon(item.icon, size: 25),
+                          SizedBox(width: 12),
+                          Text(item.title),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
   }
 }

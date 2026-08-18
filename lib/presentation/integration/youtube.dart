@@ -93,7 +93,7 @@ class _YoutubeState extends ConsumerState<Youtube> {
         title: 'YouTube Analytics',
         actions: [
           HeaderAction(
-            icon: Icons.more_horiz,
+            icon: Icons.menu,
             contentDescription: 'Menu',
             menuItems: [
               HeaderMenuItem(
@@ -109,6 +109,7 @@ class _YoutubeState extends ConsumerState<Youtube> {
             ],
           ),
         ],
+        isSheet: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 0, bottom: 100),

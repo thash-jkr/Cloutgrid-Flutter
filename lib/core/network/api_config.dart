@@ -13,5 +13,5 @@ enum ApiConfig {
 
   const ApiConfig({required this.baseUrl, required this.socketUrl});
 
-  static const ApiConfig current = ApiConfig.development;
+  static const ApiConfig current = ApiConfig.production;
 }
