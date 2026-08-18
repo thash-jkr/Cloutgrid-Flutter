@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import './create/create_screen.dart';
 import './jobs/job_screen.dart';
@@ -22,7 +24,7 @@ enum TabItem {
   const TabItem(this.title, this.icon);
 }
 
-class TabNavigator extends StatefulWidget {
+class TabNavigator extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
@@ -43,10 +45,10 @@ class TabNavigator extends StatefulWidget {
   });
 
   @override
-  State<TabNavigator> createState() => _TabNavigatorState();
+  ConsumerState<TabNavigator> createState() => _TabNavigatorState();
 }
 
-class _TabNavigatorState extends State<TabNavigator> {
+class _TabNavigatorState extends ConsumerState<TabNavigator> {
   late final PageController _pageController = PageController(
     initialPage: TabItem.home.index,
   );
@@ -70,6 +72,13 @@ class _TabNavigatorState extends State<TabNavigator> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    ref.listen(deepLinkProvider.select((s) => s.targetTab), (previous, next) {
+      if (next != null) {
+        _selectTab(next);
+        ref.read(deepLinkProvider.notifier).clearTargetTab();
+      }
+    });
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,

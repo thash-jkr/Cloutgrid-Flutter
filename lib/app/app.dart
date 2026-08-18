@@ -1,3 +1,5 @@
+import 'package:app_links/app_links.dart';
+import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -18,10 +20,16 @@ class _CloutgridAppState extends ConsumerState<CloutgridApp> {
   @override
   void initState() {
     super.initState();
+
     ref.listenManual(authProvider, (previous, next) {
       if (!next.isLoading) {
         FlutterNativeSplash.remove();
       }
+    });
+
+    final appLinks = AppLinks();
+    appLinks.uriLinkStream.listen((uri) {
+      ref.read(deepLinkProvider.notifier).handleUri(uri);
     });
   }
 

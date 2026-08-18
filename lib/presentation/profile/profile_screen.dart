@@ -5,6 +5,7 @@ import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
 import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
+import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
@@ -48,6 +49,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       final profile = ref.read(profileProvider.notifier);
       if (ref.read(profileProvider).posts.isEmpty) {
         profile.fetchPosts(username);
+      }
+    });
+
+    Future(() {
+      final action = ref.read(deepLinkProvider).profileAction;
+      if (action == ProfileAction.connectInstagram) {
+        _openInstagram();
+        ref.read(deepLinkProvider.notifier).clearProfileAction();
+      } else if (action == ProfileAction.connectYoutube) {
+        _openYouTube();
+        ref.read(deepLinkProvider.notifier).clearProfileAction();
       }
     });
   }
@@ -136,6 +148,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     final auth = ref.watch(authProvider);
 
     final UserContainer? user = auth.value?.user;
+
+    ref.listen(deepLinkProvider.select((s) => s.profileAction), (
+      previous,
+      next,
+    ) {
+      if (next == ProfileAction.connectInstagram) {
+        _openInstagram();
+        ref.read(deepLinkProvider.notifier).clearProfileAction();
+      } else if (next == ProfileAction.connectYoutube) {
+        _openYouTube();
+        ref.read(deepLinkProvider.notifier).clearProfileAction();
+      }
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: true,

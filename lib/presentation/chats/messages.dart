@@ -81,7 +81,7 @@ class _MessagesState extends ConsumerState<Messages> {
               15,
               kToolbarHeight + topInset,
               15,
-              bottomInset + 60,
+              bottomInset + 75,
             ),
             itemCount: messages.length,
             itemBuilder: (context, index) {
