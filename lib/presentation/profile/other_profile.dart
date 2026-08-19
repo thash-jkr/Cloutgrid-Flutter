@@ -68,13 +68,20 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   void _openInstagram() {
     cloutSheet(
       context,
-      content: OtherInstagram(username: username),
-      short: true,
+      content: OtherInstagram(
+        username: username,
+        isConnected: widget.user.instagramConnected == true,
+      ),
+      short: widget.user.instagramConnected != true,
     );
   }
 
   void _openYouTube() {
-    cloutSheet(context, content: OtherYoutube(username: username), short: true);
+    cloutSheet(
+      context,
+      content: OtherYoutube(username: username),
+      short: widget.user.youtubeConnected != true,
+    );
   }
 
   void _handleBlock(bool block) async {

@@ -22,8 +22,6 @@ class Instagram extends ConsumerStatefulWidget {
 }
 
 class _InstagramState extends ConsumerState<Instagram> {
-  bool _initialLoadTriggered = false;
-
   IntegrationState get integrationState => ref.read(integrationProvider);
   UserContainer? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
@@ -83,12 +81,7 @@ class _InstagramState extends ConsumerState<Instagram> {
 
     if (user?.instagramConnected == true &&
         integrationState.instagramPage == null) {
-      if (!_initialLoadTriggered) {
-        _initialLoadTriggered = true;
-        Future(_loadOwnData);
-      }
-    } else {
-      _initialLoadTriggered = false;
+      Future(_loadOwnData);
     }
 
     return Scaffold(

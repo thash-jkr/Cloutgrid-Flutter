@@ -105,6 +105,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
+                          prefixIcon: _isFocused ? Icon(Icons.search) : null,
                           suffixIcon: IconButton(
                             onPressed: !_isFocused
                                 ? null
