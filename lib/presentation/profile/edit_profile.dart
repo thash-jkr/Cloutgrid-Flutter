@@ -81,23 +81,22 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
     data = {...data, 'area': _category};
 
-    try {
-      await ref
-          .read(authProvider.notifier)
-          .updateProfile(
-            userType: "creator",
-            data: data,
-            imageBytes: _selectedImageBytes,
-          );
+    await showAsyncToast(
+      context,
+      task: () async {
+        await ref
+            .read(authProvider.notifier)
+            .updateProfile(
+              userType: "creator",
+              data: data,
+              imageBytes: _selectedImageBytes,
+            );
+      },
+      loadingMessage: "Profile updating...",
+      successMessage: "Profile updated",
+    );
 
-      if (!mounted) return;
-
-      showToast(context, message: "Profile Updated");
-      widget.onNavigateBack();
-    } catch (e) {
-      if (!mounted) return;
-      showToast(context, message: "Updated failed: $e", isSuccess: false);
-    }
+    widget.onNavigateBack();
   }
 
   @override

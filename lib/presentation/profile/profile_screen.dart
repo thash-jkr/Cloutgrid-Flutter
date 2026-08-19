@@ -6,10 +6,12 @@ import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
 import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
+import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
 import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
+import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,6 +37,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   bool get wantKeepAlive => true;
 
   ProfileTab _selectedTab = ProfileTab.posts;
+
+  UserContainer? get user => ref.read(authProvider).value?.user;
+  IntegrationNotifier get integrationNotifier =>
+      ref.read(integrationProvider.notifier);
 
   @override
   void initState() {
@@ -93,6 +99,30 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       profile.fetchProfile(username, other: false),
       profile.fetchPosts(username),
     ]);
+  }
+
+  Future<void> _connectInstagram() async {
+    if (user == null) return;
+    final username = user!.profile.username;
+
+    await showAsyncToast(
+      context,
+      loadingMessage: 'Connecting Instagram...',
+      successMessage: 'Instagram Connected',
+      task: () async {
+        await ref.read(authProvider.notifier).setInstagramConnected(true);
+
+        await Future.wait([
+          integrationNotifier.fetchInstagramProfile(),
+          integrationNotifier.fetchInstagramMedia(),
+        ]);
+
+        await Future.wait([
+          integrationNotifier.loadOwnInstagramProfile(username),
+          integrationNotifier.loadOwnInstagramMedia(username),
+        ]);
+      },
+    );
   }
 
   List<Widget> _buildTabContent() {
@@ -154,10 +184,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       next,
     ) {
       if (next == ProfileAction.connectInstagram) {
-        _openInstagram();
+        _connectInstagram();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       } else if (next == ProfileAction.connectYoutube) {
-        _openYouTube();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       }
     });

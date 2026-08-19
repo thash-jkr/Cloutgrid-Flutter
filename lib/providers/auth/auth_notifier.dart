@@ -34,6 +34,7 @@ class AuthNotifier extends _$AuthNotifier {
       isAuth: access != null && access.isNotEmpty,
       user: user,
       type: userType,
+      access: access,
     );
   }
 

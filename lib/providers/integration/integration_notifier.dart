@@ -55,18 +55,22 @@ class IntegrationState {
           ? null
           : (instagramPage ?? this.instagramPage),
       instagramMedia: instagramMedia ?? this.instagramMedia,
+
       youtubeChannel: clearYoutubeChannel
           ? null
           : (youtubeChannel ?? this.youtubeChannel),
       youtubeMedia: youtubeMedia ?? this.youtubeMedia,
+
       otherInstagramPage: clearOtherInstagramPage
           ? null
           : (otherInstagramPage ?? this.otherInstagramPage),
       otherInstagramMedia: otherInstagramMedia ?? this.otherInstagramMedia,
+
       otherYoutubeChannel: clearOtherYoutubeChannel
           ? null
           : (otherYoutubeChannel ?? this.otherYoutubeChannel),
       otherYoutubeMedia: otherYoutubeMedia ?? this.otherYoutubeMedia,
+
       isLoading: isLoading ?? this.isLoading,
       errorMessage: clearErrorMessage
           ? null

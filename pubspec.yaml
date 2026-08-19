@@ -74,13 +74,14 @@ flutter:
     - assets/images/delete.png
     - assets/images/kid.png
     - assets/images/profile.png
+    - assets/images/image_error.jpg
 
     - assets/icons/instagram.svg
     - assets/icons/youtube.svg
 
 flutter_native_splash:
   color: "#F2F0EF"
-  image:                assets/images/cloutgrid_logo_splash.png
+  image: assets/images/cloutgrid_logo_splash.png
   fullscreen: true
 
   android_12:

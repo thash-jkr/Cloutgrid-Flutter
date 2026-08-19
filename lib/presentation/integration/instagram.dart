@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/core/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/integration/integration_models.dart';
 import '../../providers/auth/auth_notifier.dart';
-import '../../providers/integration/integration_notifier.dart';
 import '../../widgets/clout_alert.dart';
 import '../../widgets/clout_empty.dart';
 import '../../widgets/clout_header.dart';
@@ -22,28 +24,39 @@ class Instagram extends ConsumerStatefulWidget {
 class _InstagramState extends ConsumerState<Instagram> {
   bool _initialLoadTriggered = false;
 
-  void _maybeLoadOwnData() {
-    final user = ref.read(authProvider).value?.user;
-    final integrationState = ref.read(integrationProvider);
+  IntegrationState get integrationState => ref.read(integrationProvider);
+  UserContainer? get user => ref.read(authProvider).value?.user;
+  IntegrationNotifier get integrationNotifier =>
+      ref.read(integrationProvider.notifier);
 
+  void _loadOwnData() {
     if (user?.instagramConnected == true &&
         integrationState.instagramPage == null) {
       final username = user!.profile.username;
-      ref.read(integrationProvider.notifier).loadOwnInstagramProfile(username);
-      ref.read(integrationProvider.notifier).loadOwnInstagramMedia(username);
+      integrationNotifier.loadOwnInstagramProfile(username);
+      integrationNotifier.loadOwnInstagramMedia(username);
     }
   }
 
-  void _handleSync() {
-    final user = ref.read(authProvider).value?.user;
-    ref.read(integrationProvider.notifier).fetchInstagramProfile();
-    ref.read(integrationProvider.notifier).fetchInstagramMedia();
+  Future<void> _handleSync() async {
+    if (user == null) return;
+    final username = user!.profile.username;
 
-    if (user != null) {
-      final username = user.profile.username;
-      ref.read(integrationProvider.notifier).loadOwnInstagramProfile(username);
-      ref.read(integrationProvider.notifier).loadOwnInstagramMedia(username);
-    }
+    await showAsyncToast(
+      context,
+      loadingMessage: 'Syncing Instagram...',
+      successMessage: 'Instagram synced',
+      task: () async {
+        await Future.wait([
+          integrationNotifier.fetchInstagramProfile(),
+          integrationNotifier.fetchInstagramMedia(),
+        ]);
+        await Future.wait([
+          integrationNotifier.loadOwnInstagramProfile(username),
+          integrationNotifier.loadOwnInstagramMedia(username),
+        ]);
+      },
+    );
   }
 
   void _showDisconnectAlert() {
@@ -65,14 +78,14 @@ class _InstagramState extends ConsumerState<Instagram> {
   @override
   Widget build(BuildContext context) {
     final topInset = MediaQuery.of(context).padding.top;
-    final user = ref.watch(authProvider.select((s) => s.value?.user));
+
     final integrationState = ref.watch(integrationProvider);
 
     if (user?.instagramConnected == true &&
         integrationState.instagramPage == null) {
       if (!_initialLoadTriggered) {
         _initialLoadTriggered = true;
-        Future(_maybeLoadOwnData);
+        Future(_loadOwnData);
       }
     } else {
       _initialLoadTriggered = false;
@@ -81,59 +94,63 @@ class _InstagramState extends ConsumerState<Instagram> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'Instagram Insights',
-        actions: [
-          HeaderAction(
-            icon: Icons.menu_rounded,
-            contentDescription: 'Menu',
-            menuItems: [
-              HeaderMenuItem(
-                title: 'Sync profile',
-                icon: Icons.sync_rounded,
-                onClick: _handleSync,
-              ),
-              HeaderMenuItem(
-                title: 'Disconnect Instagram',
-                icon: Icons.block_rounded,
-                onClick: _showDisconnectAlert,
-              ),
-            ],
-          ),
-        ],
+        title: 'Instagram Insights 📊',
+        actions: user?.instagramConnected == true
+            ? [
+                HeaderAction(
+                  icon: Icons.menu_rounded,
+                  contentDescription: 'Menu',
+                  menuItems: [
+                    HeaderMenuItem(
+                      title: 'Sync profile',
+                      icon: Icons.sync_rounded,
+                      onClick: _handleSync,
+                    ),
+                    HeaderMenuItem(
+                      title: 'Disconnect Instagram',
+                      icon: Icons.block_rounded,
+                      onClick: _showDisconnectAlert,
+                    ),
+                  ],
+                ),
+              ]
+            : [],
         isSheet: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: kToolbarHeight + topInset, bottom: 100),
         child: user?.instagramConnected == true
             ? Column(
+                spacing: 15,
                 crossAxisAlignment: .start,
                 children: [
-                  if (integrationState.instagramPage != null) ...[
-                    const SizedBox(height: 15),
-                    InstagramHeader(page: integrationState.instagramPage!),
-                    const SizedBox(height: 15),
-                    InstagramInsights(
-                      insights: integrationState.instagramPage!.insights,
-                    ),
-                    const SizedBox(height: 15),
-                  ],
-                  InstagramMedia(
-                    igMedia: integrationState.instagramMedia,
-                    type: 'IMAGE',
-                  ),
-                  const SizedBox(height: 15),
-                  InstagramMedia(
-                    igMedia: integrationState.instagramMedia,
-                    type: 'VIDEO',
-                  ),
                   if ((integrationState.instagramPage == null ||
                           integrationState.instagramMedia.isEmpty) &&
-                      integrationState.isLoading)
+                      integrationState.isLoading) ...[
                     const CloutEmpty(
                       type: EmptyType.instagram,
                       message: 'Loading...',
                       isLoading: true,
                     ),
+                  ] else ...[
+                    if (integrationState.instagramPage != null) ...[
+                      InstagramHeader(page: integrationState.instagramPage!),
+
+                      InstagramInsights(
+                        insights: integrationState.instagramPage!.insights,
+                      ),
+                    ],
+
+                    InstagramMedia(
+                      igMedia: integrationState.instagramMedia,
+                      type: 'IMAGE',
+                    ),
+
+                    InstagramMedia(
+                      igMedia: integrationState.instagramMedia,
+                      type: 'VIDEO',
+                    ),
+                  ],
                 ],
               )
             : const _NotConnected(),
@@ -293,10 +310,10 @@ class InstagramMedia extends StatelessWidget {
           )
         else
           SizedBox(
-            height: 250,
+            height: 300,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               itemCount: mediaList.length,
               separatorBuilder: (context, index) => const SizedBox(width: 15),
               itemBuilder: (context, index) {
@@ -321,10 +338,9 @@ class InstagramMedia extends StatelessWidget {
                             height: 300,
                             color: Colors.grey.shade200,
                           ),
-                          errorWidget: (context, url, error) => Container(
-                            width: 200,
-                            height: 300,
-                            color: Colors.grey.shade200,
+                          errorWidget: (context, url, error) => const Image(
+                            image: AssetImage("assets/images/image_error.jpg"),
+                            fit: .cover,
                           ),
                         ),
                       ),
@@ -436,27 +452,35 @@ class _StatItem extends StatelessWidget {
   }
 }
 
-class _NotConnected extends StatelessWidget {
+class _NotConnected extends ConsumerWidget {
   const _NotConnected();
 
+  Future<void> _openUrl(BuildContext context, String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      if (!context.mounted) return;
+      showToast(context, message: "Failed to open $url", isSuccess: false);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider).value;
+    final access = authState?.access;
+
     return Column(
+      spacing: 15,
       children: [
-        Column(
-          children: [
-            FilledButton(
-              onPressed: () {},
-              child: const Text('Connect Instagram'),
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'This feature is in development',
-              style: TextStyle(fontSize: 10, color: Colors.grey),
-            ),
-          ],
+        FilledButton(
+          onPressed: () => _openUrl(
+            context,
+            "${ApiConfig.current.baseUrl}/auth/instagram/start?token=$access&medium=app",
+          ),
+          child: const Text('Connect Instagram'),
         ),
-        const SizedBox(height: 20),
+
         const InstagramConstants(),
       ],
     );

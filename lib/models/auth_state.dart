@@ -4,6 +4,7 @@ class AuthState {
   final bool isAuth;
   final UserContainer? user;
   final String? type;
+  final String? access;
   final bool isLoading;
   final String? errorMessage;
 
@@ -11,6 +12,7 @@ class AuthState {
     required this.isAuth,
     this.user,
     this.type,
+    this.access,
     this.isLoading = false,
     this.errorMessage,
   });
@@ -19,6 +21,7 @@ class AuthState {
     bool? isAuth,
     UserContainer? user,
     String? type,
+    String? access,
     bool? isLoading,
     String? errorMessage,
     bool clearErrorMessage = false,
@@ -27,6 +30,7 @@ class AuthState {
       isAuth: isAuth ?? this.isAuth,
       user: user ?? this.user,
       type: type ?? this.type,
+      access: access ?? this.access,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: clearErrorMessage
           ? null
