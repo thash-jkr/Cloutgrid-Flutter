@@ -35,7 +35,7 @@ class PostDetail extends ConsumerWidget {
 
     cloutSheet(
       context,
-      content: Consumer(
+      content: (context, scrollController) => Consumer(
         builder: (context, ref, _) {
           final homeState = ref.watch(homeProvider);
           final user = ref.watch(authProvider).value?.user;
@@ -48,6 +48,7 @@ class PostDetail extends ConsumerWidget {
                 ref.read(homeProvider.notifier).addComment(id, content),
             onDeleteComment: (commentId) =>
                 ref.read(homeProvider.notifier).deleteComment(id, commentId),
+            scrollController: scrollController,
           );
         },
       ),

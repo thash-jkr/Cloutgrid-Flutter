@@ -8,12 +8,14 @@ class CategorySheet extends StatelessWidget {
   final List<CategoryList> categories;
   final String selectedCategory;
   final ValueChanged<CategoryList> onCategorySelected;
+  final ScrollController? scrollController;
 
   const CategorySheet({
     super.key,
     required this.categories,
     this.selectedCategory = '',
     required this.onCategorySelected,
+    this.scrollController,
   });
 
   @override
@@ -24,6 +26,7 @@ class CategorySheet extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: 'Choose Category'),
       body: ListView.separated(
+        controller: scrollController,
         padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
         itemCount: categories.length,
         separatorBuilder: (context, index) => const SizedBox(height: 1),

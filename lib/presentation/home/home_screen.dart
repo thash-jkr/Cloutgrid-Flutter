@@ -81,7 +81,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   void _openNotifications() {
-    cloutSheet(context, content: const Notifications());
+    cloutSheet(
+      context,
+      content: (context, scrollController) =>
+          Notifications(scrollController: scrollController),
+    );
   }
 
   void _openComments(int postId) {
@@ -92,7 +96,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     cloutSheet(
       context,
-      content: Consumer(
+      content: (context, scrollController) => Consumer(
         builder: (context, ref, _) {
           final homeState = ref.watch(homeProvider);
           final user = ref.watch(authProvider).value?.user;
@@ -106,6 +110,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             onDeleteComment: (commentId) => ref
                 .read(homeProvider.notifier)
                 .deleteComment(postId, commentId),
+            scrollController: scrollController,
           );
         },
       ),

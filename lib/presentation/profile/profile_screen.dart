@@ -83,11 +83,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   }
 
   void _openInstagram() {
-    cloutSheet(context, content: const Instagram());
+    cloutSheet(
+      context,
+      content: (context, scrollController) =>
+          Instagram(scrollController: scrollController),
+    );
   }
 
   void _openYouTube() {
-    cloutSheet(context, content: const Youtube());
+    cloutSheet(
+      context,
+      content: (context, scrollController) =>
+          Youtube(scrollController: scrollController),
+    );
   }
 
   Future<void> _onRefresh() async {

@@ -79,10 +79,6 @@ class _NotificationsState extends ConsumerState<Notifications> {
                         width: double.infinity,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(color: Colors.white),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 5,
-                        ),
                         child: ListTile(
                           title: Text(item.message),
                           subtitle: Text(timeAgo(item.createdAt)),

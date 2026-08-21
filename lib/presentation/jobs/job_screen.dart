@@ -57,11 +57,12 @@ class _JobScreenState extends ConsumerState<JobScreen> {
   void _openJob(JobModel job, String? type) {
     cloutSheet(
       context,
-      content: JobDetail(
+      content: (context, scrollController) => JobDetail(
         job: job,
         onNavigateToQuestions: widget.onNavigateToQuestions,
         onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
         onClose: () => Navigator.pop(context),
+        scrollController: scrollController,
       ),
     );
   }

@@ -79,9 +79,10 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   void _openCollabSheet() {
     cloutSheet(
       context,
-      content: _CollabSheet(
+      content: (context, scrollController) => _CollabSheet(
         selectedCollab: _collab,
         onCollabSelected: (c) => setState(() => _collab = c),
+        scrollController: scrollController,
       ),
     );
   }
@@ -267,10 +268,12 @@ class _CreatePostState extends ConsumerState<CreatePost> {
 class _CollabSheet extends ConsumerStatefulWidget {
   final UserContainer? selectedCollab;
   final ValueChanged<UserContainer> onCollabSelected;
+  final ScrollController? scrollController;
 
   const _CollabSheet({
     required this.selectedCollab,
     required this.onCollabSelected,
+    this.scrollController,
   });
 
   @override
@@ -303,6 +306,7 @@ class _CollabSheetState extends ConsumerState<_CollabSheet> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: 'Search Collaboration'),
       body: ListView(
+        controller: widget.scrollController,
         padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
         children: [
           TextField(

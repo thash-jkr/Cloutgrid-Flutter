@@ -8,11 +8,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class OtherInstagram extends ConsumerStatefulWidget {
   final String username;
   final bool isConnected;
+  final ScrollController? scrollController;
 
   const OtherInstagram({
     super.key,
     required this.username,
     required this.isConnected,
+    this.scrollController,
   });
 
   @override
@@ -43,6 +45,7 @@ class _InstagramState extends ConsumerState<OtherInstagram> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: "Instagram Insights 📊"),
       body: SingleChildScrollView(
+        controller: widget.scrollController,
         padding: EdgeInsets.only(
           top: kToolbarHeight + MediaQuery.of(context).padding.top,
           bottom: 100,

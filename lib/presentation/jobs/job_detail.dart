@@ -13,6 +13,7 @@ class JobDetail extends ConsumerWidget {
   final ValueChanged<int> onNavigateToQuestions;
   final void Function(UserContainer user) onNavigateToOtherProfile;
   final VoidCallback onClose;
+  final ScrollController? scrollController;
 
   const JobDetail({
     super.key,
@@ -20,6 +21,7 @@ class JobDetail extends ConsumerWidget {
     required this.onNavigateToQuestions,
     required this.onNavigateToOtherProfile,
     required this.onClose,
+    this.scrollController,
   });
 
   void _showReportDialog(BuildContext context) {
@@ -77,6 +79,7 @@ class JobDetail extends ConsumerWidget {
         isSheet: true,
       ),
       body: SingleChildScrollView(
+        controller: scrollController,
         padding: EdgeInsetsGeometry.only(
           top: kToolbarHeight,
           bottom: 100,

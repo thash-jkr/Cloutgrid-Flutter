@@ -62,13 +62,14 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   void _openCategorySheet() {
     cloutSheet(
       context,
-      content: CategorySheet(
+      content: (context, scrollController) => CategorySheet(
         categories: CategoryList.allOptions,
         selectedCategory: _category,
         onCategorySelected: (cat) {
           setState(() => _category = cat.value);
           Navigator.pop(context);
         },
+        scrollController: scrollController,
       ),
     );
   }

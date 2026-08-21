@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 
 class OtherYoutube extends StatelessWidget {
   final String username;
+  final ScrollController? scrollController;
 
-  const OtherYoutube({super.key, required this.username});
+  const OtherYoutube({
+    super.key,
+    required this.username,
+    this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {

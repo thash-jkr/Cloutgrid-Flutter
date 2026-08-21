@@ -68,9 +68,10 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   void _openInstagram() {
     cloutSheet(
       context,
-      content: OtherInstagram(
+      content: (context, scrollController) => OtherInstagram(
         username: username,
         isConnected: widget.user.instagramConnected == true,
+        scrollController: scrollController,
       ),
       short: widget.user.instagramConnected != true,
     );
@@ -79,7 +80,8 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   void _openYouTube() {
     cloutSheet(
       context,
-      content: OtherYoutube(username: username),
+      content: (context, scrollController) =>
+          OtherYoutube(username: username, scrollController: scrollController),
       short: widget.user.youtubeConnected != true,
     );
   }

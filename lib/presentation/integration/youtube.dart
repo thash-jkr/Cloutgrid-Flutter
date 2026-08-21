@@ -14,7 +14,9 @@ import '../../widgets/clout_toast.dart';
 import 'integration_constants.dart';
 
 class Youtube extends ConsumerStatefulWidget {
-  const Youtube({super.key});
+  final ScrollController? scrollController;
+
+  const Youtube({super.key, this.scrollController});
 
   @override
   ConsumerState<Youtube> createState() => _YoutubeState();
@@ -23,21 +25,34 @@ class Youtube extends ConsumerStatefulWidget {
 class _YoutubeState extends ConsumerState<Youtube> {
   bool _loadTriggered = false;
 
+  UserContainer? get user => ref.read(authProvider).value?.user;
+  IntegrationNotifier get integrationNotifier =>
+      ref.read(integrationProvider.notifier);
+
   void _loadOwnData(String username) {
-    ref.read(integrationProvider.notifier).loadOwnYoutubeChannel(username);
-    // NOTE: Swift's .task uses readYoutubeChannel/readYoutubeMedia (the
-    // "other" read variants) even for the current user's own data — kept
-    // as-is here for parity, though loadOwnYoutubeChannel/loadOwnYoutubeMedia
-    // would be the more semantically correct call for "my own" data.
-    ref.read(integrationProvider.notifier).loadOwnYoutubeMedia(username);
+    integrationNotifier.loadOwnYoutubeChannel(username);
+    integrationNotifier.loadOwnYoutubeMedia(username);
   }
 
-  void _handleSync(String username) {
-    final notifier = ref.read(integrationProvider.notifier);
-    notifier.fetchYoutubeChannel();
-    notifier.readOtherYoutubeChannel(username);
-    notifier.fetchYoutubeMedia();
-    notifier.readOtherYoutubeMedia(username);
+  Future<void> _handleSync() async {
+    if (user == null) return;
+    final username = user!.profile.username;
+
+    await showAsyncToast(
+      context,
+      loadingMessage: 'Syncing YouTube...',
+      successMessage: 'YouTube synced',
+      task: () async {
+        await Future.wait([
+          integrationNotifier.fetchYoutubeChannel(),
+          integrationNotifier.fetchYoutubeMedia(),
+        ]);
+        await Future.wait([
+          integrationNotifier.loadOwnYoutubeChannel(username),
+          integrationNotifier.loadOwnYoutubeMedia(username),
+        ]);
+      },
+    );
   }
 
   void _showDisconnectAlert() {
@@ -57,23 +72,6 @@ class _YoutubeState extends ConsumerState<Youtube> {
     );
   }
 
-  Future<void> _openConnectYoutube() async {
-    final token = ref
-        .read(authProvider)
-        .value; // access token isn't on AuthState directly — see note below
-    // NOTE: Swift reads `auth.access` directly. Our AuthState doesn't expose
-    // the raw access token (it lives in SecureStorage) — you'll likely want
-    // to read it via a small addition, e.g. exposing a getter through
-    // AuthNotifier, or reading secureStorageProvider directly here instead.
-    final accessToken = ''; // placeholder — wire to the real token source
-    final url =
-        '${ApiConfig.current.baseUrl}/auth/google/start?token=$accessToken&medium=app';
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(authProvider.select((s) => s.value?.user));
@@ -91,34 +89,36 @@ class _YoutubeState extends ConsumerState<Youtube> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
         title: 'YouTube Analytics',
-        actions: [
-          HeaderAction(
-            icon: Icons.menu,
-            contentDescription: 'Menu',
-            menuItems: [
-              HeaderMenuItem(
-                title: 'Sync Profile',
-                icon: Icons.sync_rounded,
-                onClick: () => _handleSync(user!.profile.username),
-              ),
-              HeaderMenuItem(
-                title: 'Disconnect',
-                icon: Icons.delete_outline,
-                onClick: _showDisconnectAlert,
-              ),
-            ],
-          ),
-        ],
+        actions: user?.youtubeConnected == true
+            ? [
+                HeaderAction(
+                  icon: Icons.menu,
+                  contentDescription: 'Menu',
+                  menuItems: [
+                    HeaderMenuItem(
+                      title: 'Sync Profile',
+                      icon: Icons.sync_rounded,
+                      onClick: () => _handleSync(),
+                    ),
+                    HeaderMenuItem(
+                      title: 'Disconnect',
+                      icon: Icons.delete_outline,
+                      onClick: _showDisconnectAlert,
+                    ),
+                  ],
+                ),
+              ]
+            : [],
         isSheet: true,
       ),
       body: SingleChildScrollView(
+        controller: widget.scrollController,
         padding: EdgeInsets.only(top: 0, bottom: 100),
         child: isConnected
             ? Column(
                 children: [
                   if (integrationState.youtubeChannel != null)
                     _ChannelDetail(channel: integrationState.youtubeChannel!),
-                  const Divider(),
                   _YoutubeMediaRow(media: integrationState.youtubeMedia),
                 ],
               )
@@ -146,12 +146,12 @@ class _ChannelDetail extends StatelessWidget {
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
-              placeholder: (context, url) => const SizedBox(
-                height: 200,
-                child: Center(child: CircularProgressIndicator()),
+              placeholder: (context, url) =>
+                  Container(height: 250, color: Colors.grey.shade200),
+              errorWidget: (context, url, error) => const Image(
+                image: AssetImage("assets/images/image_error.jpg"),
+                fit: .cover,
               ),
-              errorWidget: (context, url, error) =>
-                  Container(height: 150, color: Colors.grey.shade200),
             ),
             Positioned(
               bottom: -50,
@@ -161,9 +161,12 @@ class _ChannelDetail extends StatelessWidget {
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => const CircleAvatar(radius: 50),
-                  errorWidget: (context, url, error) =>
-                      const CircleAvatar(radius: 50),
+                  placeholder: (context, url) => const Image(
+                    image: AssetImage("assets/images/profile.png"),
+                  ),
+                  errorWidget: (context, url, error) => const Image(
+                    image: AssetImage("assets/images/profile.png"),
+                  ),
                 ),
               ),
             ),
@@ -242,18 +245,18 @@ class _YoutubeMediaRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(left: 15, bottom: 10),
+          padding: EdgeInsets.only(left: 15, bottom: 5),
           child: Text(
             'Recent Posts',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),
         SizedBox(
-          height: 320,
+          height: 300,
           width: double.infinity,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             itemCount: media.length,
             separatorBuilder: (context, index) => const SizedBox(width: 15),
             itemBuilder: (context, index) {
@@ -262,27 +265,30 @@ class _YoutubeMediaRow extends StatelessWidget {
                 clipBehavior: Clip.none,
                 alignment: Alignment.bottomLeft,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: CachedNetworkImage(
-                      imageUrl: item.thumbnail,
-                      width: 180,
-                      height: 300,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        width: 180,
+                  Material(
+                    elevation: 1,
+                    borderRadius: .circular(20),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CachedNetworkImage(
+                        imageUrl: item.thumbnail,
+                        width: 200,
                         height: 300,
-                        color: Colors.grey.shade200,
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        width: 180,
-                        height: 300,
-                        color: Colors.grey.shade200,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          width: 200,
+                          height: 300,
+                          color: Colors.grey.shade200,
+                        ),
+                        errorWidget: (context, url, error) => const Image(
+                          image: AssetImage("assets/images/image_error.jpg"),
+                          fit: .cover,
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
-                    bottom: -10,
+                    bottom: 10,
                     left: 10,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -330,26 +336,34 @@ class _YoutubeMediaRow extends StatelessWidget {
   }
 }
 
-class _NotConnected extends StatelessWidget {
+class _NotConnected extends ConsumerWidget {
   const _NotConnected();
 
+  Future<void> _openUrl(BuildContext context, String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      if (!context.mounted) return;
+      showToast(context, message: "Failed to open $url", isSuccess: false);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider).value;
+    final access = authState?.access;
+
     return Column(
+      spacing: 15,
       children: [
-        Column(
-          children: [
-            FilledButton(
-              onPressed: () {},
-              child: const Text('Connect YouTube'),
-            ),
-            const Text(
-              'This feature is in development',
-              style: TextStyle(fontSize: 10, color: Colors.grey),
-            ),
-          ],
+        FilledButton(
+          onPressed: () => _openUrl(
+            context,
+            "${ApiConfig.current.baseUrl}/auth/youtube/start?token=$access&medium=app",
+          ),
+          child: const Text('Connect YouTube'),
         ),
-        const SizedBox(height: 20),
         const YoutubeConstants(),
       ],
     );

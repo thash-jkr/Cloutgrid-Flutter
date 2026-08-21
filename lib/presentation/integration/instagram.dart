@@ -15,13 +15,17 @@ import '../../widgets/clout_toast.dart';
 import 'integration_constants.dart';
 
 class Instagram extends ConsumerStatefulWidget {
-  const Instagram({super.key});
+  final ScrollController? scrollController;
+
+  const Instagram({super.key, this.scrollController});
 
   @override
   ConsumerState<Instagram> createState() => _InstagramState();
 }
 
 class _InstagramState extends ConsumerState<Instagram> {
+  bool _loadTriggered = false;
+
   IntegrationState get integrationState => ref.read(integrationProvider);
   UserContainer? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
@@ -78,10 +82,13 @@ class _InstagramState extends ConsumerState<Instagram> {
     final topInset = MediaQuery.of(context).padding.top;
 
     final integrationState = ref.watch(integrationProvider);
+    final isConnected = user?.youtubeConnected == true;
 
-    if (user?.instagramConnected == true &&
-        integrationState.instagramPage == null) {
+    if (isConnected && !_loadTriggered) {
+      _loadTriggered = true;
       Future(_loadOwnData);
+    } else if (!isConnected) {
+      _loadTriggered = false;
     }
 
     return Scaffold(
@@ -111,6 +118,8 @@ class _InstagramState extends ConsumerState<Instagram> {
         isSheet: true,
       ),
       body: SingleChildScrollView(
+        controller: widget.scrollController,
+        physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.only(top: kToolbarHeight + topInset, bottom: 100),
         child: user?.instagramConnected == true
             ? Column(
