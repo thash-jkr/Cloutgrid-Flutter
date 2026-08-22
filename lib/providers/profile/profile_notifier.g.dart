@@ -41,7 +41,7 @@ final class ProfileNotifierProvider
   }
 }
 
-String _$profileNotifierHash() => r'2bf0ad1e3a39017df285c1341ad7712533d2f0d4';
+String _$profileNotifierHash() => r'b5b04dbafd594c82404a232b4e5e5f3a98061376';
 
 abstract class _$ProfileNotifier extends $Notifier<ProfileState> {
   ProfileState build();

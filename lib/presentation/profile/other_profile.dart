@@ -35,22 +35,28 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   String get username => widget.user.profile.username;
   String get type => widget.user.profile.userType;
 
+  late final ProfileNotifier profile;
+
   @override
   void initState() {
     super.initState();
 
+    profile = ref.read(profileProvider.notifier);
+
     Future(() {
-      if (!mounted) return;
-
-      final profile = ref.read(profileProvider.notifier);
-
       profile.fetchProfile(username, other: true);
       profile.fetchPosts(username, other: true);
 
-      if (widget.user.profile.userType == "business") {
+      if (type == 'business') {
         profile.fetchCollabs(username, other: true);
       }
     });
+  }
+
+  @override
+  void dispose() {
+    profile.clearOtherProfileData();
+    super.dispose();
   }
 
   void _onTabSelected(ProfileTab tab) {
@@ -173,14 +179,14 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
         ),
         title: "@$username",
         center: false,
-        actions: [
-          HeaderAction(
-            icon: user?.isFollowing == true
-                ? Icons.person_remove_rounded
-                : Icons.person_add_alt_rounded,
-            contentDescription: "follow",
-            onClick: () => user != null
-                ? user.isFollowing == true
+        actions: user != null
+            ? [
+                HeaderAction(
+                  icon: user.isFollowing == true
+                      ? Icons.person_remove_rounded
+                      : Icons.person_add_alt_rounded,
+                  contentDescription: "follow",
+                  onClick: () => user.isFollowing == true
                       ? CloutAlert.show(
                           context,
                           title: "Unfollow @$username?",
@@ -191,58 +197,56 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                         )
                       : ref
                             .watch(profileProvider.notifier)
-                            .handleFollow(user.profile.username, true)
-                : null,
-            disabled:
-                user != null &&
-                (user.isBlocker == true || user.isBlocking == true),
-          ),
-          HeaderAction(
-            icon: Icons.menu_rounded,
-            contentDescription: "Open menu",
-            menuItems: [
-              HeaderMenuItem(
-                title: "Report a problem",
-                icon: Icons.warning_rounded,
-                onClick: () => CloutAlert.show(
-                  context,
-                  title: 'Report a problem',
-                  body: 'If you encountered any issues, let us know.',
-                  hasTextField: true,
-                  onSubmit: (_) {
-                    showToast(context, message: "Reported");
-                  },
+                            .handleFollow(user.profile.username, true),
+                  disabled: (user.isBlocker == true || user.isBlocking == true),
                 ),
-              ),
-              HeaderMenuItem(
-                title: "Report @$username",
-                icon: Icons.report_gmailerrorred_rounded,
-                onClick: () => CloutAlert.show(
-                  context,
-                  title: 'Report @$username?',
-                  body:
-                      'Tell us why you want to report this user. Our team will take appropriate action',
-                  hasTextField: true,
-                  onSubmit: (_) {
-                    showToast(context, message: "Reported");
-                  },
+                HeaderAction(
+                  icon: Icons.menu_rounded,
+                  contentDescription: "Open menu",
+                  menuItems: [
+                    HeaderMenuItem(
+                      title: "Report a problem",
+                      icon: Icons.warning_rounded,
+                      onClick: () => CloutAlert.show(
+                        context,
+                        title: 'Report a problem',
+                        body: 'If you encountered any issues, let us know.',
+                        hasTextField: true,
+                        onSubmit: (_) {
+                          showToast(context, message: "Reported");
+                        },
+                      ),
+                    ),
+                    HeaderMenuItem(
+                      title: "Report @$username",
+                      icon: Icons.report_gmailerrorred_rounded,
+                      onClick: () => CloutAlert.show(
+                        context,
+                        title: 'Report @$username?',
+                        body:
+                            'Tell us why you want to report this user. Our team will take appropriate action',
+                        hasTextField: true,
+                        onSubmit: (_) {
+                          showToast(context, message: "Reported");
+                        },
+                      ),
+                    ),
+                    HeaderMenuItem(
+                      title: "${isBlocked ? "Unblock" : "Block"} @$username",
+                      icon: Icons.block_rounded,
+                      onClick: () => CloutAlert.show(
+                        context,
+                        title: '${isBlocked ? "Unblock" : "Block"} @$username?',
+                        body:
+                            'Do you want to ${isBlocked ? "Unblock" : "Block"} @$username?',
+                        hasTextField: false,
+                        onSubmit: (_) => _handleBlock(isBlocked == false),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              HeaderMenuItem(
-                title: "${isBlocked ? "Unblock" : "Block"} @$username",
-                icon: Icons.block_rounded,
-                onClick: () => CloutAlert.show(
-                  context,
-                  title: '${isBlocked ? "Unblock" : "Block"} @$username?',
-                  body:
-                      'Do you want to ${isBlocked ? "Unblock" : "Block"} @$username?',
-                  hasTextField: false,
-                  onSubmit: (_) => _handleBlock(isBlocked == false),
-                ),
-              ),
-            ],
-          ),
-        ],
+              ]
+            : [],
       ),
       body: SafeArea(
         top: false,
@@ -265,7 +269,7 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                         child: ProfileSelector(
                           selectedTab: _selectedTab,
                           onTabSelected: _onTabSelected,
-                          type: user.profile.userType,
+                          type: type,
                         ),
                       ),
 
@@ -279,6 +283,14 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                         ),
                       ),
                     ],
+                  ] else ...[
+                    SliverToBoxAdapter(
+                      child: CloutEmpty(
+                        type: .profile,
+                        message: "Loading...",
+                        isLoading: profileState.isLoading,
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -305,7 +317,7 @@ class BlockedProfile extends StatelessWidget {
     return Column(
       spacing: 20,
       children: [
-        CloutEmpty(type: .profile, message: "You cannot view this profile"),
+        CloutEmpty(type: .block, message: "You cannot view this profile"),
 
         if (isBlocker) ...[
           FilledButton(

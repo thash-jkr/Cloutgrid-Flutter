@@ -9,7 +9,8 @@ enum EmptyType {
   youtube('assets/images/youtube_analytics.png'),
   chat('assets/images/chat.png'),
   general('assets/images/box.png'),
-  profile('assets/images/delete.png');
+  profile('assets/images/portfolio.png'),
+  block('assets/images/delete.png');
 
   final String assetPath;
   const EmptyType(this.assetPath);

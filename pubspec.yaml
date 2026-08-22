@@ -74,6 +74,7 @@ flutter:
     - assets/images/delete.png
     - assets/images/kid.png
     - assets/images/profile.png
+    - assets/images/portfolio.png
     - assets/images/image_error.jpg
 
     - assets/icons/instagram.svg

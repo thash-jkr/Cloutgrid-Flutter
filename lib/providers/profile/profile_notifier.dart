@@ -63,6 +63,16 @@ class ProfileNotifier extends _$ProfileNotifier {
   @override
   ProfileState build() => const ProfileState();
 
+  void clearOtherProfileData() {
+    Future(() {
+      state = state.copyWith(
+        clearOtherProfile: true,
+        otherPosts: const [],
+        otherCollabs: const [],
+      );
+    });
+  }
+
   Future<void> fetchProfile(String username, {required bool other}) async {
     state = state.copyWith(isLoading: true, clearErrorMessage: true);
 
