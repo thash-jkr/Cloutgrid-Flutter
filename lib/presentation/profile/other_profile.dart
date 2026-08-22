@@ -80,8 +80,11 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   void _openYouTube() {
     cloutSheet(
       context,
-      content: (context, scrollController) =>
-          OtherYoutube(username: username, scrollController: scrollController),
+      content: (context, scrollController) => OtherYoutube(
+        username: username,
+        isConnected: widget.user.youtubeConnected == true,
+        scrollController: scrollController,
+      ),
       short: widget.user.youtubeConnected != true,
     );
   }

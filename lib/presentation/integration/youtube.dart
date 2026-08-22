@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -88,7 +89,7 @@ class _YoutubeState extends ConsumerState<Youtube> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'YouTube Analytics',
+        title: 'YouTube Analytics 📈',
         actions: user?.youtubeConnected == true
             ? [
                 HeaderAction(
@@ -113,13 +114,27 @@ class _YoutubeState extends ConsumerState<Youtube> {
       ),
       body: SingleChildScrollView(
         controller: widget.scrollController,
-        padding: EdgeInsets.only(top: 0, bottom: 100),
+        padding: EdgeInsets.only(
+          top: isConnected ? 0 : kToolbarHeight,
+          bottom: 100,
+        ),
         child: isConnected
             ? Column(
                 children: [
-                  if (integrationState.youtubeChannel != null)
-                    _ChannelDetail(channel: integrationState.youtubeChannel!),
-                  _YoutubeMediaRow(media: integrationState.youtubeMedia),
+                  if ((integrationState.youtubeChannel == null ||
+                          integrationState.youtubeMedia.isEmpty) &&
+                      integrationState.isLoading) ...[
+                    const CloutEmpty(
+                      type: EmptyType.youtube,
+                      message: 'Loading...',
+                      isLoading: true,
+                    ),
+                  ] else ...[
+                    if (integrationState.youtubeChannel != null) ...[
+                      ChannelDetail(channel: integrationState.youtubeChannel!),
+                      YoutubeMediaRow(media: integrationState.youtubeMedia),
+                    ],
+                  ],
                 ],
               )
             : const _NotConnected(),
@@ -128,10 +143,10 @@ class _YoutubeState extends ConsumerState<Youtube> {
   }
 }
 
-class _ChannelDetail extends StatelessWidget {
+class ChannelDetail extends StatelessWidget {
   final YoutubeChannelModel channel;
 
-  const _ChannelDetail({required this.channel});
+  const ChannelDetail({super.key, required this.channel});
 
   @override
   Widget build(BuildContext context) {
@@ -234,10 +249,10 @@ class _StatColumn extends StatelessWidget {
   }
 }
 
-class _YoutubeMediaRow extends StatelessWidget {
+class YoutubeMediaRow extends StatelessWidget {
   final List<YoutubeMediaModel> media;
 
-  const _YoutubeMediaRow({required this.media});
+  const YoutubeMediaRow({super.key, required this.media});
 
   @override
   Widget build(BuildContext context) {
@@ -364,6 +379,7 @@ class _NotConnected extends ConsumerWidget {
           ),
           child: const Text('Connect YouTube'),
         ),
+
         const YoutubeConstants(),
       ],
     );

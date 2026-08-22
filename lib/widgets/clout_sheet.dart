@@ -1,32 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Bouncing everywhere except at the top edge, where it clamps instead —
-/// so dragging down while already at the top of the list releases the
-/// gesture to the modal sheet (triggering dismiss) rather than the list
-/// consuming it as an overscroll bounce.
-class SheetScrollPhysics extends BouncingScrollPhysics {
-  const SheetScrollPhysics({super.parent});
-
-  @override
-  SheetScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return SheetScrollPhysics(parent: buildParent(ancestor));
-  }
-
-  @override
-  double applyBoundaryConditions(ScrollMetrics position, double value) {
-    // Only intervene when the drag would pull past the START (top) of
-    // the list — leave the END (bottom) alone, so bounce there still works.
-    if (value < position.pixels &&
-        position.pixels <= position.minScrollExtent) {
-      return value - position.pixels; // clamp: no overscroll generated here
-    }
-    return super.applyBoundaryConditions(
-      position,
-      value,
-    ); // bounce as normal elsewhere
-  }
-}
-
 Future<void> cloutSheet(
   BuildContext context, {
   required Widget Function(
