@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
+import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +51,7 @@ class _MessagesState extends ConsumerState<Messages> {
   void dispose() {
     _messageController.dispose();
     _chatNotifier.disconnectWebSocket();
+    _chatNotifier.clearMessages();
     super.dispose();
   }
 
@@ -58,7 +60,8 @@ class _MessagesState extends ConsumerState<Messages> {
     final topInset = MediaQuery.of(context).padding.top;
     final bottomInset = MediaQuery.of(context).padding.bottom;
 
-    final messages = ref.watch(chatProvider.select((s) => s.messages));
+    final chatState = ref.watch(chatProvider);
+    final messages = chatState.messages;
     final myPhoto = ref.watch(
       authProvider.select((s) => s.value?.user?.profile.profilePhoto),
     );
@@ -73,43 +76,58 @@ class _MessagesState extends ConsumerState<Messages> {
           onClick: widget.onNavigateBack,
         ),
       ),
-      body: Stack(
-        children: [
-          ListView.builder(
-            reverse: true,
-            padding: EdgeInsets.fromLTRB(
-              15,
-              kToolbarHeight + topInset,
-              15,
-              bottomInset + 75,
+      body: messages.isEmpty
+          ? Padding(
+              padding: EdgeInsets.fromLTRB(
+                15,
+                kToolbarHeight + topInset,
+                15,
+                bottomInset + 75,
+              ),
+              child: CloutEmpty(
+                type: .chat,
+                message: "loading",
+                isLoading: chatState.isLoading,
+              ),
+            )
+          : Stack(
+              children: [
+                ListView.builder(
+                  reverse: true,
+                  padding: EdgeInsets.fromLTRB(
+                    15,
+                    kToolbarHeight + topInset,
+                    15,
+                    bottomInset + 75,
+                  ),
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    return _ChatRow(
+                      content: message.content,
+                      date: timeAgo(message.createdAt),
+                      isSender:
+                          message.sender.profile.username != widget.username,
+                      profilePhoto: widget.profilePhoto,
+                    );
+                  },
+                ),
+                Positioned(
+                  left: 15,
+                  right: 15,
+                  bottom: MediaQuery.of(context).viewInsets.bottom > 0
+                      ? 15
+                      : MediaQuery.of(context).padding.bottom,
+                  child: CloutInput(
+                    onSend: (text) =>
+                        ref.read(chatProvider.notifier).sendLiveMessage(text),
+                    avatarUrl: myPhoto != null
+                        ? ApiConfig.current.baseUrl + myPhoto
+                        : null,
+                  ),
+                ),
+              ],
             ),
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              final message = messages[index];
-              return _ChatRow(
-                content: message.content,
-                date: timeAgo(message.createdAt),
-                isSender: message.sender.profile.username != widget.username,
-                profilePhoto: widget.profilePhoto,
-              );
-            },
-          ),
-          Positioned(
-            left: 15,
-            right: 15,
-            bottom: MediaQuery.of(context).viewInsets.bottom > 0
-                ? 15
-                : MediaQuery.of(context).padding.bottom,
-            child: CloutInput(
-              onSend: (text) =>
-                  ref.read(chatProvider.notifier).sendLiveMessage(text),
-              avatarUrl: myPhoto != null
-                  ? ApiConfig.current.baseUrl + myPhoto
-                  : null,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

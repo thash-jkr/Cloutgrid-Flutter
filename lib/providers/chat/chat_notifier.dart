@@ -57,6 +57,12 @@ class ChatNotifier extends _$ChatNotifier {
   WebSocketChannel? _channel;
   StreamSubscription? _channelSubscription;
 
+  void clearMessages() {
+    Future(() {
+      state = state.copyWith(messages: []);
+    });
+  }
+
   @override
   ChatState build() {
     ref.onDispose(disconnectWebSocket);

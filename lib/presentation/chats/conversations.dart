@@ -126,7 +126,7 @@ class _ConversationsState extends ConsumerState<Conversations> {
 
           if (chatState.chats.isEmpty && _query.isEmpty)
             CloutEmpty(
-              type: EmptyType.comment,
+              type: EmptyType.chat,
               message: 'No conversations yet',
               isLoading: chatState.isLoading,
             ),
