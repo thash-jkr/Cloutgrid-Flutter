@@ -3,6 +3,29 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'integration_models.freezed.dart';
 part 'integration_models.g.dart';
 
+String compactCount(int value) {
+  if (value < 1000) return value.toString();
+
+  const suffixes = [
+    (threshold: 1000000000, suffix: 'B'),
+    (threshold: 1000000, suffix: 'M'),
+    (threshold: 1000, suffix: 'K'),
+  ];
+
+  for (final entry in suffixes) {
+    if (value >= entry.threshold) {
+      final scaled = value / entry.threshold;
+      final formatted = scaled.toStringAsFixed(1);
+      final trimmed = formatted.endsWith('.0')
+          ? formatted.substring(0, formatted.length - 2)
+          : formatted;
+      return '$trimmed${entry.suffix}';
+    }
+  }
+
+  return value.toString();
+}
+
 @freezed
 abstract class InstagramPageModel with _$InstagramPageModel {
   const factory InstagramPageModel({
@@ -14,16 +37,13 @@ abstract class InstagramPageModel with _$InstagramPageModel {
     required int followings,
     @JsonKey(name: 'media_count') required int mediaCount,
     @JsonKey(name: 'insights_raw') required List<ProfileInsightModel> insights,
+    @JsonKey(name: 'last_synced_at') required String lastSync,
   }) = _InstagramPageModel;
 
   factory InstagramPageModel.fromJson(Map<String, dynamic> json) =>
       _$InstagramPageModelFromJson(json);
 }
 
-/// Kotlin's InsightValue had a `val id: String get() = UUID.randomUUID()...`
-/// — a computed getter returning a NEW random value on every access, not a
-/// stable id (same footgun flagged on UserContainer earlier). Dropped here;
-/// use list index for widget Keys when rendering these instead.
 @freezed
 abstract class InsightValue with _$InsightValue {
   const factory InsightValue({required int value}) = _InsightValue;

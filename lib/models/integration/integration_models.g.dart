@@ -18,6 +18,7 @@ _InstagramPageModel _$InstagramPageModelFromJson(Map<String, dynamic> json) =>
       insights: (json['insights_raw'] as List<dynamic>)
           .map((e) => ProfileInsightModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      lastSync: json['last_synced_at'] as String,
     );
 
 Map<String, dynamic> _$InstagramPageModelToJson(_InstagramPageModel instance) =>
@@ -30,6 +31,7 @@ Map<String, dynamic> _$InstagramPageModelToJson(_InstagramPageModel instance) =>
       'followings': instance.followings,
       'media_count': instance.mediaCount,
       'insights_raw': instance.insights,
+      'last_synced_at': instance.lastSync,
     };
 
 _InsightValue _$InsightValueFromJson(Map<String, dynamic> json) =>

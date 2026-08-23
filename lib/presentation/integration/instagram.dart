@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/core/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -196,6 +197,10 @@ class InstagramHeader extends StatelessWidget {
                   onPressed: () {},
                   child: Text('@${page.username}'),
                 ),
+                Text(
+                  "Updated ${timeAgo(page.lastSync)}",
+                  style: TextStyle(color: Colors.grey, fontSize: 10),
+                ),
               ],
             ),
           ),
@@ -263,7 +268,7 @@ class InstagramInsights extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${metric.totalValue.value}',
+                      compactCount(metric.totalValue.value),
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -304,7 +309,7 @@ class InstagramMedia extends StatelessWidget {
         ),
         if (mediaList.isEmpty)
           Padding(
-            padding: const EdgeInsets.only(left: 15, bottom: 15),
+            padding: const EdgeInsets.only(left: 15),
             child: Text(
               'No $emptyLabel found',
               style: const TextStyle(color: Colors.grey),
@@ -368,7 +373,7 @@ class InstagramMedia extends StatelessWidget {
                             ),
                             const SizedBox(width: 2),
                             Text(
-                              '${media.likeCount}',
+                              compactCount(media.likeCount),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -386,7 +391,7 @@ class InstagramMedia extends StatelessWidget {
                                   (v) => Padding(
                                     padding: const EdgeInsets.only(left: 2),
                                     child: Text(
-                                      '${v.value}',
+                                      compactCount(v.value),
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
