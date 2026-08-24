@@ -83,7 +83,7 @@ class _InstagramState extends ConsumerState<Instagram> {
     final topInset = MediaQuery.of(context).padding.top;
 
     final integrationState = ref.watch(integrationProvider);
-    final isConnected = user?.youtubeConnected == true;
+    final isConnected = user?.instagramConnected == true;
 
     if (isConnected && !_loadTriggered) {
       _loadTriggered = true;
@@ -120,7 +120,6 @@ class _InstagramState extends ConsumerState<Instagram> {
       ),
       body: SingleChildScrollView(
         controller: widget.scrollController,
-        physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.only(top: kToolbarHeight + topInset, bottom: 100),
         child: user?.instagramConnected == true
             ? Column(

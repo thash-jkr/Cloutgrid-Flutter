@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,6 @@ import '../../core/network/api_config.dart';
 import '../../models/integration/integration_models.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../providers/integration/integration_notifier.dart';
-import '../../widgets/clout_alert.dart';
 import '../../widgets/clout_header.dart';
 import '../../widgets/clout_toast.dart';
 import 'integration_constants.dart';
@@ -56,20 +56,20 @@ class _YoutubeState extends ConsumerState<Youtube> {
     );
   }
 
-  void _showDisconnectAlert() {
+  Future<void> _showDisconnectAlert() async {
     CloutAlert.show(
       context,
-      title: 'Disconnect YouTube?',
+      title: "Disconnect YouTube",
       body:
-          'Are you sure you want to disconnect your YouTube integration and purge all your data?',
-      onSubmit: (_) async {
-        try {
-          // await ref.read(integrationProvider.notifier).disconnectYoutube();
-        } catch (e) {
-          if (!context.mounted) return;
-          showToast(context, message: e.toString(), isSuccess: false);
-        }
-      },
+          "Are you sure you want to disconnect YouTube integration and purge all your data with us?",
+      onSubmit: (_) async => await showAsyncToast(
+        context,
+        loadingMessage: 'Disconnecting...',
+        successMessage: 'Disconnected',
+        task: () async {
+          await ref.read(integrationProvider.notifier).disconnectYoutube();
+        },
+      ),
     );
   }
 
@@ -375,7 +375,7 @@ class _NotConnected extends ConsumerWidget {
         FilledButton(
           onPressed: () => _openUrl(
             context,
-            "${ApiConfig.current.baseUrl}/auth/youtube/start?token=$access&medium=app",
+            "${ApiConfig.current.baseUrl}/auth/google/start?token=$access&medium=app",
           ),
           child: const Text('Connect YouTube'),
         ),

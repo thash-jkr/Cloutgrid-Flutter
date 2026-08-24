@@ -118,17 +118,37 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       loadingMessage: 'Connecting Instagram...',
       successMessage: 'Instagram Connected',
       task: () async {
-        await ref.read(authProvider.notifier).setInstagramConnected(true);
-
-        await Future.wait([
-          integrationNotifier.fetchInstagramProfile(),
-          integrationNotifier.fetchInstagramMedia(),
-        ]);
+        await integrationNotifier.fetchInstagramProfile();
+        await integrationNotifier.fetchInstagramMedia();
 
         await Future.wait([
           integrationNotifier.loadOwnInstagramProfile(username),
           integrationNotifier.loadOwnInstagramMedia(username),
         ]);
+
+        await ref.read(authProvider.notifier).setInstagramConnected(true);
+      },
+    );
+  }
+
+  Future<void> _connectYouTube() async {
+    if (user == null) return;
+    final username = user!.profile.username;
+
+    await showAsyncToast(
+      context,
+      loadingMessage: 'Connecting YouTube...',
+      successMessage: 'YouTube Connected',
+      task: () async {
+        await integrationNotifier.fetchYoutubeChannel();
+        await integrationNotifier.fetchYoutubeMedia();
+
+        await Future.wait([
+          integrationNotifier.loadOwnYoutubeChannel(username),
+          integrationNotifier.loadOwnYoutubeMedia(username),
+        ]);
+
+        await ref.read(authProvider.notifier).setYoutubeConnected(true);
       },
     );
   }
@@ -195,6 +215,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         _connectInstagram();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       } else if (next == ProfileAction.connectYoutube) {
+        _connectYouTube();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       }
     });

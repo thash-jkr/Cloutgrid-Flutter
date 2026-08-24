@@ -258,6 +258,28 @@ class IntegrationNotifier extends _$IntegrationNotifier {
     }
   }
 
+  Future<void> disconnectYoutube() async {
+    state = state.copyWith(isLoading: true, clearErrorMessage: true);
+    try {
+      await ref.read(authProvider.notifier).setYoutubeConnected(false);
+      state = state.copyWith(clearYoutubeChannel: true, youtubeMedia: const []);
+
+      await ref
+          .read(apiServiceProvider)
+          .request<dynamic>(
+            '/auth/google/disconnect/',
+            method: 'POST',
+            fromJson: (json) => json,
+            body: <String, String>{},
+            requireAuth: true,
+          );
+      state = state.copyWith(isLoading: false);
+    } catch (e) {
+      state = state.copyWith(errorMessage: e.toString(), isLoading: false);
+      rethrow;
+    }
+  }
+
   Future<void> fetchYoutubeChannel() async {
     state = state.copyWith(isLoading: true, clearErrorMessage: true);
     try {

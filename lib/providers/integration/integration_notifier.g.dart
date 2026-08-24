@@ -42,7 +42,7 @@ final class IntegrationNotifierProvider
 }
 
 String _$integrationNotifierHash() =>
-    r'1dfd15ed4ae5e286c63c0f1410788fbeeaabb6d0';
+    r'e0f5550edc36a4db56543450c0ebe8cecdcd355e';
 
 abstract class _$IntegrationNotifier extends $Notifier<IntegrationState> {
   IntegrationState build();
