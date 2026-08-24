@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ProfileImageCropper extends StatefulWidget {
   final Uint8List imageBytes;
@@ -21,6 +22,28 @@ class ProfileImageCropper extends StatefulWidget {
 
 class _ProfileImageCropperState extends State<ProfileImageCropper> {
   final _controller = CropController();
+  bool _isCompressing = false;
+
+  Future<void> _handleCropped(Uint8List? croppedImage) async {
+    if (croppedImage == null) {
+      widget.onCropCompleted(null);
+      return;
+    }
+
+    setState(() => _isCompressing = true);
+
+    final compressed = await FlutterImageCompress.compressWithList(
+      croppedImage,
+      minWidth: 500,
+      minHeight: 500,
+      quality: 80,
+      format: CompressFormat.jpeg,
+    );
+
+    if (!mounted) return;
+    setState(() => _isCompressing = false);
+    widget.onCropCompleted(compressed);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +60,9 @@ class _ProfileImageCropperState extends State<ProfileImageCropper> {
             onCropped: (result) {
               switch (result) {
                 case CropSuccess(:final croppedImage):
-                  widget.onCropCompleted(croppedImage);
+                  _handleCropped(croppedImage);
                 case CropFailure():
-                  widget.onCropCompleted(null);
+                  _handleCropped(null);
               }
             },
           ),
@@ -60,6 +83,13 @@ class _ProfileImageCropperState extends State<ProfileImageCropper> {
             ],
           ),
         ),
+        if (_isCompressing)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black54,
+              child: const Center(child: CircularProgressIndicator()),
+            ),
+          ),
       ],
     );
   }

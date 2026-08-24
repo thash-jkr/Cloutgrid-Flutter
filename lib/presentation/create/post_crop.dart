@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:crop_image/crop_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class PostCrop extends StatefulWidget {
   final Uint8List imageBytes;
@@ -84,9 +85,27 @@ class _PostCropState extends State<PostCrop> {
     try {
       final ui.Image bitmap = await _controller.croppedBitmap();
       final byteData = await bitmap.toByteData(format: ui.ImageByteFormat.png);
-      widget.onCropCompleted(byteData?.buffer.asUint8List(), _ratioLabel);
+      final rawBytes = byteData?.buffer.asUint8List();
+
+      if (rawBytes == null) {
+        if (!mounted) return;
+        widget.onCropCompleted(null, _ratioLabel);
+        return;
+      }
+
+      final compressed = await FlutterImageCompress.compressWithList(
+        rawBytes,
+        minWidth: 1080,
+        minHeight: 1080,
+        quality: 85,
+        format: CompressFormat.jpeg,
+      );
+
+      if (!mounted) return;
+      widget.onCropCompleted(compressed, _ratioLabel);
     } catch (_) {
-      widget.onCropCompleted(null, "1:1");
+      if (!mounted) return;
+      widget.onCropCompleted(null, '1:1');
     }
   }
 

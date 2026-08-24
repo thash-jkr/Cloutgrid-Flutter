@@ -32,6 +32,7 @@ dependencies:
   flutter_native_splash: ^2.4.8
   web_socket_channel: ^3.0.3
   app_links: ^7.2.1
+  flutter_image_compress: ^2.3.0
 
 dev_dependencies:
   flutter_test:

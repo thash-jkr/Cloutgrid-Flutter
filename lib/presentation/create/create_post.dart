@@ -182,43 +182,43 @@ class _CreatePostState extends ConsumerState<CreatePost> {
                   ),
                 ),
 
-                if (isCreator)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 0,
-                    ),
-                    child: InputDecorator(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        helperText:
-                            'Optional – If you collaborated with any brands for this post, mention them',
-                        helperMaxLines: 2,
-                        suffixIcon: _collab != null
-                            ? IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () => setState(() => _collab = null),
-                              )
-                            : null,
-                      ),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: _openCollabSheet,
-                        child: Text(
-                          _collab != null
-                              ? '@${_collab!.profile.username}'
-                              : 'Collaboration',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                const SizedBox(height: 100),
+                // if (isCreator)
+                //   Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 15,
+                //       vertical: 0,
+                //     ),
+                //     child: InputDecorator(
+                //       decoration: InputDecoration(
+                //         border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(12.0),
+                //         ),
+                //         helperText:
+                //             'Optional – If you collaborated with any brands for this post, mention them',
+                //         helperMaxLines: 2,
+                //         suffixIcon: _collab != null
+                //             ? IconButton(
+                //                 icon: const Icon(Icons.close),
+                //                 onPressed: () => setState(() => _collab = null),
+                //               )
+                //             : null,
+                //       ),
+                //       child: GestureDetector(
+                //         behavior: HitTestBehavior.opaque,
+                //         onTap: _openCollabSheet,
+                //         child: Text(
+                //           _collab != null
+                //               ? '@${_collab!.profile.username}'
+                //               : 'Collaboration',
+                //           style: TextStyle(
+                //             fontSize: 16,
+                //             color: Theme.of(context).colorScheme.onSurface,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // const SizedBox(height: 100),
               ],
             ),
           ),
