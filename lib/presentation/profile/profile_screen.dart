@@ -54,6 +54,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
       final profile = ref.read(profileProvider.notifier);
       if (ref.read(profileProvider).posts.isEmpty) {
+        profile.fetchProfile(username, other: false);
         profile.fetchPosts(username);
       }
     });

@@ -194,11 +194,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       onLikeClick: () =>
                           ref.read(homeProvider.notifier).likePost(post.id),
                       onCommentClick: () => _openComments(post.id),
-                      onUserClick: (username) {
-                        if (username == user?.profile.username) {
+                      onUserClick: (author) {
+                        if (author.profile.username == user?.profile.username) {
                           widget.onSelectTab(.profile);
                         } else {
-                          widget.onNavigateToOtherProfile(post.postedBy);
+                          widget.onNavigateToOtherProfile(author);
                         }
                       },
                       onBlockClick: () => ref

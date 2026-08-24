@@ -1,17 +1,17 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/network/api_config.dart';
+// import '../../core/network/api_config.dart';
 import '../../models/auth/auth_models.dart';
-import '../../providers/auth/auth_notifier.dart';
+// import '../../providers/auth/auth_notifier.dart';
 import '../../providers/create/create_notifier.dart';
-import '../../widgets/category_list.dart';
-import '../../widgets/clout_empty.dart';
+// import '../../widgets/category_list.dart';
+// import '../../widgets/clout_empty.dart';
 import '../../widgets/clout_header.dart';
-import '../../widgets/clout_sheet.dart';
+// import '../../widgets/clout_sheet.dart';
 import '../../widgets/clout_toast.dart';
 import 'post_crop.dart';
 
@@ -76,16 +76,16 @@ class _CreatePostState extends ConsumerState<CreatePost> {
     super.dispose();
   }
 
-  void _openCollabSheet() {
-    cloutSheet(
-      context,
-      content: (context, scrollController) => _CollabSheet(
-        selectedCollab: _collab,
-        onCollabSelected: (c) => setState(() => _collab = c),
-        scrollController: scrollController,
-      ),
-    );
-  }
+  // void _openCollabSheet() {
+  //   cloutSheet(
+  //     context,
+  //     content: (context, scrollController) => _CollabSheet(
+  //       selectedCollab: _collab,
+  //       onCollabSelected: (c) => setState(() => _collab = c),
+  //       scrollController: scrollController,
+  //     ),
+  //   );
+  // }
 
   Future<void> _handleSave() async {
     if (_captionController.text.trim().isEmpty) {
@@ -115,8 +115,8 @@ class _CreatePostState extends ConsumerState<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(authProvider).value?.user;
-    final isCreator = user?.profile.userType == 'creator';
+    // final user = ref.watch(authProvider).value?.user;
+    // final isCreator = user?.profile.userType == 'creator';
 
     return Stack(
       children: [
@@ -265,151 +265,151 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   }
 }
 
-class _CollabSheet extends ConsumerStatefulWidget {
-  final UserContainer? selectedCollab;
-  final ValueChanged<UserContainer> onCollabSelected;
-  final ScrollController? scrollController;
+// class _CollabSheet extends ConsumerStatefulWidget {
+//   final UserContainer? selectedCollab;
+//   final ValueChanged<UserContainer> onCollabSelected;
+//   final ScrollController? scrollController;
 
-  const _CollabSheet({
-    required this.selectedCollab,
-    required this.onCollabSelected,
-    this.scrollController,
-  });
+//   const _CollabSheet({
+//     required this.selectedCollab,
+//     required this.onCollabSelected,
+//     this.scrollController,
+//   });
 
-  @override
-  ConsumerState<_CollabSheet> createState() => _CollabSheetState();
-}
+//   @override
+//   ConsumerState<_CollabSheet> createState() => _CollabSheetState();
+// }
 
-class _CollabSheetState extends ConsumerState<_CollabSheet> {
-  final _queryController = TextEditingController();
-  String _query = '';
+// class _CollabSheetState extends ConsumerState<_CollabSheet> {
+//   final _queryController = TextEditingController();
+//   String _query = '';
 
-  @override
-  void dispose() {
-    _queryController.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     _queryController.dispose();
+//     super.dispose();
+//   }
 
-  void _onQueryChanged(String value) {
-    setState(() => _query = value);
-    if (value.isNotEmpty) {
-      ref.read(createProvider.notifier).searchBusiness(value);
-    }
-  }
+//   void _onQueryChanged(String value) {
+//     setState(() => _query = value);
+//     if (value.isNotEmpty) {
+//       ref.read(createProvider.notifier).searchBusiness(value);
+//     }
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final topInset = MediaQuery.of(context).padding.top;
-    final createState = ref.watch(createProvider);
+//   @override
+//   Widget build(BuildContext context) {
+//     final topInset = MediaQuery.of(context).padding.top;
+//     final createState = ref.watch(createProvider);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CloutHeader(title: 'Search Collaboration'),
-      body: ListView(
-        controller: widget.scrollController,
-        padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
-        children: [
-          TextField(
-            controller: _queryController,
-            onChanged: _onQueryChanged,
-            decoration: InputDecoration(
-              labelText: 'Search for Brands',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
+//     return Scaffold(
+//       extendBodyBehindAppBar: true,
+//       appBar: CloutHeader(title: 'Search Collaboration'),
+//       body: ListView(
+//         controller: widget.scrollController,
+//         padding: EdgeInsets.fromLTRB(15, kToolbarHeight + topInset, 15, 100),
+//         children: [
+//           TextField(
+//             controller: _queryController,
+//             onChanged: _onQueryChanged,
+//             decoration: InputDecoration(
+//               labelText: 'Search for Brands',
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(12),
+//               ),
+//             ),
+//           ),
 
-          const SizedBox(height: 15),
+//           const SizedBox(height: 15),
 
-          if (createState.collabs.isEmpty)
-            CloutEmpty(
-              type: EmptyType.general,
-              message: _query.isEmpty
-                  ? 'Search for the business you collaborated with'
-                  : 'No results found',
-              isLoading: createState.isLoading,
-            )
-          else
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: createState.collabs.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 1),
-              itemBuilder: (context, index) {
-                final collab = createState.collabs[index];
-                final isSelected =
-                    collab.profile.username ==
-                    widget.selectedCollab?.profile.username;
+//           if (createState.collabs.isEmpty)
+//             CloutEmpty(
+//               type: EmptyType.general,
+//               message: _query.isEmpty
+//                   ? 'Search for the business you collaborated with'
+//                   : 'No results found',
+//               isLoading: createState.isLoading,
+//             )
+//           else
+//             ListView.separated(
+//               shrinkWrap: true,
+//               physics: const NeverScrollableScrollPhysics(),
+//               padding: EdgeInsets.zero,
+//               itemCount: createState.collabs.length,
+//               separatorBuilder: (context, index) => const SizedBox(height: 1),
+//               itemBuilder: (context, index) {
+//                 final collab = createState.collabs[index];
+//                 final isSelected =
+//                     collab.profile.username ==
+//                     widget.selectedCollab?.profile.username;
 
-                return Material(
-                  elevation: 1,
-                  borderRadius: _segmentRadius(
-                    index,
-                    createState.collabs.length,
-                  ),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: _segmentRadius(
-                        index,
-                        createState.collabs.length,
-                      ),
-                    ),
-                    selected: isSelected,
-                    tileColor: Colors.white,
-                    selectedTileColor: Theme.of(context).colorScheme.secondary,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 0,
-                    ),
-                    leading: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            ApiConfig.current.baseUrl +
-                            collab.profile.profilePhoto,
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const CircleAvatar(radius: 20),
-                        errorWidget: (context, url, error) =>
-                            const CircleAvatar(radius: 20),
-                      ),
-                    ),
-                    title: Text(
-                      collab.profile.name,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.black,
-                      ),
-                    ),
-                    subtitle: Text(
-                      CategoryList.labelFor(collab.targetAudience ?? ''),
-                      style: TextStyle(
-                        color: isSelected ? Colors.white70 : Colors.grey,
-                      ),
-                    ),
-                    onTap: () {
-                      widget.onCollabSelected(collab);
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-              },
-            ),
-        ],
-      ),
-    );
-  }
+//                 return Material(
+//                   elevation: 1,
+//                   borderRadius: _segmentRadius(
+//                     index,
+//                     createState.collabs.length,
+//                   ),
+//                   child: ListTile(
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: _segmentRadius(
+//                         index,
+//                         createState.collabs.length,
+//                       ),
+//                     ),
+//                     selected: isSelected,
+//                     tileColor: Colors.white,
+//                     selectedTileColor: Theme.of(context).colorScheme.secondary,
+//                     contentPadding: const EdgeInsets.symmetric(
+//                       horizontal: 15,
+//                       vertical: 0,
+//                     ),
+//                     leading: ClipOval(
+//                       child: CachedNetworkImage(
+//                         imageUrl:
+//                             ApiConfig.current.baseUrl +
+//                             collab.profile.profilePhoto,
+//                         width: 40,
+//                         height: 40,
+//                         fit: BoxFit.cover,
+//                         placeholder: (context, url) =>
+//                             const CircleAvatar(radius: 20),
+//                         errorWidget: (context, url, error) =>
+//                             const CircleAvatar(radius: 20),
+//                       ),
+//                     ),
+//                     title: Text(
+//                       collab.profile.name,
+//                       style: TextStyle(
+//                         color: isSelected ? Colors.white : Colors.black,
+//                       ),
+//                     ),
+//                     subtitle: Text(
+//                       CategoryList.labelFor(collab.targetAudience ?? ''),
+//                       style: TextStyle(
+//                         color: isSelected ? Colors.white70 : Colors.grey,
+//                       ),
+//                     ),
+//                     onTap: () {
+//                       widget.onCollabSelected(collab);
+//                       Navigator.pop(context);
+//                     },
+//                   ),
+//                 );
+//               },
+//             ),
+//         ],
+//       ),
+//     );
+//   }
 
-  BorderRadius _segmentRadius(int index, int count) {
-    const radius = Radius.circular(12);
-    final isFirst = index == 0;
-    final isLast = index == count - 1;
+//   BorderRadius _segmentRadius(int index, int count) {
+//     const radius = Radius.circular(12);
+//     final isFirst = index == 0;
+//     final isLast = index == count - 1;
 
-    if (count == 1) return BorderRadius.all(radius);
-    if (isFirst) return const BorderRadius.vertical(top: radius);
-    if (isLast) return const BorderRadius.vertical(bottom: radius);
-    return BorderRadius.zero;
-  }
-}
+//     if (count == 1) return BorderRadius.all(radius);
+//     if (isFirst) return const BorderRadius.vertical(top: radius);
+//     if (isLast) return const BorderRadius.vertical(bottom: radius);
+//     return BorderRadius.zero;
+//   }
+// }

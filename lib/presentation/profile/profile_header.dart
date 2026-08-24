@@ -32,6 +32,12 @@ class ProfileHeader extends StatelessWidget {
                     width: 75,
                     height: 75,
                     fit: BoxFit.cover,
+                    placeholder: (context, url) => const Image(
+                      image: AssetImage('assets/images/profile.png'),
+                    ),
+                    errorWidget: (context, url, error) => const Image(
+                      image: AssetImage('assets/images/profile.png'),
+                    ),
                   ),
                 ),
 

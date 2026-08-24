@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class FeedPost extends StatefulWidget {
   final PostModel post;
   final VoidCallback onLikeClick;
   final VoidCallback onCommentClick;
-  final ValueChanged<String> onUserClick; // username
+  final ValueChanged<UserContainer> onUserClick;
   final bool isOwner;
   final VoidCallback onBlockClick;
   final VoidCallback onDeleteClick;
@@ -118,7 +119,7 @@ class _FeedPostState extends State<FeedPost>
                       color: theme.colorScheme.onSurface,
                     ),
                   ),
-                  onTap: () => widget.onUserClick(post.author.username),
+                  onTap: () => widget.onUserClick(post.postedBy),
                 ),
 
                 const Spacer(),
@@ -271,7 +272,7 @@ class _FeedPostState extends State<FeedPost>
                     text: post.author.username,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     recognizer: _collabTapRecognizer = TapGestureRecognizer()
-                      ..onTap = () => widget.onUserClick(post.author.username),
+                      ..onTap = () => widget.onUserClick(post.postedBy),
                   ),
                   if (post.collaboration != null) ...[
                     const TextSpan(
@@ -282,9 +283,7 @@ class _FeedPostState extends State<FeedPost>
                       text: post.collaboration!.profile.username,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       recognizer: _collabTapRecognizer = TapGestureRecognizer()
-                        ..onTap = () => widget.onUserClick(
-                          post.collaboration!.profile.username,
-                        ),
+                        ..onTap = () => widget.onUserClick(post.collaboration!),
                     ),
                   ],
                   const TextSpan(
