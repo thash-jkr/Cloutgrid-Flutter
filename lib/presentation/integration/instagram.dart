@@ -145,12 +145,12 @@ class _InstagramState extends ConsumerState<Instagram> {
 
                     InstagramMedia(
                       igMedia: integrationState.instagramMedia,
-                      type: 'IMAGE',
+                      isReel: true,
                     ),
 
                     InstagramMedia(
                       igMedia: integrationState.instagramMedia,
-                      type: 'VIDEO',
+                      isReel: false,
                     ),
                   ],
                 ],
@@ -286,15 +286,21 @@ class InstagramInsights extends StatelessWidget {
 
 class InstagramMedia extends StatelessWidget {
   final List<InstagramMediaModel> igMedia;
-  final String type;
+  final bool isReel;
 
-  const InstagramMedia({super.key, required this.igMedia, required this.type});
+  const InstagramMedia({
+    super.key,
+    required this.igMedia,
+    required this.isReel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final mediaList = igMedia.where((m) => m.mediaType == type).toList();
-    final label = type == 'IMAGE' ? 'Recent Posts' : 'Recent Reels';
-    final emptyLabel = type == 'IMAGE' ? 'posts' : 'reels';
+    final mediaList = igMedia
+        .where((m) => isReel ? m.mediaType == "VIDEO" : m.mediaType != "VIDEO")
+        .toList();
+    final label = isReel ? 'Recent Reels' : 'Recent Posts';
+    final emptyLabel = isReel ? 'reels' : 'posts';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

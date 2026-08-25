@@ -159,7 +159,7 @@ class _AuthInterceptor extends Interceptor {
     final refreshToken = await _authStore.refresh;
 
     if (refreshToken == null) {
-      await _authStore.clearSession(); // ADD THIS
+      await _authStore.clearSession();
       return handler.next(err);
     }
 

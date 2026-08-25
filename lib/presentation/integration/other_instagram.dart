@@ -76,12 +76,12 @@ class _InstagramState extends ConsumerState<OtherInstagram> {
 
                     InstagramMedia(
                       igMedia: integrationState.otherInstagramMedia,
-                      type: 'IMAGE',
+                      isReel: true,
                     ),
 
                     InstagramMedia(
                       igMedia: integrationState.otherInstagramMedia,
-                      type: 'VIDEO',
+                      isReel: false,
                     ),
                   ],
                 ],
