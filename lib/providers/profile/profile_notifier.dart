@@ -2,7 +2,7 @@ import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/home/home_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/core_providers.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/home/home_models.dart';
 import '../../models/auth/auth_models.dart';
 

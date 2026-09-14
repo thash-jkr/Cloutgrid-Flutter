@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/core_providers.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/auth/auth_models.dart';
 import '../../models/search/search_models.dart';
 

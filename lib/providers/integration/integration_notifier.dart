@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/core_providers.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/integration/integration_models.dart';
 import '../auth/auth_notifier.dart';
 

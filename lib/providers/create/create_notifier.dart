@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:cloutgrid_flutter/core/network/api_config.dart';
+import 'package:cloutgrid_flutter/app/network/api_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/core_providers.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/auth/auth_models.dart';
 import '../../models/home/home_models.dart';
 import '../home/home_notifier.dart';

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloutgrid_flutter/core/network/api_config.dart';
+import 'package:cloutgrid_flutter/app/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';

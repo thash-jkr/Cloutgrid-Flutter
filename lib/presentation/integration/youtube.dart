@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/network/api_config.dart';
+import '../../app/network/api_config.dart';
 import '../../models/integration/integration_models.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../providers/integration/integration_notifier.dart';

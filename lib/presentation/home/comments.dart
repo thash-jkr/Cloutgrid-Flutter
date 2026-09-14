@@ -3,7 +3,7 @@ import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_input.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/network/api_config.dart';
+import '../../app/network/api_config.dart';
 import '../../../models/auth/auth_models.dart';
 import '../../../models/home/home_models.dart';
 import '../../../widgets/clout_header.dart';

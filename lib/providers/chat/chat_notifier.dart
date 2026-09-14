@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../core/network/api_config.dart';
-import '../../core/providers/core_providers.dart';
+import '../../app/network/api_config.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/chat/chat_models.dart';
 
 part 'chat_notifier.g.dart';

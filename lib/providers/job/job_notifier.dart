@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/core_providers.dart';
+import '../../app/providers/core_providers.dart';
 import '../../models/job/job_models.dart';
 
 part 'job_notifier.g.dart';

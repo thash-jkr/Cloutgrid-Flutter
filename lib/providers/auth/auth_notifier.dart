@@ -3,9 +3,9 @@ import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/network/api_service.dart';
-import '../../core/providers/core_providers.dart';
-import '../../core/storage/secure_storage.dart';
+import '../../app/network/api_service.dart';
+import '../../app/providers/core_providers.dart';
+import '../../app/storage/secure_storage.dart';
 import '../../models/auth_state.dart';
 import '../../models/auth/auth_models.dart';
 

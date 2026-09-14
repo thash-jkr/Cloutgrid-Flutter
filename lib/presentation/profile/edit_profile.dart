@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../core/network/api_config.dart';
+import '../../app/network/api_config.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../widgets/category_list.dart';
 import '../../widgets/category_sheet.dart';
