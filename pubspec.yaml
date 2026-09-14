@@ -33,6 +33,8 @@ dependencies:
   web_socket_channel: ^3.0.3
   app_links: ^7.2.1
   flutter_image_compress: ^2.3.0
+  animated_emoji: ^3.3.0
+  lottie: ^3.5.1
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +82,8 @@ flutter:
 
     - assets/icons/instagram.svg
     - assets/icons/youtube.svg
+
+    - assets/animations/hero.json
 
 flutter_native_splash:
   color: "#F2F0EF"

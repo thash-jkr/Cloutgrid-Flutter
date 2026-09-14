@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:animated_emoji/emoji.dart';
+import 'package:animated_emoji/emoji_data.dart';
+import 'package:animated_emoji/emojis.g.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LandingScreen extends StatelessWidget {
   final VoidCallback onNavigateToLogin;
@@ -56,8 +59,8 @@ class LandingScreen extends StatelessWidget {
 
               Expanded(
                 child: Center(
-                  child: Image(
-                    image: const AssetImage('assets/images/kid.png'),
+                  child: Lottie.asset(
+                    'assets/animations/hero.json',
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -98,45 +101,23 @@ class LandingScreen extends StatelessWidget {
                   top: 15,
                 ),
                 child: Column(
+                  spacing: 15,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _FeatureTile(
-                            label: 'Unlimited campaigns',
-                            color: theme.colorScheme.primary,
-                            icon: CupertinoIcons.rocket,
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: _FeatureTile(
-                            label: 'Instagram & YouTube analytics',
-                            color: theme.colorScheme.secondary,
-                            icon: CupertinoIcons.chart_bar_alt_fill,
-                          ),
-                        ),
-                      ],
+                    _FeatureTile(
+                      label: 'Unlimited campaigns',
+                      icon: AnimatedEmojis.rocket,
                     ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _FeatureTile(
-                            label: 'Safe escrow payments',
-                            color: theme.colorScheme.secondary,
-                            icon: CupertinoIcons.shield_lefthalf_fill,
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: _FeatureTile(
-                            label: 'AI-powered brand matching',
-                            color: theme.colorScheme.primary,
-                            icon: CupertinoIcons.sparkles,
-                          ),
-                        ),
-                      ],
+                    _FeatureTile(
+                      label: 'Instagram & YouTube analytics',
+                      icon: AnimatedEmojis.barChart,
+                    ),
+                    _FeatureTile(
+                      label: 'Safe escrow payments',
+                      icon: AnimatedEmojis.moneyWithWings,
+                    ),
+                    _FeatureTile(
+                      label: 'AI-powered brand matching',
+                      icon: AnimatedEmojis.sparkles,
                     ),
                   ],
                 ),
@@ -151,45 +132,27 @@ class LandingScreen extends StatelessWidget {
 
 class _FeatureTile extends StatelessWidget {
   final String label;
-  final Color color;
-  final IconData icon;
+  final AnimatedEmojiData icon;
 
-  const _FeatureTile({
-    required this.label,
-    required this.color,
-    required this.icon,
-  });
+  const _FeatureTile({required this.label, required this.icon});
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.5,
-      child: Material(
-        elevation: 1,
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(15),
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          AnimatedEmoji(icon, size: 30, repeat: true),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            textAlign: TextAlign.left,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
-          padding: const EdgeInsets.all(15),
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: Colors.white, size: 25),
-              const SizedBox(height: 5),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }
