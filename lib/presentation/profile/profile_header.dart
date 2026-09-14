@@ -3,11 +3,10 @@ import 'package:cloutgrid_flutter/widgets/clout_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/network/api_config.dart';
 import '../../models/auth/auth_models.dart';
 
 class ProfileHeader extends StatelessWidget {
-  final UserContainer user;
+  final UserProfile user;
 
   const ProfileHeader({super.key, required this.user});
 
@@ -28,7 +27,7 @@ class ProfileHeader extends StatelessWidget {
                 ClipOval(
                   child: CachedNetworkImage(
                     imageUrl:
-                        ApiConfig.current.baseUrl + user.profile.profilePhoto,
+                        user.profilePhoto,
                     width: 75,
                     height: 75,
                     fit: BoxFit.cover,
@@ -44,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
                 const SizedBox(height: 14),
 
                 Text(
-                  user.profile.name,
+                  user.name,
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -52,7 +51,7 @@ class ProfileHeader extends StatelessWidget {
                 ),
 
                 Text(
-                  user.profile.bio ?? '',
+                  user.bio,
                   style: TextStyle(fontSize: 14, color: colorScheme.onSurface),
                 ),
 
@@ -61,7 +60,7 @@ class ProfileHeader extends StatelessWidget {
                 Row(
                   spacing: 10,
                   children: [
-                    CloutCapsule(user.area ?? user.targetAudience ?? 'Creator'),
+                    CloutCapsule(user.category),
 
                     if (user.website != null && user.website!.isNotEmpty) ...[
                       Container(
@@ -132,7 +131,7 @@ class ProfileHeader extends StatelessWidget {
             child: Row(
               children: [
                 _StatItem(
-                  value: '${user.profile.followersCount}',
+                  value: '${user.followersCount}',
                   label: 'Followers',
                 ),
                 const SizedBox(width: 5),
@@ -145,7 +144,7 @@ class ProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 _StatItem(
-                  value: '${user.profile.followingCount}',
+                  value: '${user.followingCount}',
                   label: 'Following',
                 ),
               ],

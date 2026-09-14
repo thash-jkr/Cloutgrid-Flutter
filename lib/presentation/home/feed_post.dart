@@ -12,7 +12,7 @@ class FeedPost extends StatefulWidget {
   final PostModel post;
   final VoidCallback onLikeClick;
   final VoidCallback onCommentClick;
-  final ValueChanged<UserContainer> onUserClick;
+  final ValueChanged<UserProfile> onUserClick;
   final bool isOwner;
   final VoidCallback onBlockClick;
   final VoidCallback onDeleteClick;
@@ -96,7 +96,7 @@ class _FeedPostState extends State<FeedPost>
               children: [
                 ClipOval(
                   child: CachedNetworkImage(
-                    imageUrl: post.author.profilePhoto,
+                    imageUrl: post.postedBy.profilePhoto,
                     width: 30,
                     height: 30,
                     fit: BoxFit.cover,
@@ -113,7 +113,7 @@ class _FeedPostState extends State<FeedPost>
 
                 GestureDetector(
                   child: Text(
-                    post.author.name,
+                    post.postedBy.name,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onSurface,
@@ -269,7 +269,7 @@ class _FeedPostState extends State<FeedPost>
                 style: const TextStyle(height: 1.3, color: Colors.black),
                 children: [
                   TextSpan(
-                    text: post.author.username,
+                    text: post.postedBy.username,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     recognizer: _collabTapRecognizer = TapGestureRecognizer()
                       ..onTap = () => widget.onUserClick(post.postedBy),
@@ -280,7 +280,7 @@ class _FeedPostState extends State<FeedPost>
                       style: TextStyle(color: Colors.grey),
                     ),
                     TextSpan(
-                      text: post.collaboration!.profile.username,
+                      text: post.collaboration!.username,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       recognizer: _collabTapRecognizer = TapGestureRecognizer()
                         ..onTap = () => widget.onUserClick(post.collaboration!),
@@ -359,7 +359,7 @@ class _OverflowMenu extends StatelessWidget {
               children: [
                 const Icon(Icons.report_outlined, size: 20),
                 const SizedBox(width: 12),
-                Text('Report @${post.postedBy.profile.username}'),
+                Text('Report @${post.postedBy.username}'),
               ],
             ),
           ),
@@ -370,7 +370,7 @@ class _OverflowMenu extends StatelessWidget {
                 children: [
                   const Icon(Icons.report_outlined, size: 20),
                   const SizedBox(width: 12),
-                  Text('Report @${post.collaboration!.profile.username}'),
+                  Text('Report @${post.collaboration!.username}'),
                 ],
               ),
             ),
@@ -380,7 +380,7 @@ class _OverflowMenu extends StatelessWidget {
               children: [
                 const Icon(Icons.block, size: 20),
                 const SizedBox(width: 12),
-                Text('Block @${post.postedBy.profile.username}'),
+                Text('Block @${post.postedBy.username}'),
               ],
             ),
           ),

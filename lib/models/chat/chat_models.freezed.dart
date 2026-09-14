@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ConversationModel {
 
- String get id; UserContainer get user;@JsonKey(name: 'created_at') String get createdAt;
+ String get id; UserProfile get user;@JsonKey(name: 'created_at') String get createdAt;
 /// Create a copy of ConversationModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $ConversationModelCopyWith<$Res>  {
   factory $ConversationModelCopyWith(ConversationModel value, $Res Function(ConversationModel) _then) = _$ConversationModelCopyWithImpl;
 @useResult
 $Res call({
- String id, UserContainer user,@JsonKey(name: 'created_at') String createdAt
+ String id, UserProfile user,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-$UserContainerCopyWith<$Res> get user;
+$UserProfileCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -69,7 +69,7 @@ class _$ConversationModelCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserContainer,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as UserProfile,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -77,9 +77,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get user {
+$UserProfileCopyWith<$Res> get user {
   
-  return $UserContainerCopyWith<$Res>(_self.user, (value) {
+  return $UserProfileCopyWith<$Res>(_self.user, (value) {
     return _then(_self.copyWith(user: value));
   });
 }
@@ -164,7 +164,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserContainer user, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserProfile user, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ConversationModel() when $default != null:
 return $default(_that.id,_that.user,_that.createdAt);case _:
@@ -185,7 +185,7 @@ return $default(_that.id,_that.user,_that.createdAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserContainer user, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserProfile user, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _ConversationModel():
 return $default(_that.id,_that.user,_that.createdAt);case _:
@@ -205,7 +205,7 @@ return $default(_that.id,_that.user,_that.createdAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserContainer user, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserProfile user, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ConversationModel() when $default != null:
 return $default(_that.id,_that.user,_that.createdAt);case _:
@@ -224,7 +224,7 @@ class _ConversationModel implements ConversationModel {
   factory _ConversationModel.fromJson(Map<String, dynamic> json) => _$ConversationModelFromJson(json);
 
 @override final  String id;
-@override final  UserContainer user;
+@override final  UserProfile user;
 @override@JsonKey(name: 'created_at') final  String createdAt;
 
 /// Create a copy of ConversationModel
@@ -260,11 +260,11 @@ abstract mixin class _$ConversationModelCopyWith<$Res> implements $ConversationM
   factory _$ConversationModelCopyWith(_ConversationModel value, $Res Function(_ConversationModel) _then) = __$ConversationModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, UserContainer user,@JsonKey(name: 'created_at') String createdAt
+ String id, UserProfile user,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-@override $UserContainerCopyWith<$Res> get user;
+@override $UserProfileCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -281,7 +281,7 @@ class __$ConversationModelCopyWithImpl<$Res>
   return _then(_ConversationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserContainer,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as UserProfile,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -290,9 +290,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get user {
+$UserProfileCopyWith<$Res> get user {
   
-  return $UserContainerCopyWith<$Res>(_self.user, (value) {
+  return $UserProfileCopyWith<$Res>(_self.user, (value) {
     return _then(_self.copyWith(user: value));
   });
 }
@@ -302,7 +302,7 @@ $UserContainerCopyWith<$Res> get user {
 /// @nodoc
 mixin _$MessageModel {
 
- String get id; UserContainer get sender; String get content;@JsonKey(name: 'is_read') bool get isRead;@JsonKey(name: 'created_at') String get createdAt;
+ String get id; UserProfile get sender; String get content;@JsonKey(name: 'is_read') bool get isRead;@JsonKey(name: 'created_at') String get createdAt;
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -335,11 +335,11 @@ abstract mixin class $MessageModelCopyWith<$Res>  {
   factory $MessageModelCopyWith(MessageModel value, $Res Function(MessageModel) _then) = _$MessageModelCopyWithImpl;
 @useResult
 $Res call({
- String id, UserContainer sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
+ String id, UserProfile sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-$UserContainerCopyWith<$Res> get sender;
+$UserProfileCopyWith<$Res> get sender;
 
 }
 /// @nodoc
@@ -356,7 +356,7 @@ class _$MessageModelCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
-as UserContainer,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as UserProfile,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
@@ -366,9 +366,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get sender {
+$UserProfileCopyWith<$Res> get sender {
   
-  return $UserContainerCopyWith<$Res>(_self.sender, (value) {
+  return $UserProfileCopyWith<$Res>(_self.sender, (value) {
     return _then(_self.copyWith(sender: value));
   });
 }
@@ -453,7 +453,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserContainer sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -474,7 +474,7 @@ return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserContainer sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel():
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -494,7 +494,7 @@ return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserContainer sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -513,7 +513,7 @@ class _MessageModel extends MessageModel {
   factory _MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
 
 @override final  String id;
-@override final  UserContainer sender;
+@override final  UserProfile sender;
 @override final  String content;
 @override@JsonKey(name: 'is_read') final  bool isRead;
 @override@JsonKey(name: 'created_at') final  String createdAt;
@@ -551,11 +551,11 @@ abstract mixin class _$MessageModelCopyWith<$Res> implements $MessageModelCopyWi
   factory _$MessageModelCopyWith(_MessageModel value, $Res Function(_MessageModel) _then) = __$MessageModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, UserContainer sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
+ String id, UserProfile sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-@override $UserContainerCopyWith<$Res> get sender;
+@override $UserProfileCopyWith<$Res> get sender;
 
 }
 /// @nodoc
@@ -572,7 +572,7 @@ class __$MessageModelCopyWithImpl<$Res>
   return _then(_MessageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
-as UserContainer,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as UserProfile,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
@@ -583,9 +583,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get sender {
+$UserProfileCopyWith<$Res> get sender {
   
-  return $UserContainerCopyWith<$Res>(_self.sender, (value) {
+  return $UserProfileCopyWith<$Res>(_self.sender, (value) {
     return _then(_self.copyWith(sender: value));
   });
 }
@@ -595,7 +595,7 @@ $UserContainerCopyWith<$Res> get sender {
 /// @nodoc
 mixin _$ChatRoute {
 
- String get id; UserContainer get user;
+ String get id; UserProfile get user;
 /// Create a copy of ChatRoute
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -628,11 +628,11 @@ abstract mixin class $ChatRouteCopyWith<$Res>  {
   factory $ChatRouteCopyWith(ChatRoute value, $Res Function(ChatRoute) _then) = _$ChatRouteCopyWithImpl;
 @useResult
 $Res call({
- String id, UserContainer user
+ String id, UserProfile user
 });
 
 
-$UserContainerCopyWith<$Res> get user;
+$UserProfileCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -649,16 +649,16 @@ class _$ChatRouteCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserContainer,
+as UserProfile,
   ));
 }
 /// Create a copy of ChatRoute
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get user {
+$UserProfileCopyWith<$Res> get user {
   
-  return $UserContainerCopyWith<$Res>(_self.user, (value) {
+  return $UserProfileCopyWith<$Res>(_self.user, (value) {
     return _then(_self.copyWith(user: value));
   });
 }
@@ -743,7 +743,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserContainer user)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserProfile user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatRoute() when $default != null:
 return $default(_that.id,_that.user);case _:
@@ -764,7 +764,7 @@ return $default(_that.id,_that.user);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserContainer user)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserProfile user)  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoute():
 return $default(_that.id,_that.user);case _:
@@ -784,7 +784,7 @@ return $default(_that.id,_that.user);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserContainer user)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserProfile user)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatRoute() when $default != null:
 return $default(_that.id,_that.user);case _:
@@ -803,7 +803,7 @@ class _ChatRoute implements ChatRoute {
   factory _ChatRoute.fromJson(Map<String, dynamic> json) => _$ChatRouteFromJson(json);
 
 @override final  String id;
-@override final  UserContainer user;
+@override final  UserProfile user;
 
 /// Create a copy of ChatRoute
 /// with the given fields replaced by the non-null parameter values.
@@ -838,11 +838,11 @@ abstract mixin class _$ChatRouteCopyWith<$Res> implements $ChatRouteCopyWith<$Re
   factory _$ChatRouteCopyWith(_ChatRoute value, $Res Function(_ChatRoute) _then) = __$ChatRouteCopyWithImpl;
 @override @useResult
 $Res call({
- String id, UserContainer user
+ String id, UserProfile user
 });
 
 
-@override $UserContainerCopyWith<$Res> get user;
+@override $UserProfileCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -859,7 +859,7 @@ class __$ChatRouteCopyWithImpl<$Res>
   return _then(_ChatRoute(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserContainer,
+as UserProfile,
   ));
 }
 
@@ -867,9 +867,9 @@ as UserContainer,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get user {
+$UserProfileCopyWith<$Res> get user {
   
-  return $UserContainerCopyWith<$Res>(_self.user, (value) {
+  return $UserProfileCopyWith<$Res>(_self.user, (value) {
     return _then(_self.copyWith(user: value));
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/providers/core_providers.dart';
@@ -9,9 +7,9 @@ import '../../models/search/search_models.dart';
 part 'search_notifier.g.dart';
 
 class SearchState {
-  final List<UserContainer> suggestions;
-  final List<UserContainer> results;
-  final List<UserContainer> collabs;
+  final List<UserProfile> suggestions;
+  final List<UserProfile> results;
+  final List<UserProfile> collabs;
   final bool isLoading;
   final String? errorMessage;
 
@@ -24,9 +22,9 @@ class SearchState {
   });
 
   SearchState copyWith({
-    List<UserContainer>? suggestions,
-    List<UserContainer>? results,
-    List<UserContainer>? collabs,
+    List<UserProfile>? suggestions,
+    List<UserProfile>? results,
+    List<UserProfile>? collabs,
     bool? isLoading,
     String? errorMessage,
     bool clearErrorMessage = false,
@@ -54,20 +52,16 @@ class SearchNotifier extends _$SearchNotifier {
     try {
       final response = await ref
           .read(apiServiceProvider)
-          .request<AllUsersResponse>(
-            '/users/',
+          .request<List<UserProfile>>(
+            '/suggestions/',
             method: 'GET',
-            fromJson: (json) => AllUsersResponse.fromJson(json),
+            fromJson: (json) => (json as List)
+                .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
+                .toList(),
             requireAuth: true,
           );
 
-      final allUsers = [...response.creators, ...response.businesses];
-      allUsers.shuffle(Random());
-
-      state = state.copyWith(
-        suggestions: allUsers.take(6).toList(),
-        isLoading: false,
-      );
+      state = state.copyWith(suggestions: response, isLoading: false);
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString(), isLoading: false);
     }
@@ -100,11 +94,11 @@ class SearchNotifier extends _$SearchNotifier {
     try {
       final results = await ref
           .read(apiServiceProvider)
-          .request<List<UserContainer>>(
+          .request<List<UserProfile>>(
             '/search-business?q=$query',
             method: 'GET',
             fromJson: (json) => (json as List)
-                .map((e) => UserContainer.fromJson(e as Map<String, dynamic>))
+                .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
                 .toList(),
             requireAuth: true,
           );

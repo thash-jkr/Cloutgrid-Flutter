@@ -11,7 +11,7 @@ import '../../../widgets/clout_header.dart';
 class Comments extends StatefulWidget {
   final List<CommentModel> comments;
   final bool isLoading;
-  final UserContainer? user;
+  final UserProfile? user;
   final ValueChanged<String> onAddComment;
   final ValueChanged<int> onDeleteComment;
   final ScrollController? scrollController;
@@ -121,10 +121,7 @@ class _CommentsState extends State<Comments> {
                 : MediaQuery.of(context).padding.bottom,
             child: CloutInput(
               onSend: (text) => _handleSend(text),
-              avatarUrl: widget.user != null
-                  ? ApiConfig.current.baseUrl +
-                        widget.user!.profile.profilePhoto
-                  : null,
+              avatarUrl: widget.user?.profilePhoto,
             ),
           ),
         ],
@@ -135,7 +132,7 @@ class _CommentsState extends State<Comments> {
 
 class _CommentRow extends StatelessWidget {
   final CommentModel comment;
-  final UserContainer? user;
+  final UserProfile? user;
   final VoidCallback onDelete;
   final VoidCallback onReport;
 
@@ -149,8 +146,7 @@ class _CommentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isOwner =
-        user != null && comment.user.username == user!.profile.username;
+    final isOwner = user != null && comment.user.username == user!.username;
     final offWhite = theme.colorScheme.surface;
     final photoUrl = ApiConfig.current.baseUrl + comment.user.profilePhoto;
 

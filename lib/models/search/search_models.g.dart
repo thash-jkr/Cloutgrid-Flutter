@@ -9,10 +9,10 @@ part of 'search_models.dart';
 _AllUsersResponse _$AllUsersResponseFromJson(Map<String, dynamic> json) =>
     _AllUsersResponse(
       creators: (json['creators'] as List<dynamic>)
-          .map((e) => UserContainer.fromJson(e as Map<String, dynamic>))
+          .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
           .toList(),
       businesses: (json['businesses'] as List<dynamic>)
-          .map((e) => UserContainer.fromJson(e as Map<String, dynamic>))
+          .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

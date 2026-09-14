@@ -3,7 +3,6 @@ import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/network/api_config.dart';
 import '../../providers/chat/chat_notifier.dart';
 import '../../providers/search/search_notifier.dart';
 import '../../widgets/category_list.dart';
@@ -72,8 +71,8 @@ class _ConversationsState extends ConsumerState<Conversations> {
       if (next != null) {
         widget.onNavigateToMessages(
           next.id,
-          next.user.profile.username,
-          next.user.profile.profilePhoto,
+          next.user.username,
+          next.user.profilePhoto,
         );
         ref.read(chatProvider.notifier).clearNewConversation();
       }
@@ -143,9 +142,7 @@ class _ConversationsState extends ConsumerState<Conversations> {
                   count: chatState.chats.length,
                   leading: ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl:
-                          ApiConfig.current.baseUrl +
-                          conversation.user.profile.profilePhoto,
+                      imageUrl: conversation.user.profilePhoto,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -157,16 +154,12 @@ class _ConversationsState extends ConsumerState<Conversations> {
                       ),
                     ),
                   ),
-                  title: conversation.user.profile.name,
-                  subtitle: CategoryList.labelFor(
-                    conversation.user.area ??
-                        conversation.user.targetAudience ??
-                        '',
-                  ),
+                  title: conversation.user.name,
+                  subtitle: CategoryList.labelFor(conversation.user.category),
                   onTap: () => widget.onNavigateToMessages(
                     conversation.id,
-                    conversation.user.profile.username,
-                    conversation.user.profile.profilePhoto,
+                    conversation.user.username,
+                    conversation.user.profilePhoto,
                   ),
                 ),
               );
@@ -189,8 +182,7 @@ class _ConversationsState extends ConsumerState<Conversations> {
                   count: searchState.results.length,
                   leading: ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl:
-                          ApiConfig.current.baseUrl + user.profile.profilePhoto,
+                      imageUrl: user.profilePhoto,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -200,13 +192,11 @@ class _ConversationsState extends ConsumerState<Conversations> {
                           const CircleAvatar(radius: 25),
                     ),
                   ),
-                  title: user.profile.name,
-                  subtitle: CategoryList.labelFor(
-                    user.area ?? user.targetAudience ?? '',
-                  ),
+                  title: user.name,
+                  subtitle: CategoryList.labelFor(user.category),
                   onTap: () => ref
                       .read(chatProvider.notifier)
-                      .createConversation(user.profile.id),
+                      .createConversation(user.id),
                 ),
               );
             }),

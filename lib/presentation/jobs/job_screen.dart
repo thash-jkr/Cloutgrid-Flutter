@@ -15,7 +15,7 @@ import 'job_detail.dart';
 
 class JobScreen extends ConsumerStatefulWidget {
   final ValueChanged<int> onNavigateToQuestions;
-  final void Function(UserContainer user) onNavigateToOtherProfile;
+  final void Function(UserProfile user) onNavigateToOtherProfile;
 
   const JobScreen({
     super.key,
@@ -34,7 +34,7 @@ class _JobScreenState extends ConsumerState<JobScreen> {
 
     Future(() {
       final jobState = ref.read(jobProvider);
-      final type = ref.read(authProvider).value?.user?.profile.userType;
+      final type = ref.read(authProvider).value?.user?.type;
       if (jobState.jobs.isEmpty) {
         if (type == 'creator') {
           ref.read(jobProvider.notifier).fetchJobs();
@@ -46,7 +46,7 @@ class _JobScreenState extends ConsumerState<JobScreen> {
   }
 
   Future<void> _onRefresh() async {
-    final type = ref.read(authProvider).value?.user?.profile.userType;
+    final type = ref.read(authProvider).value?.user?.type;
     if (type == 'creator') {
       await ref.read(jobProvider.notifier).fetchJobs();
     } else {
@@ -71,7 +71,6 @@ class _JobScreenState extends ConsumerState<JobScreen> {
   Widget build(BuildContext context) {
     final topInset = MediaQuery.of(context).padding.top;
     final jobState = ref.watch(jobProvider);
-    final type = ref.watch(authProvider).value?.user?.profile.userType;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -99,7 +98,9 @@ class _JobScreenState extends ConsumerState<JobScreen> {
                 separatorBuilder: (context, index) => const SizedBox(height: 1),
                 itemBuilder: (context, index) {
                   final job = jobState.jobs[index];
-                  final photoUrl = job.postedBy.profile.profilePhoto;
+                  final user = ref.watch(authProvider).value?.user;
+                  final type = user?.type;
+                  final photoUrl = job.postedBy.profilePhoto;
 
                   return SegmentedListItem(
                     index: index,
@@ -120,7 +121,7 @@ class _JobScreenState extends ConsumerState<JobScreen> {
                       ),
                     ),
                     title: job.title,
-                    subtitle: job.postedBy.profile.name,
+                    subtitle: job.postedBy.name,
                     overline: timeAgo(job.createdAt),
                   );
                 },

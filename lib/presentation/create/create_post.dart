@@ -34,7 +34,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   final _captionFocusNode = FocusNode();
   final _scrollController = ScrollController();
 
-  UserContainer? _collab;
+  UserProfile? _collab;
   Uint8List? _croppedImage;
   String _aspect = "1:1";
   bool _showImageViewer = false;
@@ -99,7 +99,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
           imageBytes: _croppedImage!,
           caption: _captionController.text.trim(),
           aspect: _aspect,
-          collab: _collab?.profile.username,
+          collab: _collab?.username,
         );
 
     if (!mounted) return;

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AllUsersResponse {
 
- List<UserContainer> get creators; List<UserContainer> get businesses;
+ List<UserProfile> get creators; List<UserProfile> get businesses;
 /// Create a copy of AllUsersResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $AllUsersResponseCopyWith<$Res>  {
   factory $AllUsersResponseCopyWith(AllUsersResponse value, $Res Function(AllUsersResponse) _then) = _$AllUsersResponseCopyWithImpl;
 @useResult
 $Res call({
- List<UserContainer> creators, List<UserContainer> businesses
+ List<UserProfile> creators, List<UserProfile> businesses
 });
 
 
@@ -68,8 +68,8 @@ class _$AllUsersResponseCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? creators = null,Object? businesses = null,}) {
   return _then(_self.copyWith(
 creators: null == creators ? _self.creators : creators // ignore: cast_nullable_to_non_nullable
-as List<UserContainer>,businesses: null == businesses ? _self.businesses : businesses // ignore: cast_nullable_to_non_nullable
-as List<UserContainer>,
+as List<UserProfile>,businesses: null == businesses ? _self.businesses : businesses // ignore: cast_nullable_to_non_nullable
+as List<UserProfile>,
   ));
 }
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<UserContainer> creators,  List<UserContainer> businesses)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<UserProfile> creators,  List<UserProfile> businesses)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AllUsersResponse() when $default != null:
 return $default(_that.creators,_that.businesses);case _:
@@ -175,7 +175,7 @@ return $default(_that.creators,_that.businesses);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<UserContainer> creators,  List<UserContainer> businesses)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<UserProfile> creators,  List<UserProfile> businesses)  $default,) {final _that = this;
 switch (_that) {
 case _AllUsersResponse():
 return $default(_that.creators,_that.businesses);case _:
@@ -195,7 +195,7 @@ return $default(_that.creators,_that.businesses);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<UserContainer> creators,  List<UserContainer> businesses)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<UserProfile> creators,  List<UserProfile> businesses)?  $default,) {final _that = this;
 switch (_that) {
 case _AllUsersResponse() when $default != null:
 return $default(_that.creators,_that.businesses);case _:
@@ -210,18 +210,18 @@ return $default(_that.creators,_that.businesses);case _:
 @JsonSerializable()
 
 class _AllUsersResponse implements AllUsersResponse {
-  const _AllUsersResponse({required final  List<UserContainer> creators, required final  List<UserContainer> businesses}): _creators = creators,_businesses = businesses;
+  const _AllUsersResponse({required final  List<UserProfile> creators, required final  List<UserProfile> businesses}): _creators = creators,_businesses = businesses;
   factory _AllUsersResponse.fromJson(Map<String, dynamic> json) => _$AllUsersResponseFromJson(json);
 
- final  List<UserContainer> _creators;
-@override List<UserContainer> get creators {
+ final  List<UserProfile> _creators;
+@override List<UserProfile> get creators {
   if (_creators is EqualUnmodifiableListView) return _creators;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_creators);
 }
 
- final  List<UserContainer> _businesses;
-@override List<UserContainer> get businesses {
+ final  List<UserProfile> _businesses;
+@override List<UserProfile> get businesses {
   if (_businesses is EqualUnmodifiableListView) return _businesses;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_businesses);
@@ -261,7 +261,7 @@ abstract mixin class _$AllUsersResponseCopyWith<$Res> implements $AllUsersRespon
   factory _$AllUsersResponseCopyWith(_AllUsersResponse value, $Res Function(_AllUsersResponse) _then) = __$AllUsersResponseCopyWithImpl;
 @override @useResult
 $Res call({
- List<UserContainer> creators, List<UserContainer> businesses
+ List<UserProfile> creators, List<UserProfile> businesses
 });
 
 
@@ -281,8 +281,8 @@ class __$AllUsersResponseCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? creators = null,Object? businesses = null,}) {
   return _then(_AllUsersResponse(
 creators: null == creators ? _self._creators : creators // ignore: cast_nullable_to_non_nullable
-as List<UserContainer>,businesses: null == businesses ? _self._businesses : businesses // ignore: cast_nullable_to_non_nullable
-as List<UserContainer>,
+as List<UserProfile>,businesses: null == businesses ? _self._businesses : businesses // ignore: cast_nullable_to_non_nullable
+as List<UserProfile>,
   ));
 }
 

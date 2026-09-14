@@ -16,7 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class OtherProfile extends ConsumerStatefulWidget {
   final VoidCallback onNavigateBack;
   final void Function(int id, bool other) onNavigateToPostDetail;
-  final UserContainer user;
+  final UserProfile user;
 
   const OtherProfile({
     super.key,
@@ -32,8 +32,8 @@ class OtherProfile extends ConsumerStatefulWidget {
 class _OtherProfileState extends ConsumerState<OtherProfile> {
   ProfileTab _selectedTab = ProfileTab.posts;
 
-  String get username => widget.user.profile.username;
-  String get type => widget.user.profile.userType;
+  String get username => widget.user.username;
+  String get type => widget.user.type;
 
   late final ProfileNotifier profile;
 
@@ -166,7 +166,7 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
   Widget build(BuildContext context) {
     final profileState = ref.watch(profileProvider);
 
-    final UserContainer? user = profileState.otherProfile;
+    final UserProfile? user = profileState.otherProfile;
     bool isBlocked = user != null && user.isBlocking == true;
 
     return Scaffold(
@@ -193,11 +193,11 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                           body: "Do you want to unfollow @$username?",
                           onSubmit: (_) => ref
                               .watch(profileProvider.notifier)
-                              .handleFollow(user.profile.username, false),
+                              .handleFollow(user.username, false),
                         )
                       : ref
                             .watch(profileProvider.notifier)
-                            .handleFollow(user.profile.username, true),
+                            .handleFollow(user.username, true),
                   disabled: (user.isBlocker == true || user.isBlocking == true),
                 ),
                 HeaderAction(

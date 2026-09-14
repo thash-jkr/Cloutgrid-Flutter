@@ -12,7 +12,7 @@ import '../profile/profile_notifier.dart';
 part 'create_notifier.g.dart';
 
 class CreateState {
-  final List<UserContainer> collabs;
+  final List<UserProfile> collabs;
   final bool isLoading;
   final String? errorMessage;
 
@@ -23,7 +23,7 @@ class CreateState {
   });
 
   CreateState copyWith({
-    List<UserContainer>? collabs,
+    List<UserProfile>? collabs,
     bool? isLoading,
     String? errorMessage,
     bool clearErrorMessage = false,
@@ -49,11 +49,11 @@ class CreateNotifier extends _$CreateNotifier {
     try {
       final results = await ref
           .read(apiServiceProvider)
-          .request<List<UserContainer>>(
+          .request<List<UserProfile>>(
             '/search-business?q=$query',
             method: 'GET',
             fromJson: (json) => (json as List)
-                .map((e) => UserContainer.fromJson(e as Map<String, dynamic>))
+                .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
                 .toList(),
             requireAuth: true,
           );

@@ -31,46 +31,39 @@ abstract class AnswerModel with _$AnswerModel {
 }
 
 @freezed
+abstract class RequirementModel with _$RequirementModel {
+  const factory RequirementModel({required int id, required String content}) =
+      _RequirementModel;
+
+  factory RequirementModel.fromJson(Map<String, dynamic> json) =>
+      _$RequirementModelFromJson(json);
+}
+
+@freezed
 abstract class JobModel with _$JobModel {
-  // Private unnamed constructor — required so the generated class can
-  // still host the timeAgo/date getters alongside the factory fields
-  // (same pattern used for CommentModel.timeAgo).
   const JobModel._();
 
   const factory JobModel({
     required int id,
-    @JsonKey(name: 'posted_by') required UserContainer postedBy,
+    @JsonKey(name: 'posted_by') required UserProfile postedBy,
     required List<QuestionModel> questions,
+    required List<RequirementModel> requirements,
     @JsonKey(name: 'is_applied') required bool isApplied,
     required String title,
     required String description,
-    required String requirements,
     @JsonKey(name: 'target_creator') required String targetCreator,
     @JsonKey(name: 'created_at') required String createdAt,
   }) = _JobModel;
 
   factory JobModel.fromJson(Map<String, dynamic> json) =>
       _$JobModelFromJson(json);
-
-  // /// Equivalent to Kotlin's DateTimeFormatter.ofPattern("dd/MM/yyyy")
-  // /// .withZone(ZoneId.systemDefault()) — DateTime.parse gives UTC or
-  // /// local depending on the string's format; .toLocal() matches the
-  // /// "systemDefault()" zone conversion explicitly.
-  // String get date {
-  //   try {
-  //     final instant = DateTime.parse(createdAt).toLocal();
-  //     return DateFormat('dd/MM/yyyy').format(instant);
-  //   } catch (_) {
-  //     return '';
-  //   }
-  // }
 }
 
 @freezed
 abstract class ApplicationModel with _$ApplicationModel {
   const factory ApplicationModel({
     required int id,
-    required UserContainer creator,
+    required UserProfile creator,
     required JobModel job,
     required List<AnswerModel> answers,
   }) = _ApplicationModel;

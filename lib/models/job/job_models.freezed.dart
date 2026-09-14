@@ -554,9 +554,275 @@ as int,
 
 
 /// @nodoc
+mixin _$RequirementModel {
+
+ int get id; String get content;
+/// Create a copy of RequirementModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RequirementModelCopyWith<RequirementModel> get copyWith => _$RequirementModelCopyWithImpl<RequirementModel>(this as RequirementModel, _$identity);
+
+  /// Serializes this RequirementModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequirementModel&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content);
+
+@override
+String toString() {
+  return 'RequirementModel(id: $id, content: $content)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RequirementModelCopyWith<$Res>  {
+  factory $RequirementModelCopyWith(RequirementModel value, $Res Function(RequirementModel) _then) = _$RequirementModelCopyWithImpl;
+@useResult
+$Res call({
+ int id, String content
+});
+
+
+
+
+}
+/// @nodoc
+class _$RequirementModelCopyWithImpl<$Res>
+    implements $RequirementModelCopyWith<$Res> {
+  _$RequirementModelCopyWithImpl(this._self, this._then);
+
+  final RequirementModel _self;
+  final $Res Function(RequirementModel) _then;
+
+/// Create a copy of RequirementModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [RequirementModel].
+extension RequirementModelPatterns on RequirementModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RequirementModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _RequirementModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RequirementModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _RequirementModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RequirementModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _RequirementModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _RequirementModel() when $default != null:
+return $default(_that.id,_that.content);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String content)  $default,) {final _that = this;
+switch (_that) {
+case _RequirementModel():
+return $default(_that.id,_that.content);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String content)?  $default,) {final _that = this;
+switch (_that) {
+case _RequirementModel() when $default != null:
+return $default(_that.id,_that.content);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _RequirementModel implements RequirementModel {
+  const _RequirementModel({required this.id, required this.content});
+  factory _RequirementModel.fromJson(Map<String, dynamic> json) => _$RequirementModelFromJson(json);
+
+@override final  int id;
+@override final  String content;
+
+/// Create a copy of RequirementModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$RequirementModelCopyWith<_RequirementModel> get copyWith => __$RequirementModelCopyWithImpl<_RequirementModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$RequirementModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequirementModel&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content);
+
+@override
+String toString() {
+  return 'RequirementModel(id: $id, content: $content)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$RequirementModelCopyWith<$Res> implements $RequirementModelCopyWith<$Res> {
+  factory _$RequirementModelCopyWith(_RequirementModel value, $Res Function(_RequirementModel) _then) = __$RequirementModelCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, String content
+});
+
+
+
+
+}
+/// @nodoc
+class __$RequirementModelCopyWithImpl<$Res>
+    implements _$RequirementModelCopyWith<$Res> {
+  __$RequirementModelCopyWithImpl(this._self, this._then);
+
+  final _RequirementModel _self;
+  final $Res Function(_RequirementModel) _then;
+
+/// Create a copy of RequirementModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,}) {
+  return _then(_RequirementModel(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$JobModel {
 
- int get id;@JsonKey(name: 'posted_by') UserContainer get postedBy; List<QuestionModel> get questions;@JsonKey(name: 'is_applied') bool get isApplied; String get title; String get description; String get requirements;@JsonKey(name: 'target_creator') String get targetCreator;@JsonKey(name: 'created_at') String get createdAt;
+ int get id;@JsonKey(name: 'posted_by') UserProfile get postedBy; List<QuestionModel> get questions; List<RequirementModel> get requirements;@JsonKey(name: 'is_applied') bool get isApplied; String get title; String get description;@JsonKey(name: 'target_creator') String get targetCreator;@JsonKey(name: 'created_at') String get createdAt;
 /// Create a copy of JobModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -569,16 +835,16 @@ $JobModelCopyWith<JobModel> get copyWith => _$JobModelCopyWithImpl<JobModel>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&const DeepCollectionEquality().equals(other.questions, questions)&&(identical(other.isApplied, isApplied) || other.isApplied == isApplied)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.requirements, requirements) || other.requirements == requirements)&&(identical(other.targetCreator, targetCreator) || other.targetCreator == targetCreator)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&const DeepCollectionEquality().equals(other.questions, questions)&&const DeepCollectionEquality().equals(other.requirements, requirements)&&(identical(other.isApplied, isApplied) || other.isApplied == isApplied)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.targetCreator, targetCreator) || other.targetCreator == targetCreator)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,postedBy,const DeepCollectionEquality().hash(questions),isApplied,title,description,requirements,targetCreator,createdAt);
+int get hashCode => Object.hash(runtimeType,id,postedBy,const DeepCollectionEquality().hash(questions),const DeepCollectionEquality().hash(requirements),isApplied,title,description,targetCreator,createdAt);
 
 @override
 String toString() {
-  return 'JobModel(id: $id, postedBy: $postedBy, questions: $questions, isApplied: $isApplied, title: $title, description: $description, requirements: $requirements, targetCreator: $targetCreator, createdAt: $createdAt)';
+  return 'JobModel(id: $id, postedBy: $postedBy, questions: $questions, requirements: $requirements, isApplied: $isApplied, title: $title, description: $description, targetCreator: $targetCreator, createdAt: $createdAt)';
 }
 
 
@@ -589,11 +855,11 @@ abstract mixin class $JobModelCopyWith<$Res>  {
   factory $JobModelCopyWith(JobModel value, $Res Function(JobModel) _then) = _$JobModelCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'posted_by') UserContainer postedBy, List<QuestionModel> questions,@JsonKey(name: 'is_applied') bool isApplied, String title, String description, String requirements,@JsonKey(name: 'target_creator') String targetCreator,@JsonKey(name: 'created_at') String createdAt
+ int id,@JsonKey(name: 'posted_by') UserProfile postedBy, List<QuestionModel> questions, List<RequirementModel> requirements,@JsonKey(name: 'is_applied') bool isApplied, String title, String description,@JsonKey(name: 'target_creator') String targetCreator,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-$UserContainerCopyWith<$Res> get postedBy;
+$UserProfileCopyWith<$Res> get postedBy;
 
 }
 /// @nodoc
@@ -606,15 +872,15 @@ class _$JobModelCopyWithImpl<$Res>
 
 /// Create a copy of JobModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postedBy = null,Object? questions = null,Object? isApplied = null,Object? title = null,Object? description = null,Object? requirements = null,Object? targetCreator = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postedBy = null,Object? questions = null,Object? requirements = null,Object? isApplied = null,Object? title = null,Object? description = null,Object? targetCreator = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
-as UserContainer,questions: null == questions ? _self.questions : questions // ignore: cast_nullable_to_non_nullable
-as List<QuestionModel>,isApplied: null == isApplied ? _self.isApplied : isApplied // ignore: cast_nullable_to_non_nullable
+as UserProfile,questions: null == questions ? _self.questions : questions // ignore: cast_nullable_to_non_nullable
+as List<QuestionModel>,requirements: null == requirements ? _self.requirements : requirements // ignore: cast_nullable_to_non_nullable
+as List<RequirementModel>,isApplied: null == isApplied ? _self.isApplied : isApplied // ignore: cast_nullable_to_non_nullable
 as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,requirements: null == requirements ? _self.requirements : requirements // ignore: cast_nullable_to_non_nullable
 as String,targetCreator: null == targetCreator ? _self.targetCreator : targetCreator // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
@@ -624,9 +890,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get postedBy {
+$UserProfileCopyWith<$Res> get postedBy {
   
-  return $UserContainerCopyWith<$Res>(_self.postedBy, (value) {
+  return $UserProfileCopyWith<$Res>(_self.postedBy, (value) {
     return _then(_self.copyWith(postedBy: value));
   });
 }
@@ -711,10 +977,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserContainer postedBy,  List<QuestionModel> questions, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description,  String requirements, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  List<QuestionModel> questions,  List<RequirementModel> requirements, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobModel() when $default != null:
-return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.title,_that.description,_that.requirements,_that.targetCreator,_that.createdAt);case _:
+return $default(_that.id,_that.postedBy,_that.questions,_that.requirements,_that.isApplied,_that.title,_that.description,_that.targetCreator,_that.createdAt);case _:
   return orElse();
 
 }
@@ -732,10 +998,10 @@ return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.ti
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserContainer postedBy,  List<QuestionModel> questions, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description,  String requirements, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  List<QuestionModel> questions,  List<RequirementModel> requirements, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _JobModel():
-return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.title,_that.description,_that.requirements,_that.targetCreator,_that.createdAt);case _:
+return $default(_that.id,_that.postedBy,_that.questions,_that.requirements,_that.isApplied,_that.title,_that.description,_that.targetCreator,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -752,10 +1018,10 @@ return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.ti
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'posted_by')  UserContainer postedBy,  List<QuestionModel> questions, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description,  String requirements, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  List<QuestionModel> questions,  List<RequirementModel> requirements, @JsonKey(name: 'is_applied')  bool isApplied,  String title,  String description, @JsonKey(name: 'target_creator')  String targetCreator, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _JobModel() when $default != null:
-return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.title,_that.description,_that.requirements,_that.targetCreator,_that.createdAt);case _:
+return $default(_that.id,_that.postedBy,_that.questions,_that.requirements,_that.isApplied,_that.title,_that.description,_that.targetCreator,_that.createdAt);case _:
   return null;
 
 }
@@ -767,11 +1033,11 @@ return $default(_that.id,_that.postedBy,_that.questions,_that.isApplied,_that.ti
 @JsonSerializable()
 
 class _JobModel extends JobModel {
-  const _JobModel({required this.id, @JsonKey(name: 'posted_by') required this.postedBy, required final  List<QuestionModel> questions, @JsonKey(name: 'is_applied') required this.isApplied, required this.title, required this.description, required this.requirements, @JsonKey(name: 'target_creator') required this.targetCreator, @JsonKey(name: 'created_at') required this.createdAt}): _questions = questions,super._();
+  const _JobModel({required this.id, @JsonKey(name: 'posted_by') required this.postedBy, required final  List<QuestionModel> questions, required final  List<RequirementModel> requirements, @JsonKey(name: 'is_applied') required this.isApplied, required this.title, required this.description, @JsonKey(name: 'target_creator') required this.targetCreator, @JsonKey(name: 'created_at') required this.createdAt}): _questions = questions,_requirements = requirements,super._();
   factory _JobModel.fromJson(Map<String, dynamic> json) => _$JobModelFromJson(json);
 
 @override final  int id;
-@override@JsonKey(name: 'posted_by') final  UserContainer postedBy;
+@override@JsonKey(name: 'posted_by') final  UserProfile postedBy;
  final  List<QuestionModel> _questions;
 @override List<QuestionModel> get questions {
   if (_questions is EqualUnmodifiableListView) return _questions;
@@ -779,10 +1045,16 @@ class _JobModel extends JobModel {
   return EqualUnmodifiableListView(_questions);
 }
 
+ final  List<RequirementModel> _requirements;
+@override List<RequirementModel> get requirements {
+  if (_requirements is EqualUnmodifiableListView) return _requirements;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_requirements);
+}
+
 @override@JsonKey(name: 'is_applied') final  bool isApplied;
 @override final  String title;
 @override final  String description;
-@override final  String requirements;
 @override@JsonKey(name: 'target_creator') final  String targetCreator;
 @override@JsonKey(name: 'created_at') final  String createdAt;
 
@@ -799,16 +1071,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&const DeepCollectionEquality().equals(other._questions, _questions)&&(identical(other.isApplied, isApplied) || other.isApplied == isApplied)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.requirements, requirements) || other.requirements == requirements)&&(identical(other.targetCreator, targetCreator) || other.targetCreator == targetCreator)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&const DeepCollectionEquality().equals(other._questions, _questions)&&const DeepCollectionEquality().equals(other._requirements, _requirements)&&(identical(other.isApplied, isApplied) || other.isApplied == isApplied)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.targetCreator, targetCreator) || other.targetCreator == targetCreator)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,postedBy,const DeepCollectionEquality().hash(_questions),isApplied,title,description,requirements,targetCreator,createdAt);
+int get hashCode => Object.hash(runtimeType,id,postedBy,const DeepCollectionEquality().hash(_questions),const DeepCollectionEquality().hash(_requirements),isApplied,title,description,targetCreator,createdAt);
 
 @override
 String toString() {
-  return 'JobModel(id: $id, postedBy: $postedBy, questions: $questions, isApplied: $isApplied, title: $title, description: $description, requirements: $requirements, targetCreator: $targetCreator, createdAt: $createdAt)';
+  return 'JobModel(id: $id, postedBy: $postedBy, questions: $questions, requirements: $requirements, isApplied: $isApplied, title: $title, description: $description, targetCreator: $targetCreator, createdAt: $createdAt)';
 }
 
 
@@ -819,11 +1091,11 @@ abstract mixin class _$JobModelCopyWith<$Res> implements $JobModelCopyWith<$Res>
   factory _$JobModelCopyWith(_JobModel value, $Res Function(_JobModel) _then) = __$JobModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'posted_by') UserContainer postedBy, List<QuestionModel> questions,@JsonKey(name: 'is_applied') bool isApplied, String title, String description, String requirements,@JsonKey(name: 'target_creator') String targetCreator,@JsonKey(name: 'created_at') String createdAt
+ int id,@JsonKey(name: 'posted_by') UserProfile postedBy, List<QuestionModel> questions, List<RequirementModel> requirements,@JsonKey(name: 'is_applied') bool isApplied, String title, String description,@JsonKey(name: 'target_creator') String targetCreator,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-@override $UserContainerCopyWith<$Res> get postedBy;
+@override $UserProfileCopyWith<$Res> get postedBy;
 
 }
 /// @nodoc
@@ -836,15 +1108,15 @@ class __$JobModelCopyWithImpl<$Res>
 
 /// Create a copy of JobModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postedBy = null,Object? questions = null,Object? isApplied = null,Object? title = null,Object? description = null,Object? requirements = null,Object? targetCreator = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postedBy = null,Object? questions = null,Object? requirements = null,Object? isApplied = null,Object? title = null,Object? description = null,Object? targetCreator = null,Object? createdAt = null,}) {
   return _then(_JobModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
-as UserContainer,questions: null == questions ? _self._questions : questions // ignore: cast_nullable_to_non_nullable
-as List<QuestionModel>,isApplied: null == isApplied ? _self.isApplied : isApplied // ignore: cast_nullable_to_non_nullable
+as UserProfile,questions: null == questions ? _self._questions : questions // ignore: cast_nullable_to_non_nullable
+as List<QuestionModel>,requirements: null == requirements ? _self._requirements : requirements // ignore: cast_nullable_to_non_nullable
+as List<RequirementModel>,isApplied: null == isApplied ? _self.isApplied : isApplied // ignore: cast_nullable_to_non_nullable
 as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,requirements: null == requirements ? _self.requirements : requirements // ignore: cast_nullable_to_non_nullable
 as String,targetCreator: null == targetCreator ? _self.targetCreator : targetCreator // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
@@ -855,9 +1127,9 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get postedBy {
+$UserProfileCopyWith<$Res> get postedBy {
   
-  return $UserContainerCopyWith<$Res>(_self.postedBy, (value) {
+  return $UserProfileCopyWith<$Res>(_self.postedBy, (value) {
     return _then(_self.copyWith(postedBy: value));
   });
 }
@@ -867,7 +1139,7 @@ $UserContainerCopyWith<$Res> get postedBy {
 /// @nodoc
 mixin _$ApplicationModel {
 
- int get id; UserContainer get creator; JobModel get job; List<AnswerModel> get answers;
+ int get id; UserProfile get creator; JobModel get job; List<AnswerModel> get answers;
 /// Create a copy of ApplicationModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -900,11 +1172,11 @@ abstract mixin class $ApplicationModelCopyWith<$Res>  {
   factory $ApplicationModelCopyWith(ApplicationModel value, $Res Function(ApplicationModel) _then) = _$ApplicationModelCopyWithImpl;
 @useResult
 $Res call({
- int id, UserContainer creator, JobModel job, List<AnswerModel> answers
+ int id, UserProfile creator, JobModel job, List<AnswerModel> answers
 });
 
 
-$UserContainerCopyWith<$Res> get creator;$JobModelCopyWith<$Res> get job;
+$UserProfileCopyWith<$Res> get creator;$JobModelCopyWith<$Res> get job;
 
 }
 /// @nodoc
@@ -921,7 +1193,7 @@ class _$ApplicationModelCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,creator: null == creator ? _self.creator : creator // ignore: cast_nullable_to_non_nullable
-as UserContainer,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as UserProfile,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as JobModel,answers: null == answers ? _self.answers : answers // ignore: cast_nullable_to_non_nullable
 as List<AnswerModel>,
   ));
@@ -930,9 +1202,9 @@ as List<AnswerModel>,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get creator {
+$UserProfileCopyWith<$Res> get creator {
   
-  return $UserContainerCopyWith<$Res>(_self.creator, (value) {
+  return $UserProfileCopyWith<$Res>(_self.creator, (value) {
     return _then(_self.copyWith(creator: value));
   });
 }/// Create a copy of ApplicationModel
@@ -1026,7 +1298,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  UserContainer creator,  JobModel job,  List<AnswerModel> answers)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  UserProfile creator,  JobModel job,  List<AnswerModel> answers)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ApplicationModel() when $default != null:
 return $default(_that.id,_that.creator,_that.job,_that.answers);case _:
@@ -1047,7 +1319,7 @@ return $default(_that.id,_that.creator,_that.job,_that.answers);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  UserContainer creator,  JobModel job,  List<AnswerModel> answers)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  UserProfile creator,  JobModel job,  List<AnswerModel> answers)  $default,) {final _that = this;
 switch (_that) {
 case _ApplicationModel():
 return $default(_that.id,_that.creator,_that.job,_that.answers);case _:
@@ -1067,7 +1339,7 @@ return $default(_that.id,_that.creator,_that.job,_that.answers);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  UserContainer creator,  JobModel job,  List<AnswerModel> answers)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  UserProfile creator,  JobModel job,  List<AnswerModel> answers)?  $default,) {final _that = this;
 switch (_that) {
 case _ApplicationModel() when $default != null:
 return $default(_that.id,_that.creator,_that.job,_that.answers);case _:
@@ -1086,7 +1358,7 @@ class _ApplicationModel implements ApplicationModel {
   factory _ApplicationModel.fromJson(Map<String, dynamic> json) => _$ApplicationModelFromJson(json);
 
 @override final  int id;
-@override final  UserContainer creator;
+@override final  UserProfile creator;
 @override final  JobModel job;
  final  List<AnswerModel> _answers;
 @override List<AnswerModel> get answers {
@@ -1129,11 +1401,11 @@ abstract mixin class _$ApplicationModelCopyWith<$Res> implements $ApplicationMod
   factory _$ApplicationModelCopyWith(_ApplicationModel value, $Res Function(_ApplicationModel) _then) = __$ApplicationModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, UserContainer creator, JobModel job, List<AnswerModel> answers
+ int id, UserProfile creator, JobModel job, List<AnswerModel> answers
 });
 
 
-@override $UserContainerCopyWith<$Res> get creator;@override $JobModelCopyWith<$Res> get job;
+@override $UserProfileCopyWith<$Res> get creator;@override $JobModelCopyWith<$Res> get job;
 
 }
 /// @nodoc
@@ -1150,7 +1422,7 @@ class __$ApplicationModelCopyWithImpl<$Res>
   return _then(_ApplicationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,creator: null == creator ? _self.creator : creator // ignore: cast_nullable_to_non_nullable
-as UserContainer,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as UserProfile,job: null == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
 as JobModel,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
 as List<AnswerModel>,
   ));
@@ -1160,9 +1432,9 @@ as List<AnswerModel>,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get creator {
+$UserProfileCopyWith<$Res> get creator {
   
-  return $UserContainerCopyWith<$Res>(_self.creator, (value) {
+  return $UserProfileCopyWith<$Res>(_self.creator, (value) {
     return _then(_self.copyWith(creator: value));
   });
 }/// Create a copy of ApplicationModel

@@ -9,7 +9,7 @@ part 'chat_models.g.dart';
 abstract class ConversationModel with _$ConversationModel {
   const factory ConversationModel({
     required String id,
-    required UserContainer user,
+    required UserProfile user,
     @JsonKey(name: 'created_at') required String createdAt,
   }) = _ConversationModel;
 
@@ -23,7 +23,7 @@ abstract class MessageModel with _$MessageModel {
 
   const factory MessageModel({
     required String id,
-    required UserContainer sender,
+    required UserProfile sender,
     required String content,
     @JsonKey(name: 'is_read') required bool isRead,
     @JsonKey(name: 'created_at') required String createdAt,
@@ -35,7 +35,7 @@ abstract class MessageModel with _$MessageModel {
 
 @freezed
 abstract class ChatRoute with _$ChatRoute {
-  const factory ChatRoute({required String id, required UserContainer user}) =
+  const factory ChatRoute({required String id, required UserProfile user}) =
       _ChatRoute;
 
   factory ChatRoute.fromJson(Map<String, dynamic> json) =>

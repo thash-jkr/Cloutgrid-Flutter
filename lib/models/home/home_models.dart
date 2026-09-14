@@ -64,12 +64,12 @@ abstract class NotificationModel with _$NotificationModel {
 abstract class PostModel with _$PostModel {
   const factory PostModel({
     required int id,
-    required UserProfile author,
-    @JsonKey(name: 'posted_by') required UserContainer postedBy,
-    UserContainer? collaboration,
+    @JsonKey(name: 'posted_by') required UserProfile postedBy,
+    UserProfile? collaboration,
     @JsonKey(name: 'like_count') required int likeCount,
     @JsonKey(name: 'comment_count') required int commentCount,
     @JsonKey(name: 'is_liked') required bool isLiked,
+    @JsonKey(name: 'is_owner') required bool isOwner,
     required String image,
     required String aspect,
     required String caption,

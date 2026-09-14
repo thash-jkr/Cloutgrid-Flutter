@@ -13,7 +13,7 @@ class ProfileState {
   final List<PostModel> collabs;
   final List<PostModel> otherPosts;
   final List<PostModel> otherCollabs;
-  final UserContainer? otherProfile;
+  final UserProfile? otherProfile;
   final bool profile;
   final bool isLoading;
   final String? errorMessage;
@@ -34,7 +34,7 @@ class ProfileState {
     List<PostModel>? collabs,
     List<PostModel>? otherPosts,
     List<PostModel>? otherCollabs,
-    UserContainer? otherProfile,
+    UserProfile? otherProfile,
     bool clearOtherProfile = false,
     bool? profile,
     bool? isLoading,
@@ -79,11 +79,11 @@ class ProfileNotifier extends _$ProfileNotifier {
     try {
       final result = await ref
           .read(apiServiceProvider)
-          .request<UserContainer>(
+          .request<UserProfile>(
             '/profiles/$username/',
             method: 'GET',
             fromJson: (json) =>
-                UserContainer.fromJson(json as Map<String, dynamic>),
+                UserProfile.fromJson(json as Map<String, dynamic>),
             requireAuth: true,
           );
 
@@ -197,11 +197,11 @@ class ProfileNotifier extends _$ProfileNotifier {
 
       final current = state.otherProfile;
       if (current != null) {
-        final updatedCount = current.profile.followersCount + (follow ? 1 : -1);
+        final updatedCount = current.followersCount + (follow ? 1 : -1);
         state = state.copyWith(
           otherProfile: current.copyWith(
             isFollowing: follow,
-            profile: current.profile.copyWith(followersCount: updatedCount),
+            followersCount: updatedCount,
           ),
         );
       }

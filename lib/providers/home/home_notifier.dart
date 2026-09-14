@@ -204,17 +204,9 @@ class HomeNotifier extends _$HomeNotifier {
     );
   }
 
-  // NOTE: your Kotlin call site passes a second bool arg
-  // (home.handleBlock(username, true)) that wasn't in the HomeRepository
-  // source you shared earlier — likely a "also notify the server" flag
-  // added at the HomeManager level. Left as a single-arg local-only
-  // removal for now; tell me what that bool controls and I'll wire the
-  // matching API call.
   void handleBlock(String username) {
     state = state.copyWith(
-      posts: state.posts
-          .where((p) => p.postedBy.profile.username != username)
-          .toList(),
+      posts: state.posts.where((p) => p.postedBy.username != username).toList(),
     );
   }
 }

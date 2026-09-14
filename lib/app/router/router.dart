@@ -95,7 +95,7 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
     onNavigateToEditProfile: () => EditProfileRoute().push(context),
-    onNavigateToOtherProfile: (UserContainer user) =>
+    onNavigateToOtherProfile: (UserProfile user) =>
         OtherProfileRoute($extra: user).push(context),
     onNavigateToCreatePost: (Uint8List bytes) =>
         CreatePostRoute($extra: bytes).push(context),
@@ -184,7 +184,7 @@ class EditProfileRoute extends GoRouteData with $EditProfileRoute {
 
 @TypedGoRoute<OtherProfileRoute>(path: '/other-profile')
 class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
-  final UserContainer $extra;
+  final UserProfile $extra;
 
   const OtherProfileRoute({required this.$extra});
 

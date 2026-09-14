@@ -26,14 +26,14 @@ Map<String, dynamic> _$NotificationModelToJson(_NotificationModel instance) =>
 
 _PostModel _$PostModelFromJson(Map<String, dynamic> json) => _PostModel(
   id: (json['id'] as num).toInt(),
-  author: UserProfile.fromJson(json['author'] as Map<String, dynamic>),
-  postedBy: UserContainer.fromJson(json['posted_by'] as Map<String, dynamic>),
+  postedBy: UserProfile.fromJson(json['posted_by'] as Map<String, dynamic>),
   collaboration: json['collaboration'] == null
       ? null
-      : UserContainer.fromJson(json['collaboration'] as Map<String, dynamic>),
+      : UserProfile.fromJson(json['collaboration'] as Map<String, dynamic>),
   likeCount: (json['like_count'] as num).toInt(),
   commentCount: (json['comment_count'] as num).toInt(),
   isLiked: json['is_liked'] as bool,
+  isOwner: json['is_owner'] as bool,
   image: json['image'] as String,
   aspect: json['aspect'] as String,
   caption: json['caption'] as String,
@@ -42,12 +42,12 @@ _PostModel _$PostModelFromJson(Map<String, dynamic> json) => _PostModel(
 Map<String, dynamic> _$PostModelToJson(_PostModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'author': instance.author,
       'posted_by': instance.postedBy,
       'collaboration': instance.collaboration,
       'like_count': instance.likeCount,
       'comment_count': instance.commentCount,
       'is_liked': instance.isLiked,
+      'is_owner': instance.isOwner,
       'image': instance.image,
       'aspect': instance.aspect,
       'caption': instance.caption,

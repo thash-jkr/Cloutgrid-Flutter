@@ -28,7 +28,7 @@ class TabNavigator extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
-  final void Function(UserContainer user) onNavigateToOtherProfile;
+  final void Function(UserProfile user) onNavigateToOtherProfile;
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
   final void Function(int id) onNavigateToQuestions;
   final void Function() onNavigateToConversations;

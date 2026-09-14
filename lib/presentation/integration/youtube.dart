@@ -26,7 +26,7 @@ class Youtube extends ConsumerStatefulWidget {
 class _YoutubeState extends ConsumerState<Youtube> {
   bool _loadTriggered = false;
 
-  UserContainer? get user => ref.read(authProvider).value?.user;
+  UserProfile? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
       ref.read(integrationProvider.notifier);
 
@@ -37,7 +37,7 @@ class _YoutubeState extends ConsumerState<Youtube> {
 
   Future<void> _handleSync() async {
     if (user == null) return;
-    final username = user!.profile.username;
+    final username = user!.username;
 
     await showAsyncToast(
       context,
@@ -81,7 +81,7 @@ class _YoutubeState extends ConsumerState<Youtube> {
 
     if (isConnected && !_loadTriggered) {
       _loadTriggered = true;
-      Future(() => _loadOwnData(user!.profile.username));
+      Future(() => _loadOwnData(user!.username));
     } else if (!isConnected) {
       _loadTriggered = false;
     }

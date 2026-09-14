@@ -108,9 +108,9 @@ class _EditProfileState extends ConsumerState<EditProfile> {
     final isLoaded = user != null;
 
     if (isLoaded && !_controllersInitialized) {
-      _nameController.text = user.profile.name;
-      _bioController.text = user.profile.bio ?? '';
-      _category = user.area ?? user.targetAudience ?? '';
+      _nameController.text = user.name;
+      _bioController.text = user.bio;
+      _category = user.category;
       _controllersInitialized = true;
     }
 
@@ -158,7 +158,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                             : CachedNetworkImage(
                                 imageUrl:
                                     ApiConfig.current.baseUrl +
-                                    (user?.profile.profilePhoto ?? ''),
+                                    (user?.profilePhoto ?? ''),
                                 width: 100,
                                 height: 100,
                                 fit: BoxFit.cover,

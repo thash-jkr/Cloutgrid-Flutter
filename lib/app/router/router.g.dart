@@ -385,7 +385,7 @@ RouteBase get $otherProfileRoute => GoRouteData.$route(
 
 mixin $OtherProfileRoute on GoRouteData {
   static OtherProfileRoute _fromState(GoRouterState state) =>
-      OtherProfileRoute($extra: state.extra as UserContainer);
+      OtherProfileRoute($extra: state.extra as UserProfile);
 
   OtherProfileRoute get _self => this as OtherProfileRoute;
 

@@ -38,7 +38,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   ProfileTab _selectedTab = ProfileTab.posts;
 
-  UserContainer? get user => ref.read(authProvider).value?.user;
+  UserProfile? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
       ref.read(integrationProvider.notifier);
 
@@ -49,7 +49,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     Future(() {
       if (!mounted) return;
 
-      final username = ref.read(authProvider).value?.user?.profile.username;
+      final username = ref.read(authProvider).value?.user?.username;
       if (username == null) return;
 
       final profile = ref.read(profileProvider.notifier);
@@ -101,7 +101,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   Future<void> _onRefresh() async {
     final profile = ref.read(profileProvider.notifier);
-    final username = ref.read(authProvider).value?.user?.profile.username;
+    final username = ref.read(authProvider).value?.user?.username;
     if (username == null) return;
 
     await Future.wait([
@@ -112,7 +112,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   Future<void> _connectInstagram() async {
     if (user == null) return;
-    final username = user!.profile.username;
+    final username = user!.username;
 
     await showAsyncToast(
       context,
@@ -134,7 +134,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   Future<void> _connectYouTube() async {
     if (user == null) return;
-    final username = user!.profile.username;
+    final username = user!.username;
 
     await showAsyncToast(
       context,
@@ -206,7 +206,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
     final auth = ref.watch(authProvider);
 
-    final UserContainer? user = auth.value?.user;
+    final UserProfile? user = auth.value?.user;
 
     ref.listen(deepLinkProvider.select((s) => s.profileAction), (
       previous,
@@ -224,7 +224,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: "@${user?.profile.username ?? ""}",
+        title: "@${user?.username ?? ""}",
         actions: [
           HeaderAction(
             icon: Icons.edit_rounded,
@@ -253,16 +253,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 ),
                 sliver: SliverMainAxisGroup(
                   slivers: [
-                    if (user != null)
+                    if (user != null) ...[
                       SliverToBoxAdapter(child: ProfileHeader(user: user)),
 
-                    SliverToBoxAdapter(
-                      child: ProfileSelector(
-                        selectedTab: _selectedTab,
-                        onTabSelected: _onTabSelected,
-                        type: user?.profile.userType ?? 'creator',
+                      SliverToBoxAdapter(
+                        child: ProfileSelector(
+                          selectedTab: _selectedTab,
+                          onTabSelected: _onTabSelected,
+                          type: user.type,
+                        ),
                       ),
-                    ),
+                    ],
 
                     ..._buildTabContent(),
                   ],

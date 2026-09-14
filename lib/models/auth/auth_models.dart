@@ -5,35 +5,24 @@ part 'auth_models.freezed.dart';
 part 'auth_models.g.dart';
 
 @freezed
-abstract class UserContainer with _$UserContainer {
-  const factory UserContainer({
-    @JsonKey(name: 'user') required UserProfile profile,
-    String? area,
-    @JsonKey(name: 'instagram_connected') bool? instagramConnected,
-    @JsonKey(name: 'youtube_connected') bool? youtubeConnected,
-    @JsonKey(name: 'target_audience') String? targetAudience,
-    String? website,
-    @JsonKey(name: 'is_following') bool? isFollowing,
-    @JsonKey(name: 'is_blocking') bool? isBlocking,
-    @JsonKey(name: 'is_blocker') bool? isBlocker,
-  }) = _UserContainer;
-
-  factory UserContainer.fromJson(Map<String, dynamic> json) =>
-      _$UserContainerFromJson(json);
-}
-
-@freezed
 abstract class UserProfile with _$UserProfile {
   const factory UserProfile({
     required int id,
     required String name,
     required String username,
     required String email,
-    String? bio,
-    @JsonKey(name: 'user_type') required String userType,
+    required String category,
+    required String bio,
+    @JsonKey(name: 'type') required String type,
     @JsonKey(name: 'profile_photo') required String profilePhoto,
     @JsonKey(name: 'followers_count') required int followersCount,
     @JsonKey(name: 'following_count') required int followingCount,
+    @JsonKey(name: 'instagram_connected') bool? instagramConnected,
+    @JsonKey(name: 'youtube_connected') bool? youtubeConnected,
+    String? website,
+    @JsonKey(name: 'is_following') bool? isFollowing,
+    @JsonKey(name: 'is_blocking') bool? isBlocking,
+    @JsonKey(name: 'is_blocker') bool? isBlocker,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
@@ -43,7 +32,7 @@ abstract class UserProfile with _$UserProfile {
 @freezed
 abstract class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
-    required UserContainer user,
+    required UserProfile user,
     required String access,
     required String refresh,
   }) = _LoginResponse;

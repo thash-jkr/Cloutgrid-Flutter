@@ -2,7 +2,7 @@ import 'auth/auth_models.dart';
 
 class AuthState {
   final bool isAuth;
-  final UserContainer? user;
+  final UserProfile? user;
   final String? type;
   final String? access;
   final bool isLoading;
@@ -19,7 +19,7 @@ class AuthState {
 
   AuthState copyWith({
     bool? isAuth,
-    UserContainer? user,
+    UserProfile? user,
     String? type,
     String? access,
     bool? isLoading,

@@ -28,14 +28,14 @@ class _InstagramState extends ConsumerState<Instagram> {
   bool _loadTriggered = false;
 
   IntegrationState get integrationState => ref.read(integrationProvider);
-  UserContainer? get user => ref.read(authProvider).value?.user;
+  UserProfile? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
       ref.read(integrationProvider.notifier);
 
   void _loadOwnData() {
     if (user?.instagramConnected == true &&
         integrationState.instagramPage == null) {
-      final username = user!.profile.username;
+      final username = user!.username;
       integrationNotifier.loadOwnInstagramProfile(username);
       integrationNotifier.loadOwnInstagramMedia(username);
     }
@@ -43,7 +43,7 @@ class _InstagramState extends ConsumerState<Instagram> {
 
   Future<void> _handleSync() async {
     if (user == null) return;
-    final username = user!.profile.username;
+    final username = user!.username;
 
     await showAsyncToast(
       context,

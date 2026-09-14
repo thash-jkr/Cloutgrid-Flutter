@@ -6,42 +6,23 @@ part of 'auth_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_UserContainer _$UserContainerFromJson(Map<String, dynamic> json) =>
-    _UserContainer(
-      profile: UserProfile.fromJson(json['user'] as Map<String, dynamic>),
-      area: json['area'] as String?,
-      instagramConnected: json['instagram_connected'] as bool?,
-      youtubeConnected: json['youtube_connected'] as bool?,
-      targetAudience: json['target_audience'] as String?,
-      website: json['website'] as String?,
-      isFollowing: json['is_following'] as bool?,
-      isBlocking: json['is_blocking'] as bool?,
-      isBlocker: json['is_blocker'] as bool?,
-    );
-
-Map<String, dynamic> _$UserContainerToJson(_UserContainer instance) =>
-    <String, dynamic>{
-      'user': instance.profile,
-      'area': instance.area,
-      'instagram_connected': instance.instagramConnected,
-      'youtube_connected': instance.youtubeConnected,
-      'target_audience': instance.targetAudience,
-      'website': instance.website,
-      'is_following': instance.isFollowing,
-      'is_blocking': instance.isBlocking,
-      'is_blocker': instance.isBlocker,
-    };
-
 _UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => _UserProfile(
   id: (json['id'] as num).toInt(),
   name: json['name'] as String,
   username: json['username'] as String,
   email: json['email'] as String,
-  bio: json['bio'] as String?,
-  userType: json['user_type'] as String,
+  category: json['category'] as String,
+  bio: json['bio'] as String,
+  type: json['type'] as String,
   profilePhoto: json['profile_photo'] as String,
   followersCount: (json['followers_count'] as num).toInt(),
   followingCount: (json['following_count'] as num).toInt(),
+  instagramConnected: json['instagram_connected'] as bool?,
+  youtubeConnected: json['youtube_connected'] as bool?,
+  website: json['website'] as String?,
+  isFollowing: json['is_following'] as bool?,
+  isBlocking: json['is_blocking'] as bool?,
+  isBlocker: json['is_blocker'] as bool?,
 );
 
 Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
@@ -50,16 +31,23 @@ Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
       'name': instance.name,
       'username': instance.username,
       'email': instance.email,
+      'category': instance.category,
       'bio': instance.bio,
-      'user_type': instance.userType,
+      'type': instance.type,
       'profile_photo': instance.profilePhoto,
       'followers_count': instance.followersCount,
       'following_count': instance.followingCount,
+      'instagram_connected': instance.instagramConnected,
+      'youtube_connected': instance.youtubeConnected,
+      'website': instance.website,
+      'is_following': instance.isFollowing,
+      'is_blocking': instance.isBlocking,
+      'is_blocker': instance.isBlocker,
     };
 
 _LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     _LoginResponse(
-      user: UserContainer.fromJson(json['user'] as Map<String, dynamic>),
+      user: UserProfile.fromJson(json['user'] as Map<String, dynamic>),
       access: json['access'] as String,
       refresh: json['refresh'] as String,
     );

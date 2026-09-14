@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../core/network/api_config.dart';
-// import '../../core/widgets/tab_item.dart';
 import '../../models/auth/auth_models.dart';
 import '../../providers/search/search_notifier.dart';
 import '../../widgets/clout_capsule.dart';
@@ -15,7 +13,7 @@ import '../../widgets/clout_header.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   final ValueChanged<TabItem> onSelectTab;
-  final void Function(UserContainer user) onNavigateToOtherProfile;
+  final void Function(UserProfile user) onNavigateToOtherProfile;
 
   const SearchScreen({
     super.key,
@@ -151,16 +149,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         itemBuilder: (context, index) {
                           final user = userList[index];
                           return _UserCard(
-                            key: ValueKey(user.profile.id),
+                            key: ValueKey(user.id),
                             user: user,
                             onTap: () {
-                              if (user.profile.username ==
+                              if (user.username ==
                                   ref
                                       .watch(authProvider)
                                       .value
                                       ?.user
-                                      ?.profile
-                                      .username) {
+                                      ?.username) {
                                 widget.onSelectTab(TabItem.profile);
                               } else {
                                 widget.onNavigateToOtherProfile(user);
@@ -178,7 +175,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 }
 
 class _UserCard extends StatelessWidget {
-  final UserContainer user;
+  final UserProfile user;
   final VoidCallback onTap;
 
   const _UserCard({super.key, required this.user, required this.onTap});
@@ -199,7 +196,7 @@ class _UserCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1,
               child: CachedNetworkImage(
-                imageUrl: ApiConfig.current.baseUrl + user.profile.profilePhoto,
+                imageUrl: user.profilePhoto,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
                     const Image(image: AssetImage('assets/images/profile.png')),
@@ -211,7 +208,7 @@ class _UserCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                user.profile.name,
+                user.name,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -221,7 +218,7 @@ class _UserCard extends StatelessWidget {
               ),
             ),
 
-            CloutCapsule(user.area ?? user.targetAudience ?? 'Creator'),
+            CloutCapsule(user.category),
 
             const SizedBox(height: 5),
           ],

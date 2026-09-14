@@ -9,7 +9,7 @@ part of 'chat_models.dart';
 _ConversationModel _$ConversationModelFromJson(Map<String, dynamic> json) =>
     _ConversationModel(
       id: json['id'] as String,
-      user: UserContainer.fromJson(json['user'] as Map<String, dynamic>),
+      user: UserProfile.fromJson(json['user'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String,
     );
 
@@ -23,7 +23,7 @@ Map<String, dynamic> _$ConversationModelToJson(_ConversationModel instance) =>
 _MessageModel _$MessageModelFromJson(Map<String, dynamic> json) =>
     _MessageModel(
       id: json['id'] as String,
-      sender: UserContainer.fromJson(json['sender'] as Map<String, dynamic>),
+      sender: UserProfile.fromJson(json['sender'] as Map<String, dynamic>),
       content: json['content'] as String,
       isRead: json['is_read'] as bool,
       createdAt: json['created_at'] as String,
@@ -40,7 +40,7 @@ Map<String, dynamic> _$MessageModelToJson(_MessageModel instance) =>
 
 _ChatRoute _$ChatRouteFromJson(Map<String, dynamic> json) => _ChatRoute(
   id: json['id'] as String,
-  user: UserContainer.fromJson(json['user'] as Map<String, dynamic>),
+  user: UserProfile.fromJson(json['user'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ChatRouteToJson(_ChatRoute instance) =>

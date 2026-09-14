@@ -63,7 +63,7 @@ class _MessagesState extends ConsumerState<Messages> {
     final chatState = ref.watch(chatProvider);
     final messages = chatState.messages;
     final myPhoto = ref.watch(
-      authProvider.select((s) => s.value?.user?.profile.profilePhoto),
+      authProvider.select((s) => s.value?.user?.profilePhoto),
     );
 
     return Scaffold(
@@ -106,8 +106,7 @@ class _MessagesState extends ConsumerState<Messages> {
                     return _ChatRow(
                       content: message.content,
                       date: timeAgo(message.createdAt),
-                      isSender:
-                          message.sender.profile.username != widget.username,
+                      isSender: message.sender.username != widget.username,
                       profilePhoto: widget.profilePhoto,
                     );
                   },

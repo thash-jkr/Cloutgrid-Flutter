@@ -16,7 +16,7 @@ import '../../providers/home/home_notifier.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final ValueChanged<TabItem> onSelectTab;
-  final void Function(UserContainer user) onNavigateToOtherProfile;
+  final void Function(UserProfile user) onNavigateToOtherProfile;
   final void Function() onNavigateToConversations;
 
   const HomeScreen({
@@ -126,7 +126,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final homeState = ref.watch(homeProvider);
     final authState = ref.watch(authProvider);
 
-    final UserContainer? user = authState.value?.user;
+    final UserProfile? user = authState.value?.user;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -184,9 +184,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     }
 
                     final post = homeState.posts[index];
-                    final isOwner =
-                        post.postedBy.profile.username ==
-                        user?.profile.username;
 
                     return FeedPost(
                       key: ValueKey(post.id),
@@ -195,7 +192,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           ref.read(homeProvider.notifier).likePost(post.id),
                       onCommentClick: () => _openComments(post.id),
                       onUserClick: (author) {
-                        if (author.profile.username == user?.profile.username) {
+                        if (author.username == user?.username) {
                           widget.onSelectTab(.profile);
                         } else {
                           widget.onNavigateToOtherProfile(author);
@@ -203,8 +200,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       },
                       onBlockClick: () => ref
                           .read(homeProvider.notifier)
-                          .handleBlock(post.postedBy.profile.username),
-                      isOwner: isOwner,
+                          .handleBlock(post.postedBy.username),
+                      isOwner: post.isOwner,
                       onDeleteClick: () =>
                           ref.read(homeProvider.notifier).deletePost(post.id),
                     );

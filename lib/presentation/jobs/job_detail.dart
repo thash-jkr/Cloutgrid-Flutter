@@ -11,7 +11,7 @@ import '../../widgets/clout_toast.dart';
 class JobDetail extends ConsumerWidget {
   final JobModel job;
   final ValueChanged<int> onNavigateToQuestions;
-  final void Function(UserContainer user) onNavigateToOtherProfile;
+  final void Function(UserProfile user) onNavigateToOtherProfile;
   final VoidCallback onClose;
   final ScrollController? scrollController;
 
@@ -61,10 +61,6 @@ class JobDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final requirements = job.requirements
-        .split(',')
-        .map((r) => r.trim())
-        .where((r) => r.isNotEmpty);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -98,7 +94,7 @@ class JobDetail extends ConsumerWidget {
             ),
 
             Text(
-              job.postedBy.profile.name,
+              job.postedBy.name,
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: .bold, color: Colors.grey),
             ),
@@ -137,12 +133,12 @@ class JobDetail extends ConsumerWidget {
                   'Requirements:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                ...requirements.map(
+                ...job.requirements.map(
                   (req) => Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('•  '),
-                      Expanded(child: Text(req)),
+                      Expanded(child: Text(req.content)),
                     ],
                   ),
                 ),

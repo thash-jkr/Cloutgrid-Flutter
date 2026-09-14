@@ -101,7 +101,7 @@ class PostDetail extends ConsumerWidget {
                   if (other) {
                     ref
                         .read(profileProvider.notifier)
-                        .handleBlock(post.postedBy.profile.username, true);
+                        .handleBlock(post.postedBy.username, true);
                     onNavigateBack();
                   }
                 },

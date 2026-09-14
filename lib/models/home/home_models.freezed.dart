@@ -290,7 +290,7 @@ as String,
 /// @nodoc
 mixin _$PostModel {
 
- int get id; UserProfile get author;@JsonKey(name: 'posted_by') UserContainer get postedBy; UserContainer? get collaboration;@JsonKey(name: 'like_count') int get likeCount;@JsonKey(name: 'comment_count') int get commentCount;@JsonKey(name: 'is_liked') bool get isLiked; String get image; String get aspect; String get caption;
+ int get id;@JsonKey(name: 'posted_by') UserProfile get postedBy; UserProfile? get collaboration;@JsonKey(name: 'like_count') int get likeCount;@JsonKey(name: 'comment_count') int get commentCount;@JsonKey(name: 'is_liked') bool get isLiked;@JsonKey(name: 'is_owner') bool get isOwner; String get image; String get aspect; String get caption;
 /// Create a copy of PostModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -303,16 +303,16 @@ $PostModelCopyWith<PostModel> get copyWith => _$PostModelCopyWithImpl<PostModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostModel&&(identical(other.id, id) || other.id == id)&&(identical(other.author, author) || other.author == author)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&(identical(other.collaboration, collaboration) || other.collaboration == collaboration)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.image, image) || other.image == image)&&(identical(other.aspect, aspect) || other.aspect == aspect)&&(identical(other.caption, caption) || other.caption == caption));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&(identical(other.collaboration, collaboration) || other.collaboration == collaboration)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.image, image) || other.image == image)&&(identical(other.aspect, aspect) || other.aspect == aspect)&&(identical(other.caption, caption) || other.caption == caption));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,author,postedBy,collaboration,likeCount,commentCount,isLiked,image,aspect,caption);
+int get hashCode => Object.hash(runtimeType,id,postedBy,collaboration,likeCount,commentCount,isLiked,isOwner,image,aspect,caption);
 
 @override
 String toString() {
-  return 'PostModel(id: $id, author: $author, postedBy: $postedBy, collaboration: $collaboration, likeCount: $likeCount, commentCount: $commentCount, isLiked: $isLiked, image: $image, aspect: $aspect, caption: $caption)';
+  return 'PostModel(id: $id, postedBy: $postedBy, collaboration: $collaboration, likeCount: $likeCount, commentCount: $commentCount, isLiked: $isLiked, isOwner: $isOwner, image: $image, aspect: $aspect, caption: $caption)';
 }
 
 
@@ -323,11 +323,11 @@ abstract mixin class $PostModelCopyWith<$Res>  {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) _then) = _$PostModelCopyWithImpl;
 @useResult
 $Res call({
- int id, UserProfile author,@JsonKey(name: 'posted_by') UserContainer postedBy, UserContainer? collaboration,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comment_count') int commentCount,@JsonKey(name: 'is_liked') bool isLiked, String image, String aspect, String caption
+ int id,@JsonKey(name: 'posted_by') UserProfile postedBy, UserProfile? collaboration,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comment_count') int commentCount,@JsonKey(name: 'is_liked') bool isLiked,@JsonKey(name: 'is_owner') bool isOwner, String image, String aspect, String caption
 });
 
 
-$UserProfileCopyWith<$Res> get author;$UserContainerCopyWith<$Res> get postedBy;$UserContainerCopyWith<$Res>? get collaboration;
+$UserProfileCopyWith<$Res> get postedBy;$UserProfileCopyWith<$Res>? get collaboration;
 
 }
 /// @nodoc
@@ -340,15 +340,15 @@ class _$PostModelCopyWithImpl<$Res>
 
 /// Create a copy of PostModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? author = null,Object? postedBy = null,Object? collaboration = freezed,Object? likeCount = null,Object? commentCount = null,Object? isLiked = null,Object? image = null,Object? aspect = null,Object? caption = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postedBy = null,Object? collaboration = freezed,Object? likeCount = null,Object? commentCount = null,Object? isLiked = null,Object? isOwner = null,Object? image = null,Object? aspect = null,Object? caption = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
-as UserProfile,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
-as UserContainer,collaboration: freezed == collaboration ? _self.collaboration : collaboration // ignore: cast_nullable_to_non_nullable
-as UserContainer?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
+as int,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
+as UserProfile,collaboration: freezed == collaboration ? _self.collaboration : collaboration // ignore: cast_nullable_to_non_nullable
+as UserProfile?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
 as int,isLiked: null == isLiked ? _self.isLiked : isLiked // ignore: cast_nullable_to_non_nullable
+as bool,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
 as bool,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,aspect: null == aspect ? _self.aspect : aspect // ignore: cast_nullable_to_non_nullable
 as String,caption: null == caption ? _self.caption : caption // ignore: cast_nullable_to_non_nullable
@@ -359,30 +359,21 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res> get author {
+$UserProfileCopyWith<$Res> get postedBy {
   
-  return $UserProfileCopyWith<$Res>(_self.author, (value) {
-    return _then(_self.copyWith(author: value));
-  });
-}/// Create a copy of PostModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get postedBy {
-  
-  return $UserContainerCopyWith<$Res>(_self.postedBy, (value) {
+  return $UserProfileCopyWith<$Res>(_self.postedBy, (value) {
     return _then(_self.copyWith(postedBy: value));
   });
 }/// Create a copy of PostModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res>? get collaboration {
+$UserProfileCopyWith<$Res>? get collaboration {
     if (_self.collaboration == null) {
     return null;
   }
 
-  return $UserContainerCopyWith<$Res>(_self.collaboration!, (value) {
+  return $UserProfileCopyWith<$Res>(_self.collaboration!, (value) {
     return _then(_self.copyWith(collaboration: value));
   });
 }
@@ -467,10 +458,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  UserProfile author, @JsonKey(name: 'posted_by')  UserContainer postedBy,  UserContainer? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked,  String image,  String aspect,  String caption)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  UserProfile? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked, @JsonKey(name: 'is_owner')  bool isOwner,  String image,  String aspect,  String caption)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostModel() when $default != null:
-return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.image,_that.aspect,_that.caption);case _:
+return $default(_that.id,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.isOwner,_that.image,_that.aspect,_that.caption);case _:
   return orElse();
 
 }
@@ -488,10 +479,10 @@ return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.l
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  UserProfile author, @JsonKey(name: 'posted_by')  UserContainer postedBy,  UserContainer? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked,  String image,  String aspect,  String caption)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  UserProfile? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked, @JsonKey(name: 'is_owner')  bool isOwner,  String image,  String aspect,  String caption)  $default,) {final _that = this;
 switch (_that) {
 case _PostModel():
-return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.image,_that.aspect,_that.caption);case _:
+return $default(_that.id,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.isOwner,_that.image,_that.aspect,_that.caption);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -508,10 +499,10 @@ return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.l
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  UserProfile author, @JsonKey(name: 'posted_by')  UserContainer postedBy,  UserContainer? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked,  String image,  String aspect,  String caption)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'posted_by')  UserProfile postedBy,  UserProfile? collaboration, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comment_count')  int commentCount, @JsonKey(name: 'is_liked')  bool isLiked, @JsonKey(name: 'is_owner')  bool isOwner,  String image,  String aspect,  String caption)?  $default,) {final _that = this;
 switch (_that) {
 case _PostModel() when $default != null:
-return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.image,_that.aspect,_that.caption);case _:
+return $default(_that.id,_that.postedBy,_that.collaboration,_that.likeCount,_that.commentCount,_that.isLiked,_that.isOwner,_that.image,_that.aspect,_that.caption);case _:
   return null;
 
 }
@@ -523,16 +514,16 @@ return $default(_that.id,_that.author,_that.postedBy,_that.collaboration,_that.l
 @JsonSerializable()
 
 class _PostModel implements PostModel {
-  const _PostModel({required this.id, required this.author, @JsonKey(name: 'posted_by') required this.postedBy, this.collaboration, @JsonKey(name: 'like_count') required this.likeCount, @JsonKey(name: 'comment_count') required this.commentCount, @JsonKey(name: 'is_liked') required this.isLiked, required this.image, required this.aspect, required this.caption});
+  const _PostModel({required this.id, @JsonKey(name: 'posted_by') required this.postedBy, this.collaboration, @JsonKey(name: 'like_count') required this.likeCount, @JsonKey(name: 'comment_count') required this.commentCount, @JsonKey(name: 'is_liked') required this.isLiked, @JsonKey(name: 'is_owner') required this.isOwner, required this.image, required this.aspect, required this.caption});
   factory _PostModel.fromJson(Map<String, dynamic> json) => _$PostModelFromJson(json);
 
 @override final  int id;
-@override final  UserProfile author;
-@override@JsonKey(name: 'posted_by') final  UserContainer postedBy;
-@override final  UserContainer? collaboration;
+@override@JsonKey(name: 'posted_by') final  UserProfile postedBy;
+@override final  UserProfile? collaboration;
 @override@JsonKey(name: 'like_count') final  int likeCount;
 @override@JsonKey(name: 'comment_count') final  int commentCount;
 @override@JsonKey(name: 'is_liked') final  bool isLiked;
+@override@JsonKey(name: 'is_owner') final  bool isOwner;
 @override final  String image;
 @override final  String aspect;
 @override final  String caption;
@@ -550,16 +541,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostModel&&(identical(other.id, id) || other.id == id)&&(identical(other.author, author) || other.author == author)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&(identical(other.collaboration, collaboration) || other.collaboration == collaboration)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.image, image) || other.image == image)&&(identical(other.aspect, aspect) || other.aspect == aspect)&&(identical(other.caption, caption) || other.caption == caption));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postedBy, postedBy) || other.postedBy == postedBy)&&(identical(other.collaboration, collaboration) || other.collaboration == collaboration)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.image, image) || other.image == image)&&(identical(other.aspect, aspect) || other.aspect == aspect)&&(identical(other.caption, caption) || other.caption == caption));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,author,postedBy,collaboration,likeCount,commentCount,isLiked,image,aspect,caption);
+int get hashCode => Object.hash(runtimeType,id,postedBy,collaboration,likeCount,commentCount,isLiked,isOwner,image,aspect,caption);
 
 @override
 String toString() {
-  return 'PostModel(id: $id, author: $author, postedBy: $postedBy, collaboration: $collaboration, likeCount: $likeCount, commentCount: $commentCount, isLiked: $isLiked, image: $image, aspect: $aspect, caption: $caption)';
+  return 'PostModel(id: $id, postedBy: $postedBy, collaboration: $collaboration, likeCount: $likeCount, commentCount: $commentCount, isLiked: $isLiked, isOwner: $isOwner, image: $image, aspect: $aspect, caption: $caption)';
 }
 
 
@@ -570,11 +561,11 @@ abstract mixin class _$PostModelCopyWith<$Res> implements $PostModelCopyWith<$Re
   factory _$PostModelCopyWith(_PostModel value, $Res Function(_PostModel) _then) = __$PostModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, UserProfile author,@JsonKey(name: 'posted_by') UserContainer postedBy, UserContainer? collaboration,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comment_count') int commentCount,@JsonKey(name: 'is_liked') bool isLiked, String image, String aspect, String caption
+ int id,@JsonKey(name: 'posted_by') UserProfile postedBy, UserProfile? collaboration,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comment_count') int commentCount,@JsonKey(name: 'is_liked') bool isLiked,@JsonKey(name: 'is_owner') bool isOwner, String image, String aspect, String caption
 });
 
 
-@override $UserProfileCopyWith<$Res> get author;@override $UserContainerCopyWith<$Res> get postedBy;@override $UserContainerCopyWith<$Res>? get collaboration;
+@override $UserProfileCopyWith<$Res> get postedBy;@override $UserProfileCopyWith<$Res>? get collaboration;
 
 }
 /// @nodoc
@@ -587,15 +578,15 @@ class __$PostModelCopyWithImpl<$Res>
 
 /// Create a copy of PostModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? author = null,Object? postedBy = null,Object? collaboration = freezed,Object? likeCount = null,Object? commentCount = null,Object? isLiked = null,Object? image = null,Object? aspect = null,Object? caption = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postedBy = null,Object? collaboration = freezed,Object? likeCount = null,Object? commentCount = null,Object? isLiked = null,Object? isOwner = null,Object? image = null,Object? aspect = null,Object? caption = null,}) {
   return _then(_PostModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
-as UserProfile,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
-as UserContainer,collaboration: freezed == collaboration ? _self.collaboration : collaboration // ignore: cast_nullable_to_non_nullable
-as UserContainer?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
+as int,postedBy: null == postedBy ? _self.postedBy : postedBy // ignore: cast_nullable_to_non_nullable
+as UserProfile,collaboration: freezed == collaboration ? _self.collaboration : collaboration // ignore: cast_nullable_to_non_nullable
+as UserProfile?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
 as int,isLiked: null == isLiked ? _self.isLiked : isLiked // ignore: cast_nullable_to_non_nullable
+as bool,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
 as bool,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,aspect: null == aspect ? _self.aspect : aspect // ignore: cast_nullable_to_non_nullable
 as String,caption: null == caption ? _self.caption : caption // ignore: cast_nullable_to_non_nullable
@@ -607,30 +598,21 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res> get author {
+$UserProfileCopyWith<$Res> get postedBy {
   
-  return $UserProfileCopyWith<$Res>(_self.author, (value) {
-    return _then(_self.copyWith(author: value));
-  });
-}/// Create a copy of PostModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res> get postedBy {
-  
-  return $UserContainerCopyWith<$Res>(_self.postedBy, (value) {
+  return $UserProfileCopyWith<$Res>(_self.postedBy, (value) {
     return _then(_self.copyWith(postedBy: value));
   });
 }/// Create a copy of PostModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserContainerCopyWith<$Res>? get collaboration {
+$UserProfileCopyWith<$Res>? get collaboration {
     if (_self.collaboration == null) {
     return null;
   }
 
-  return $UserContainerCopyWith<$Res>(_self.collaboration!, (value) {
+  return $UserProfileCopyWith<$Res>(_self.collaboration!, (value) {
     return _then(_self.copyWith(collaboration: value));
   });
 }

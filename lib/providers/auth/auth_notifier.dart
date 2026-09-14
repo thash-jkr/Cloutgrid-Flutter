@@ -27,7 +27,7 @@ class AuthNotifier extends _$AuthNotifier {
     final userType = await _storage.userType;
 
     final user = userJsonString != null
-        ? UserContainer.fromJson(jsonDecode(userJsonString))
+        ? UserProfile.fromJson(jsonDecode(userJsonString))
         : null;
 
     return AuthState(
@@ -119,10 +119,10 @@ class AuthNotifier extends _$AuthNotifier {
   }) async {
     _setLoading(true, clearError: true);
     try {
-      final updatedUser = await _api.multipartRequest<UserContainer>(
+      final updatedUser = await _api.multipartRequest<UserProfile>(
         '/profile/$userType/',
         method: 'PUT',
-        fromJson: (json) => UserContainer.fromJson(json),
+        fromJson: (json) => UserProfile.fromJson(json),
         imageBytes: imageBytes,
         imageKey: 'user[profile_photo]',
         params: data,
@@ -137,7 +137,7 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
-  Future<void> saveUser(UserContainer user) async {
+  Future<void> saveUser(UserProfile user) async {
     await _storage.saveUser(jsonEncode(user.toJson()));
     final current = state.value;
     state = AsyncValue.data(
