@@ -34,6 +34,17 @@ abstract class MessageModel with _$MessageModel {
 }
 
 @freezed
+abstract class MessageResponse with _$MessageResponse {
+  const factory MessageResponse({
+    required List<MessageModel> results,
+    String? next,
+  }) = _MessageResponse;
+
+  factory MessageResponse.fromJson(Map<String, dynamic> json) =>
+      _$MessageResponseFromJson(json);
+}
+
+@freezed
 abstract class ChatRoute with _$ChatRoute {
   const factory ChatRoute({required String id, required UserProfile user}) =
       _ChatRoute;

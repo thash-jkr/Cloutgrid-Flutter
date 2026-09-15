@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../app/network/api_config.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../widgets/category_list.dart';
 import '../../widgets/category_sheet.dart';
@@ -156,16 +155,21 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                                 fit: BoxFit.cover,
                               )
                             : CachedNetworkImage(
-                                imageUrl:
-                                    ApiConfig.current.baseUrl +
-                                    (user?.profilePhoto ?? ''),
+                                imageUrl: (user?.profilePhoto ?? ''),
                                 width: 100,
                                 height: 100,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) =>
-                                    const CircleAvatar(radius: 50),
+                                placeholder: (context, url) => const Image(
+                                  image: AssetImage(
+                                    'assets/images/profile.png',
+                                  ),
+                                ),
                                 errorWidget: (context, url, error) =>
-                                    const CircleAvatar(radius: 50),
+                                    const Image(
+                                      image: AssetImage(
+                                        'assets/images/profile.png',
+                                      ),
+                                    ),
                               ),
                       ),
                       Positioned(

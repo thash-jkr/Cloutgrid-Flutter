@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloutgrid_flutter/app/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
                           subtitle: Text(timeAgo(item.createdAt)),
                           leading: ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: ApiConfig.current.baseUrl + item.photo,
+                              imageUrl: item.photo,
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,

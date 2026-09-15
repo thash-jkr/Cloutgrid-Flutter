@@ -38,6 +38,17 @@ Map<String, dynamic> _$MessageModelToJson(_MessageModel instance) =>
       'created_at': instance.createdAt,
     };
 
+_MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) =>
+    _MessageResponse(
+      results: (json['results'] as List<dynamic>)
+          .map((e) => MessageModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      next: json['next'] as String?,
+    );
+
+Map<String, dynamic> _$MessageResponseToJson(_MessageResponse instance) =>
+    <String, dynamic>{'results': instance.results, 'next': instance.next};
+
 _ChatRoute _$ChatRouteFromJson(Map<String, dynamic> json) => _ChatRoute(
   id: json['id'] as String,
   user: UserProfile.fromJson(json['user'] as Map<String, dynamic>),

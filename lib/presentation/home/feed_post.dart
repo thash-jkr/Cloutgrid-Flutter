@@ -374,16 +374,6 @@ class _OverflowMenu extends StatelessWidget {
                 ],
               ),
             ),
-          PopupMenuItem(
-            value: onBlock,
-            child: Row(
-              children: [
-                const Icon(Icons.block, size: 20),
-                const SizedBox(width: 12),
-                Text('Block @${post.postedBy.username}'),
-              ],
-            ),
-          ),
         ];
       },
     );

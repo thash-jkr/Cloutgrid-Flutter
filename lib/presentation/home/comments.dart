@@ -3,7 +3,6 @@ import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_input.dart';
 import 'package:flutter/material.dart';
 
-import '../../app/network/api_config.dart';
 import '../../../models/auth/auth_models.dart';
 import '../../../models/home/home_models.dart';
 import '../../../widgets/clout_header.dart';
@@ -148,7 +147,6 @@ class _CommentRow extends StatelessWidget {
     final theme = Theme.of(context);
     final isOwner = user != null && comment.user.username == user!.username;
     final offWhite = theme.colorScheme.surface;
-    final photoUrl = ApiConfig.current.baseUrl + comment.user.profilePhoto;
 
     return Dismissible(
       key: ValueKey(comment.id),
@@ -159,7 +157,7 @@ class _CommentRow extends StatelessWidget {
           return true;
         } else {
           onReport();
-          return false; // snaps back, same as dismissState.reset()
+          return false;
         }
       },
       background: Container(
@@ -174,7 +172,7 @@ class _CommentRow extends StatelessWidget {
             tileColor: offWhite,
             leading: ClipOval(
               child: CachedNetworkImage(
-                imageUrl: photoUrl,
+                imageUrl: comment.user.profilePhoto,
                 width: 40,
                 height: 40,
                 fit: BoxFit.cover,

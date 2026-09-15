@@ -17,6 +17,7 @@ class ChatState {
   final bool socketConnected;
   final String? errorMessage;
   final ConversationModel? newConversation;
+  final String? nextCursor;
 
   const ChatState({
     this.chats = const [],
@@ -25,6 +26,7 @@ class ChatState {
     this.socketConnected = false,
     this.errorMessage,
     this.newConversation,
+    this.nextCursor,
   });
 
   ChatState copyWith({
@@ -36,6 +38,8 @@ class ChatState {
     bool clearErrorMessage = false,
     ConversationModel? newConversation,
     bool clearNewConversation = false,
+    String? nextCursor,
+    bool clearNextCursor = false,
   }) {
     return ChatState(
       chats: chats ?? this.chats,
@@ -48,6 +52,7 @@ class ChatState {
       newConversation: clearNewConversation
           ? null
           : (newConversation ?? this.newConversation),
+      nextCursor: clearNextCursor ? null : (nextCursor ?? this.nextCursor),
     );
   }
 }
@@ -121,22 +126,35 @@ class ChatNotifier extends _$ChatNotifier {
     }
   }
 
-  Future<void> fetchMessages(String id) async {
+  Future<void> fetchMessages(String id, bool isInitial) async {
+    final url = isInitial
+        ? '/chats/${id.toLowerCase()}/messages/'
+        : state.nextCursor;
+    if (url == null || url.isEmpty) return;
+
     state = state.copyWith(isLoading: true, clearErrorMessage: true);
 
     try {
-      final results = await ref
+      final response = await ref
           .read(apiServiceProvider)
-          .request<List<MessageModel>>(
-            '/chats/${id.toLowerCase()}/messages/',
+          .request<MessageResponse>(
+            url,
             method: 'GET',
-            fromJson: (json) => (json as List)
-                .map((e) => MessageModel.fromJson(e as Map<String, dynamic>))
-                .toList(),
+            fromJson: (json) => MessageResponse.fromJson(json),
             requireAuth: true,
+            fullUrl: !isInitial,
           );
 
-      state = state.copyWith(messages: results, isLoading: false);
+      final updatedMessages = isInitial
+          ? response.results
+          : [...state.messages, ...response.results];
+
+      state = state.copyWith(
+        messages: updatedMessages,
+        isLoading: false,
+        nextCursor: response.next,
+        clearNextCursor: response.next == null,
+      );
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString(), isLoading: false);
     }

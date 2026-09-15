@@ -6,7 +6,6 @@ import 'package:cloutgrid_flutter/widgets/clout_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/network/api_config.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../providers/chat/chat_notifier.dart';
 import '../../widgets/clout_header.dart';
@@ -14,8 +13,8 @@ import '../../widgets/clout_header.dart';
 class Messages extends ConsumerStatefulWidget {
   final String id;
   final VoidCallback onNavigateBack;
-  final String username; // the OTHER person in this conversation
-  final String profilePhoto; // the OTHER person's photo
+  final String username;
+  final String profilePhoto;
 
   const Messages({
     super.key,
@@ -33,6 +32,10 @@ class _MessagesState extends ConsumerState<Messages> {
   final _messageController = TextEditingController();
   late final ChatNotifier _chatNotifier;
 
+  final _scrollController = ScrollController();
+
+  bool _isFetchingMore = false;
+
   @override
   void initState() {
     super.initState();
@@ -42,8 +45,30 @@ class _MessagesState extends ConsumerState<Messages> {
     Future(() {
       final notifier = ref.read(chatProvider.notifier);
       notifier.disconnectWebSocket();
-      notifier.fetchMessages(widget.id);
+      notifier.fetchMessages(widget.id, true);
       notifier.connectWebSocket(widget.id);
+    });
+
+    _scrollController.addListener(() {
+      debugPrint(
+        'scroll: pixels=${_scrollController.position.pixels} '
+        'max=${_scrollController.position.maxScrollExtent}',
+      );
+
+      if (_isFetchingMore) return;
+
+      final state = ref.read(chatProvider);
+      final nearOldestLoaded =
+          _scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 300;
+
+      if (nearOldestLoaded && state.nextCursor != null) {
+        _isFetchingMore = true;
+        final notifier = ref.read(chatProvider.notifier);
+        notifier.fetchMessages(widget.id, false).whenComplete(() {
+          _isFetchingMore = false;
+        });
+      }
     });
   }
 
@@ -62,6 +87,9 @@ class _MessagesState extends ConsumerState<Messages> {
 
     final chatState = ref.watch(chatProvider);
     final messages = chatState.messages;
+    debugPrint(
+      'messages: ${messages.length}, nextCursor: ${chatState.nextCursor}',
+    );
     final myPhoto = ref.watch(
       authProvider.select((s) => s.value?.user?.profilePhoto),
     );
@@ -93,6 +121,7 @@ class _MessagesState extends ConsumerState<Messages> {
           : Stack(
               children: [
                 ListView.builder(
+                  controller: _scrollController,
                   reverse: true,
                   padding: EdgeInsets.fromLTRB(
                     15,
@@ -120,9 +149,7 @@ class _MessagesState extends ConsumerState<Messages> {
                   child: CloutInput(
                     onSend: (text) =>
                         ref.read(chatProvider.notifier).sendLiveMessage(text),
-                    avatarUrl: myPhoto != null
-                        ? ApiConfig.current.baseUrl + myPhoto
-                        : null,
+                    avatarUrl: myPhoto,
                   ),
                 ),
               ],
@@ -157,7 +184,7 @@ class _ChatRow extends StatelessWidget {
           if (!isSender)
             ClipOval(
               child: CachedNetworkImage(
-                imageUrl: ApiConfig.current.baseUrl + profilePhoto,
+                imageUrl: profilePhoto,
                 width: 30,
                 height: 30,
                 fit: BoxFit.cover,
