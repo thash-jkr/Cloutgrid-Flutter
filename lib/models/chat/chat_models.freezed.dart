@@ -302,7 +302,7 @@ $UserProfileCopyWith<$Res> get user {
 /// @nodoc
 mixin _$MessageModel {
 
- String get id; UserProfile get sender; String get content;@JsonKey(name: 'is_read') bool get isRead;@JsonKey(name: 'created_at') String get createdAt;
+ String get id; int get sender; String get content;@JsonKey(name: 'is_read') bool get isRead;@JsonKey(name: 'created_at') String get createdAt;
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -335,11 +335,11 @@ abstract mixin class $MessageModelCopyWith<$Res>  {
   factory $MessageModelCopyWith(MessageModel value, $Res Function(MessageModel) _then) = _$MessageModelCopyWithImpl;
 @useResult
 $Res call({
- String id, UserProfile sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
+ String id, int sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-$UserProfileCopyWith<$Res> get sender;
+
 
 }
 /// @nodoc
@@ -356,22 +356,13 @@ class _$MessageModelCopyWithImpl<$Res>
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
-as UserProfile,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
-/// Create a copy of MessageModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res> get sender {
-  
-  return $UserProfileCopyWith<$Res>(_self.sender, (value) {
-    return _then(_self.copyWith(sender: value));
-  });
-}
+
 }
 
 
@@ -453,7 +444,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  int sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -474,7 +465,7 @@ return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  int sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel():
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -494,7 +485,7 @@ return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  UserProfile sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  int sender,  String content, @JsonKey(name: 'is_read')  bool isRead, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
 return $default(_that.id,_that.sender,_that.content,_that.isRead,_that.createdAt);case _:
@@ -513,7 +504,7 @@ class _MessageModel extends MessageModel {
   factory _MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
 
 @override final  String id;
-@override final  UserProfile sender;
+@override final  int sender;
 @override final  String content;
 @override@JsonKey(name: 'is_read') final  bool isRead;
 @override@JsonKey(name: 'created_at') final  String createdAt;
@@ -551,11 +542,11 @@ abstract mixin class _$MessageModelCopyWith<$Res> implements $MessageModelCopyWi
   factory _$MessageModelCopyWith(_MessageModel value, $Res Function(_MessageModel) _then) = __$MessageModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, UserProfile sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
+ String id, int sender, String content,@JsonKey(name: 'is_read') bool isRead,@JsonKey(name: 'created_at') String createdAt
 });
 
 
-@override $UserProfileCopyWith<$Res> get sender;
+
 
 }
 /// @nodoc
@@ -572,23 +563,14 @@ class __$MessageModelCopyWithImpl<$Res>
   return _then(_MessageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
-as UserProfile,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
 
-/// Create a copy of MessageModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserProfileCopyWith<$Res> get sender {
-  
-  return $UserProfileCopyWith<$Res>(_self.sender, (value) {
-    return _then(_self.copyWith(sender: value));
-  });
-}
+
 }
 
 

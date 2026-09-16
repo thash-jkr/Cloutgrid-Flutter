@@ -90,9 +90,7 @@ class _MessagesState extends ConsumerState<Messages> {
     debugPrint(
       'messages: ${messages.length}, nextCursor: ${chatState.nextCursor}',
     );
-    final myPhoto = ref.watch(
-      authProvider.select((s) => s.value?.user?.profilePhoto),
-    );
+    final user = ref.watch(authProvider.select((s) => s.value?.user));
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -135,7 +133,7 @@ class _MessagesState extends ConsumerState<Messages> {
                     return _ChatRow(
                       content: message.content,
                       date: timeAgo(message.createdAt),
-                      isSender: message.sender.username != widget.username,
+                      isSender: message.sender == user?.id,
                       profilePhoto: widget.profilePhoto,
                     );
                   },
@@ -149,7 +147,7 @@ class _MessagesState extends ConsumerState<Messages> {
                   child: CloutInput(
                     onSend: (text) =>
                         ref.read(chatProvider.notifier).sendLiveMessage(text),
-                    avatarUrl: myPhoto,
+                    avatarUrl: user?.profilePhoto,
                   ),
                 ),
               ],

@@ -23,7 +23,7 @@ abstract class MessageModel with _$MessageModel {
 
   const factory MessageModel({
     required String id,
-    required UserProfile sender,
+    required int sender,
     required String content,
     @JsonKey(name: 'is_read') required bool isRead,
     @JsonKey(name: 'created_at') required String createdAt,

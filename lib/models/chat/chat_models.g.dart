@@ -23,7 +23,7 @@ Map<String, dynamic> _$ConversationModelToJson(_ConversationModel instance) =>
 _MessageModel _$MessageModelFromJson(Map<String, dynamic> json) =>
     _MessageModel(
       id: json['id'] as String,
-      sender: UserProfile.fromJson(json['sender'] as Map<String, dynamic>),
+      sender: (json['sender'] as num).toInt(),
       content: json['content'] as String,
       isRead: json['is_read'] as bool,
       createdAt: json['created_at'] as String,
