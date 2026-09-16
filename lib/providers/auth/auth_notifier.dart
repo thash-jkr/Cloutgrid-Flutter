@@ -202,11 +202,29 @@ class AuthNotifier extends _$AuthNotifier {
 
     try {
       await _api.request<dynamic>(
-        '/password-reset/',
+        '/password/forgot/',
         method: 'POST',
         fromJson: (json) => json,
         body: {'email': email},
         requireAuth: false,
+      );
+      _setLoading(false);
+    } catch (e) {
+      _setError(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    _setLoading(true, clearError: true);
+
+    try {
+      await _api.request<dynamic>(
+        '/password/change/',
+        method: 'POST',
+        fromJson: (json) => json,
+        body: {'old_password': oldPassword, 'new_password': newPassword},
+        requireAuth: true,
       );
       _setLoading(false);
     } catch (e) {

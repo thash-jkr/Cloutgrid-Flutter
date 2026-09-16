@@ -8,6 +8,7 @@ import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
 import 'package:cloutgrid_flutter/presentation/chats/messages.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
+import 'package:cloutgrid_flutter/presentation/profile/change_password.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/other_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
@@ -157,8 +158,19 @@ class SecurityRoute extends GoRouteData with $SecurityRoute {
   const SecurityRoute();
 
   @override
+  Widget build(BuildContext context, GoRouterState state) => Security(
+    onNavigateBack: () => context.pop(),
+    onNavigateToChangePassword: () => ChangePasswordRoute().push(context),
+  );
+}
+
+@TypedGoRoute<ChangePasswordRoute>(path: "/change-password")
+class ChangePasswordRoute extends GoRouteData with $ChangePasswordRoute {
+  const ChangePasswordRoute();
+
+  @override
   Widget build(BuildContext context, GoRouterState state) =>
-      Security(onNavigateBack: () => context.pop());
+      ChangePassword(onNavigateBack: () => context.pop());
 }
 
 @TypedGoRoute<PostDetailRoute>(path: "/post-detail")

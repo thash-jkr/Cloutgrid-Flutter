@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../providers/auth/auth_notifier.dart';
 import '../../widgets/clout_header.dart';
@@ -76,8 +74,13 @@ class _DeleteConfirmDialogState extends State<_DeleteConfirmDialog> {
 
 class Security extends ConsumerWidget {
   final VoidCallback onNavigateBack;
+  final VoidCallback onNavigateToChangePassword;
 
-  const Security({super.key, required this.onNavigateBack});
+  const Security({
+    super.key,
+    required this.onNavigateBack,
+    required this.onNavigateToChangePassword,
+  });
 
   void _showDeleteDialog(BuildContext context, WidgetRef ref) {
     showDialog<void>(
@@ -109,64 +112,19 @@ class Security extends ConsumerWidget {
         child: Column(
           spacing: 1,
           children: [
-            // SegmentedListItem(
-            //   index: 0,
-            //   count: 1,
-            //   leading: const Icon(Icons.lock_rounded),
-            //   onTap: () {},
-            //   title: 'Change Password',
-            // ),
-
-            // const SizedBox(height: 25),
             SegmentedListItem(
               index: 0,
-              count: 3,
-              leading: SvgPicture.asset(
-                'assets/icons/instagram.svg',
-                width: 25,
-                height: 25,
-                colorFilter: const ColorFilter.mode(
-                  Colors.red,
-                  BlendMode.srcIn,
-                ),
-              ),
-              onTap: () => {
-                showToast(
-                  context,
-                  message: "You haven't connected your Instagram account",
-                  isSuccess: false,
-                ),
-              },
-              title: 'Delete Instagram Data',
-              danger: true,
+              count: 1,
+              leading: const Icon(Icons.lock_rounded),
+              onTap: () => onNavigateToChangePassword(),
+              title: 'Change Password',
             ),
 
-            SegmentedListItem(
-              index: 1,
-              count: 3,
-              leading: SvgPicture.asset(
-                'assets/icons/youtube.svg',
-                width: 25,
-                height: 25,
-                colorFilter: const ColorFilter.mode(
-                  Colors.red,
-                  BlendMode.srcIn,
-                ),
-              ),
-              onTap: () => {
-                showToast(
-                  context,
-                  message: "You haven't connected your YouTube account",
-                  isSuccess: false,
-                ),
-              },
-              title: 'Delete YouTube Data',
-              danger: true,
-            ),
+            const SizedBox(height: 25),
 
             SegmentedListItem(
-              index: 2,
-              count: 3,
+              index: 0,
+              count: 1,
               leading: const Icon(Icons.delete_rounded, color: Colors.red),
               onTap: () => _showDeleteDialog(context, ref),
               title: 'Delete Account',
