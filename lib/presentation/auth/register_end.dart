@@ -85,7 +85,7 @@ class _RegisterEndState extends ConsumerState<RegisterEnd> {
     final data = {
       ...widget.basicInfo,
       'user.password': _passwordController.text,
-      'area': _category,
+      'category': _category,
     };
 
     try {
@@ -110,7 +110,7 @@ class _RegisterEndState extends ConsumerState<RegisterEnd> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'Creator Registration',
+        title: 'Creator Signup',
         icon: HeaderAction(
           icon: Icons.arrow_back,
           contentDescription: 'Back',

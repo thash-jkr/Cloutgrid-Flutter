@@ -87,9 +87,9 @@ class _RegisterBeginState extends ConsumerState<RegisterBegin> {
         setState(() => _emailVerified = true);
         showToast(context, message: 'Email verified');
         widget.onNavigateToMoreInfo({
-          'name': _nameController.text.trim(),
-          'username': _usernameController.text.trim(),
-          'email': _emailController.text.trim(),
+          'user.name': _nameController.text.trim(),
+          'user.username': _usernameController.text.trim(),
+          'user.email': _emailController.text.trim(),
         });
       }
     } catch (e) {
@@ -107,7 +107,7 @@ class _RegisterBeginState extends ConsumerState<RegisterBegin> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
-        title: 'Creator Registration',
+        title: 'Creator Signup',
         icon: HeaderAction(
           icon: Icons.arrow_back,
           contentDescription: 'Back',

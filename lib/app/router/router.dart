@@ -59,7 +59,7 @@ class RegisterEndRoute extends GoRouteData with $RegisterEndRoute {
   Widget build(BuildContext context, GoRouterState state) => RegisterEnd(
     basicInfo: $extra,
     onNavigateBack: () => context.pop(),
-    onNavigateToLogin: () => () {
+    onNavigateToLogin: () {
       const LandingRoute().go(context);
       const LoginRoute().push(context);
     },
