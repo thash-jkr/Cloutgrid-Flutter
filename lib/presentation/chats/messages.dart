@@ -50,11 +50,6 @@ class _MessagesState extends ConsumerState<Messages> {
     });
 
     _scrollController.addListener(() {
-      debugPrint(
-        'scroll: pixels=${_scrollController.position.pixels} '
-        'max=${_scrollController.position.maxScrollExtent}',
-      );
-
       if (_isFetchingMore) return;
 
       final state = ref.read(chatProvider);
@@ -87,9 +82,6 @@ class _MessagesState extends ConsumerState<Messages> {
 
     final chatState = ref.watch(chatProvider);
     final messages = chatState.messages;
-    debugPrint(
-      'messages: ${messages.length}, nextCursor: ${chatState.nextCursor}',
-    );
     final user = ref.watch(authProvider.select((s) => s.value?.user));
 
     return Scaffold(

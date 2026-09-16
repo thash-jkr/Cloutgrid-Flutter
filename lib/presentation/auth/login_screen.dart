@@ -101,10 +101,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   controller: _emailController,
                   keyboardType: .emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    hintText: "Email",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
+                    prefixIcon: Icon(Icons.mail_outline_rounded),
                   ),
                 ),
 
@@ -114,10 +115,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   controller: _passwordController,
                   obscureText: !showPassword,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    hintText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
+                    prefixIcon: Icon(Icons.lock_outline_rounded),
                     suffixIcon: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {

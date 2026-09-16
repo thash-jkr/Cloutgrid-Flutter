@@ -124,7 +124,7 @@ class AuthNotifier extends _$AuthNotifier {
         method: 'PUT',
         fromJson: (json) => UserProfile.fromJson(json),
         imageBytes: imageBytes,
-        imageKey: 'user[profile_photo]',
+        imageKey: 'profile_photo',
         params: data,
         requireAuth: true,
       );

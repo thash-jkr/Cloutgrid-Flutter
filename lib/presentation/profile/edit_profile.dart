@@ -75,11 +75,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
   Future<void> _handleSave() async {
     var data = {
-      'user[name]': _nameController.text.trim(),
-      'user[bio]': _bioController.text.trim(),
+      'name': _nameController.text.trim(),
+      'bio': _bioController.text.trim(),
     };
 
-    data = {...data, 'area': _category};
+    data = {...data, 'category': _category};
 
     await showAsyncToast(
       context,
