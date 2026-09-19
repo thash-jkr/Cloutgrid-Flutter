@@ -265,36 +265,13 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                         user.isBlocking == false) ...[
                       SliverToBoxAdapter(child: ProfileHeader(user: user)),
 
-                      if (user.type == "business")
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: .all(15),
-                            child: SegmentedButton<ProfileTab>(
-                              segments: [
-                                ButtonSegment(
-                                  value: ProfileTab.posts,
-                                  icon: Icon(ProfileTab.posts.icon),
-                                  label: Text(ProfileTab.posts.label),
-                                ),
-
-                                ButtonSegment(
-                                  value: ProfileTab.collabs,
-                                  icon: Icon(ProfileTab.collabs.icon),
-                                  label: Text(ProfileTab.collabs.label),
-                                ),
-                              ],
-                              selected: {_selectedTab},
-                              onSelectionChanged: (newSelection) =>
-                                  _onTabSelected(newSelection.first),
-                              style: SegmentedButton.styleFrom(
-                                selectedBackgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.secondary,
-                                selectedForegroundColor: Colors.white,
-                              ),
-                            ),
-                          ),
+                      SliverToBoxAdapter(
+                        child: ProfileSelector(
+                          selectedTab: _selectedTab,
+                          onTabSelected: _onTabSelected,
+                          user: user,
                         ),
+                      ),
 
                       ..._buildTabContent(),
                     ] else ...[

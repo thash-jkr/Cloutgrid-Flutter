@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfile {
 
- int get id; String get name; String get username; String get email; String get category; String get bio;@JsonKey(name: 'type') String get type;@JsonKey(name: 'profile_photo') String get profilePhoto;@JsonKey(name: 'followers_count') int get followersCount;@JsonKey(name: 'following_count') int get followingCount;@JsonKey(name: 'instagram_connected') bool? get instagramConnected;@JsonKey(name: 'youtube_connected') bool? get youtubeConnected; String? get website;@JsonKey(name: 'is_following') bool? get isFollowing;@JsonKey(name: 'is_blocking') bool? get isBlocking;@JsonKey(name: 'is_blocker') bool? get isBlocker;
+ int get id; String get name; String get username; String get email; String get category; String get bio;@JsonKey(name: 'type') String get type;@JsonKey(name: 'profile_photo') String get profilePhoto;@JsonKey(name: 'followers_count') int get followersCount;@JsonKey(name: 'following_count') int get followingCount;@JsonKey(name: 'instagram_connected') bool? get instagramConnected;@JsonKey(name: 'youtube_connected') bool? get youtubeConnected;@JsonKey(name: 'instagram_followers') int? get instagramFollowers;@JsonKey(name: 'youtube_subscribers') int? get youtubeSubscribers; String? get website;@JsonKey(name: 'is_following') bool? get isFollowing;@JsonKey(name: 'is_blocking') bool? get isBlocking;@JsonKey(name: 'is_blocker') bool? get isBlocker;
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.category, category) || other.category == category)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.type, type) || other.type == type)&&(identical(other.profilePhoto, profilePhoto) || other.profilePhoto == profilePhoto)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.instagramConnected, instagramConnected) || other.instagramConnected == instagramConnected)&&(identical(other.youtubeConnected, youtubeConnected) || other.youtubeConnected == youtubeConnected)&&(identical(other.website, website) || other.website == website)&&(identical(other.isFollowing, isFollowing) || other.isFollowing == isFollowing)&&(identical(other.isBlocking, isBlocking) || other.isBlocking == isBlocking)&&(identical(other.isBlocker, isBlocker) || other.isBlocker == isBlocker));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.category, category) || other.category == category)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.type, type) || other.type == type)&&(identical(other.profilePhoto, profilePhoto) || other.profilePhoto == profilePhoto)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.instagramConnected, instagramConnected) || other.instagramConnected == instagramConnected)&&(identical(other.youtubeConnected, youtubeConnected) || other.youtubeConnected == youtubeConnected)&&(identical(other.instagramFollowers, instagramFollowers) || other.instagramFollowers == instagramFollowers)&&(identical(other.youtubeSubscribers, youtubeSubscribers) || other.youtubeSubscribers == youtubeSubscribers)&&(identical(other.website, website) || other.website == website)&&(identical(other.isFollowing, isFollowing) || other.isFollowing == isFollowing)&&(identical(other.isBlocking, isBlocking) || other.isBlocking == isBlocking)&&(identical(other.isBlocker, isBlocker) || other.isBlocker == isBlocker));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,username,email,category,bio,type,profilePhoto,followersCount,followingCount,instagramConnected,youtubeConnected,website,isFollowing,isBlocking,isBlocker);
+int get hashCode => Object.hash(runtimeType,id,name,username,email,category,bio,type,profilePhoto,followersCount,followingCount,instagramConnected,youtubeConnected,instagramFollowers,youtubeSubscribers,website,isFollowing,isBlocking,isBlocker);
 
 @override
 String toString() {
-  return 'UserProfile(id: $id, name: $name, username: $username, email: $email, category: $category, bio: $bio, type: $type, profilePhoto: $profilePhoto, followersCount: $followersCount, followingCount: $followingCount, instagramConnected: $instagramConnected, youtubeConnected: $youtubeConnected, website: $website, isFollowing: $isFollowing, isBlocking: $isBlocking, isBlocker: $isBlocker)';
+  return 'UserProfile(id: $id, name: $name, username: $username, email: $email, category: $category, bio: $bio, type: $type, profilePhoto: $profilePhoto, followersCount: $followersCount, followingCount: $followingCount, instagramConnected: $instagramConnected, youtubeConnected: $youtubeConnected, instagramFollowers: $instagramFollowers, youtubeSubscribers: $youtubeSubscribers, website: $website, isFollowing: $isFollowing, isBlocking: $isBlocking, isBlocker: $isBlocker)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserProfileCopyWith<$Res>  {
   factory $UserProfileCopyWith(UserProfile value, $Res Function(UserProfile) _then) = _$UserProfileCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, String username, String email, String category, String bio,@JsonKey(name: 'type') String type,@JsonKey(name: 'profile_photo') String profilePhoto,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount,@JsonKey(name: 'instagram_connected') bool? instagramConnected,@JsonKey(name: 'youtube_connected') bool? youtubeConnected, String? website,@JsonKey(name: 'is_following') bool? isFollowing,@JsonKey(name: 'is_blocking') bool? isBlocking,@JsonKey(name: 'is_blocker') bool? isBlocker
+ int id, String name, String username, String email, String category, String bio,@JsonKey(name: 'type') String type,@JsonKey(name: 'profile_photo') String profilePhoto,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount,@JsonKey(name: 'instagram_connected') bool? instagramConnected,@JsonKey(name: 'youtube_connected') bool? youtubeConnected,@JsonKey(name: 'instagram_followers') int? instagramFollowers,@JsonKey(name: 'youtube_subscribers') int? youtubeSubscribers, String? website,@JsonKey(name: 'is_following') bool? isFollowing,@JsonKey(name: 'is_blocking') bool? isBlocking,@JsonKey(name: 'is_blocker') bool? isBlocker
 });
 
 
@@ -65,7 +65,7 @@ class _$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? username = null,Object? email = null,Object? category = null,Object? bio = null,Object? type = null,Object? profilePhoto = null,Object? followersCount = null,Object? followingCount = null,Object? instagramConnected = freezed,Object? youtubeConnected = freezed,Object? website = freezed,Object? isFollowing = freezed,Object? isBlocking = freezed,Object? isBlocker = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? username = null,Object? email = null,Object? category = null,Object? bio = null,Object? type = null,Object? profilePhoto = null,Object? followersCount = null,Object? followingCount = null,Object? instagramConnected = freezed,Object? youtubeConnected = freezed,Object? instagramFollowers = freezed,Object? youtubeSubscribers = freezed,Object? website = freezed,Object? isFollowing = freezed,Object? isBlocking = freezed,Object? isBlocker = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -79,7 +79,9 @@ as String,followersCount: null == followersCount ? _self.followersCount : follow
 as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
 as int,instagramConnected: freezed == instagramConnected ? _self.instagramConnected : instagramConnected // ignore: cast_nullable_to_non_nullable
 as bool?,youtubeConnected: freezed == youtubeConnected ? _self.youtubeConnected : youtubeConnected // ignore: cast_nullable_to_non_nullable
-as bool?,website: freezed == website ? _self.website : website // ignore: cast_nullable_to_non_nullable
+as bool?,instagramFollowers: freezed == instagramFollowers ? _self.instagramFollowers : instagramFollowers // ignore: cast_nullable_to_non_nullable
+as int?,youtubeSubscribers: freezed == youtubeSubscribers ? _self.youtubeSubscribers : youtubeSubscribers // ignore: cast_nullable_to_non_nullable
+as int?,website: freezed == website ? _self.website : website // ignore: cast_nullable_to_non_nullable
 as String?,isFollowing: freezed == isFollowing ? _self.isFollowing : isFollowing // ignore: cast_nullable_to_non_nullable
 as bool?,isBlocking: freezed == isBlocking ? _self.isBlocking : isBlocking // ignore: cast_nullable_to_non_nullable
 as bool?,isBlocker: freezed == isBlocker ? _self.isBlocker : isBlocker // ignore: cast_nullable_to_non_nullable
@@ -168,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected, @JsonKey(name: 'instagram_followers')  int? instagramFollowers, @JsonKey(name: 'youtube_subscribers')  int? youtubeSubscribers,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
+return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.instagramFollowers,_that.youtubeSubscribers,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
   return orElse();
 
 }
@@ -189,10 +191,10 @@ return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected, @JsonKey(name: 'instagram_followers')  int? instagramFollowers, @JsonKey(name: 'youtube_subscribers')  int? youtubeSubscribers,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile():
-return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
+return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.instagramFollowers,_that.youtubeSubscribers,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +211,10 @@ return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String username,  String email,  String category,  String bio, @JsonKey(name: 'type')  String type, @JsonKey(name: 'profile_photo')  String profilePhoto, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount, @JsonKey(name: 'instagram_connected')  bool? instagramConnected, @JsonKey(name: 'youtube_connected')  bool? youtubeConnected, @JsonKey(name: 'instagram_followers')  int? instagramFollowers, @JsonKey(name: 'youtube_subscribers')  int? youtubeSubscribers,  String? website, @JsonKey(name: 'is_following')  bool? isFollowing, @JsonKey(name: 'is_blocking')  bool? isBlocking, @JsonKey(name: 'is_blocker')  bool? isBlocker)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
+return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_that.bio,_that.type,_that.profilePhoto,_that.followersCount,_that.followingCount,_that.instagramConnected,_that.youtubeConnected,_that.instagramFollowers,_that.youtubeSubscribers,_that.website,_that.isFollowing,_that.isBlocking,_that.isBlocker);case _:
   return null;
 
 }
@@ -224,7 +226,7 @@ return $default(_that.id,_that.name,_that.username,_that.email,_that.category,_t
 @JsonSerializable()
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.id, required this.name, required this.username, required this.email, required this.category, required this.bio, @JsonKey(name: 'type') required this.type, @JsonKey(name: 'profile_photo') required this.profilePhoto, @JsonKey(name: 'followers_count') required this.followersCount, @JsonKey(name: 'following_count') required this.followingCount, @JsonKey(name: 'instagram_connected') this.instagramConnected, @JsonKey(name: 'youtube_connected') this.youtubeConnected, this.website, @JsonKey(name: 'is_following') this.isFollowing, @JsonKey(name: 'is_blocking') this.isBlocking, @JsonKey(name: 'is_blocker') this.isBlocker});
+  const _UserProfile({required this.id, required this.name, required this.username, required this.email, required this.category, required this.bio, @JsonKey(name: 'type') required this.type, @JsonKey(name: 'profile_photo') required this.profilePhoto, @JsonKey(name: 'followers_count') required this.followersCount, @JsonKey(name: 'following_count') required this.followingCount, @JsonKey(name: 'instagram_connected') this.instagramConnected, @JsonKey(name: 'youtube_connected') this.youtubeConnected, @JsonKey(name: 'instagram_followers') this.instagramFollowers, @JsonKey(name: 'youtube_subscribers') this.youtubeSubscribers, this.website, @JsonKey(name: 'is_following') this.isFollowing, @JsonKey(name: 'is_blocking') this.isBlocking, @JsonKey(name: 'is_blocker') this.isBlocker});
   factory _UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
 
 @override final  int id;
@@ -239,6 +241,8 @@ class _UserProfile implements UserProfile {
 @override@JsonKey(name: 'following_count') final  int followingCount;
 @override@JsonKey(name: 'instagram_connected') final  bool? instagramConnected;
 @override@JsonKey(name: 'youtube_connected') final  bool? youtubeConnected;
+@override@JsonKey(name: 'instagram_followers') final  int? instagramFollowers;
+@override@JsonKey(name: 'youtube_subscribers') final  int? youtubeSubscribers;
 @override final  String? website;
 @override@JsonKey(name: 'is_following') final  bool? isFollowing;
 @override@JsonKey(name: 'is_blocking') final  bool? isBlocking;
@@ -257,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.category, category) || other.category == category)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.type, type) || other.type == type)&&(identical(other.profilePhoto, profilePhoto) || other.profilePhoto == profilePhoto)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.instagramConnected, instagramConnected) || other.instagramConnected == instagramConnected)&&(identical(other.youtubeConnected, youtubeConnected) || other.youtubeConnected == youtubeConnected)&&(identical(other.website, website) || other.website == website)&&(identical(other.isFollowing, isFollowing) || other.isFollowing == isFollowing)&&(identical(other.isBlocking, isBlocking) || other.isBlocking == isBlocking)&&(identical(other.isBlocker, isBlocker) || other.isBlocker == isBlocker));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.category, category) || other.category == category)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.type, type) || other.type == type)&&(identical(other.profilePhoto, profilePhoto) || other.profilePhoto == profilePhoto)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.instagramConnected, instagramConnected) || other.instagramConnected == instagramConnected)&&(identical(other.youtubeConnected, youtubeConnected) || other.youtubeConnected == youtubeConnected)&&(identical(other.instagramFollowers, instagramFollowers) || other.instagramFollowers == instagramFollowers)&&(identical(other.youtubeSubscribers, youtubeSubscribers) || other.youtubeSubscribers == youtubeSubscribers)&&(identical(other.website, website) || other.website == website)&&(identical(other.isFollowing, isFollowing) || other.isFollowing == isFollowing)&&(identical(other.isBlocking, isBlocking) || other.isBlocking == isBlocking)&&(identical(other.isBlocker, isBlocker) || other.isBlocker == isBlocker));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,username,email,category,bio,type,profilePhoto,followersCount,followingCount,instagramConnected,youtubeConnected,website,isFollowing,isBlocking,isBlocker);
+int get hashCode => Object.hash(runtimeType,id,name,username,email,category,bio,type,profilePhoto,followersCount,followingCount,instagramConnected,youtubeConnected,instagramFollowers,youtubeSubscribers,website,isFollowing,isBlocking,isBlocker);
 
 @override
 String toString() {
-  return 'UserProfile(id: $id, name: $name, username: $username, email: $email, category: $category, bio: $bio, type: $type, profilePhoto: $profilePhoto, followersCount: $followersCount, followingCount: $followingCount, instagramConnected: $instagramConnected, youtubeConnected: $youtubeConnected, website: $website, isFollowing: $isFollowing, isBlocking: $isBlocking, isBlocker: $isBlocker)';
+  return 'UserProfile(id: $id, name: $name, username: $username, email: $email, category: $category, bio: $bio, type: $type, profilePhoto: $profilePhoto, followersCount: $followersCount, followingCount: $followingCount, instagramConnected: $instagramConnected, youtubeConnected: $youtubeConnected, instagramFollowers: $instagramFollowers, youtubeSubscribers: $youtubeSubscribers, website: $website, isFollowing: $isFollowing, isBlocking: $isBlocking, isBlocker: $isBlocker)';
 }
 
 
@@ -277,7 +281,7 @@ abstract mixin class _$UserProfileCopyWith<$Res> implements $UserProfileCopyWith
   factory _$UserProfileCopyWith(_UserProfile value, $Res Function(_UserProfile) _then) = __$UserProfileCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, String username, String email, String category, String bio,@JsonKey(name: 'type') String type,@JsonKey(name: 'profile_photo') String profilePhoto,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount,@JsonKey(name: 'instagram_connected') bool? instagramConnected,@JsonKey(name: 'youtube_connected') bool? youtubeConnected, String? website,@JsonKey(name: 'is_following') bool? isFollowing,@JsonKey(name: 'is_blocking') bool? isBlocking,@JsonKey(name: 'is_blocker') bool? isBlocker
+ int id, String name, String username, String email, String category, String bio,@JsonKey(name: 'type') String type,@JsonKey(name: 'profile_photo') String profilePhoto,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount,@JsonKey(name: 'instagram_connected') bool? instagramConnected,@JsonKey(name: 'youtube_connected') bool? youtubeConnected,@JsonKey(name: 'instagram_followers') int? instagramFollowers,@JsonKey(name: 'youtube_subscribers') int? youtubeSubscribers, String? website,@JsonKey(name: 'is_following') bool? isFollowing,@JsonKey(name: 'is_blocking') bool? isBlocking,@JsonKey(name: 'is_blocker') bool? isBlocker
 });
 
 
@@ -294,7 +298,7 @@ class __$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? username = null,Object? email = null,Object? category = null,Object? bio = null,Object? type = null,Object? profilePhoto = null,Object? followersCount = null,Object? followingCount = null,Object? instagramConnected = freezed,Object? youtubeConnected = freezed,Object? website = freezed,Object? isFollowing = freezed,Object? isBlocking = freezed,Object? isBlocker = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? username = null,Object? email = null,Object? category = null,Object? bio = null,Object? type = null,Object? profilePhoto = null,Object? followersCount = null,Object? followingCount = null,Object? instagramConnected = freezed,Object? youtubeConnected = freezed,Object? instagramFollowers = freezed,Object? youtubeSubscribers = freezed,Object? website = freezed,Object? isFollowing = freezed,Object? isBlocking = freezed,Object? isBlocker = freezed,}) {
   return _then(_UserProfile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -308,7 +312,9 @@ as String,followersCount: null == followersCount ? _self.followersCount : follow
 as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
 as int,instagramConnected: freezed == instagramConnected ? _self.instagramConnected : instagramConnected // ignore: cast_nullable_to_non_nullable
 as bool?,youtubeConnected: freezed == youtubeConnected ? _self.youtubeConnected : youtubeConnected // ignore: cast_nullable_to_non_nullable
-as bool?,website: freezed == website ? _self.website : website // ignore: cast_nullable_to_non_nullable
+as bool?,instagramFollowers: freezed == instagramFollowers ? _self.instagramFollowers : instagramFollowers // ignore: cast_nullable_to_non_nullable
+as int?,youtubeSubscribers: freezed == youtubeSubscribers ? _self.youtubeSubscribers : youtubeSubscribers // ignore: cast_nullable_to_non_nullable
+as int?,website: freezed == website ? _self.website : website // ignore: cast_nullable_to_non_nullable
 as String?,isFollowing: freezed == isFollowing ? _self.isFollowing : isFollowing // ignore: cast_nullable_to_non_nullable
 as bool?,isBlocking: freezed == isBlocking ? _self.isBlocking : isBlocking // ignore: cast_nullable_to_non_nullable
 as bool?,isBlocker: freezed == isBlocker ? _self.isBlocker : isBlocker // ignore: cast_nullable_to_non_nullable

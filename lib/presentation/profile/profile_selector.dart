@@ -1,4 +1,6 @@
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 enum ProfileTab {
   posts(label: 'Posts', icon: Icons.grid_3x3_rounded),
@@ -39,4 +41,102 @@ enum ProfileTab {
 
   static List<ProfileTab> visibleFor(String type) =>
       values.where((tab) => tab.isVisibleFor(type)).toList();
+}
+
+class ProfileSelector extends StatelessWidget {
+  final ProfileTab selectedTab;
+  final ValueChanged<ProfileTab> onTabSelected;
+  final UserProfile user;
+
+  const ProfileSelector({
+    super.key,
+    required this.selectedTab,
+    required this.onTabSelected,
+    required this.user,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+        child: user.type == "creator"
+            ? Padding(
+                padding: .all(15),
+                child: Row(
+                  spacing: 15,
+                  children: [
+                    OutlinedButton(
+                      onPressed: () => onTabSelected(.instagram),
+                      child: Row(
+                        spacing: 5,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/instagram.svg",
+                            width: 25,
+                            height: 25,
+                            colorFilter: ColorFilter.mode(
+                              Colors.pink,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          user.instagramFollowers != null
+                              ? Text("${user.instagramFollowers}")
+                              : Icon(Icons.info_outline_rounded),
+                        ],
+                      ),
+                    ),
+                    OutlinedButton(
+                      onPressed: () => onTabSelected(.youtube),
+                      child: Row(
+                        spacing: 5,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/youtube.svg",
+                            width: 25,
+                            height: 25,
+                            colorFilter: ColorFilter.mode(
+                              Colors.red,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          user.youtubeSubscribers != null
+                              ? Text("${user.youtubeSubscribers}")
+                              : Icon(Icons.info_outline_rounded),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Padding(
+                padding: .all(15),
+                child: SegmentedButton<ProfileTab>(
+                  segments: [
+                    ButtonSegment(
+                      value: ProfileTab.posts,
+                      icon: Icon(ProfileTab.posts.icon),
+                      label: Text(ProfileTab.posts.label),
+                    ),
+
+                    ButtonSegment(
+                      value: ProfileTab.collabs,
+                      icon: Icon(ProfileTab.collabs.icon),
+                      label: Text(ProfileTab.collabs.label),
+                    ),
+                  ],
+                  selected: {selectedTab},
+                  onSelectionChanged: (newSelection) =>
+                      onTabSelected(newSelection.first),
+                  style: SegmentedButton.styleFrom(
+                    selectedBackgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.secondary,
+                    selectedForegroundColor: Colors.white,
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
 }

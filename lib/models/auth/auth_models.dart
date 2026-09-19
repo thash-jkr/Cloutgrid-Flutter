@@ -19,6 +19,8 @@ abstract class UserProfile with _$UserProfile {
     @JsonKey(name: 'following_count') required int followingCount,
     @JsonKey(name: 'instagram_connected') bool? instagramConnected,
     @JsonKey(name: 'youtube_connected') bool? youtubeConnected,
+    @JsonKey(name: 'instagram_followers') int? instagramFollowers,
+    @JsonKey(name: 'youtube_subscribers') int? youtubeSubscribers,
     String? website,
     @JsonKey(name: 'is_following') bool? isFollowing,
     @JsonKey(name: 'is_blocking') bool? isBlocking,

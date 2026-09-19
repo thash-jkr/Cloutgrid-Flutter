@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/widgets/clout_capsule.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../models/auth/auth_models.dart';
 
@@ -119,52 +118,6 @@ class ProfileHeader extends StatelessWidget {
               ],
             ),
           ),
-
-          if (user.type == "creator")
-            Padding(
-              padding: .all(15),
-              child: Row(
-                spacing: 15,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: Row(
-                      spacing: 5,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/icons/instagram.svg",
-                          width: 25,
-                          height: 25,
-                          colorFilter: ColorFilter.mode(
-                            Colors.pink,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        Text("111K"),
-                      ],
-                    ),
-                  ),
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: Row(
-                      spacing: 5,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/icons/youtube.svg",
-                          width: 25,
-                          height: 25,
-                          colorFilter: ColorFilter.mode(
-                            Colors.red,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        Text("10K"),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
         ],
       ),
     );
