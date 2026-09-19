@@ -58,82 +58,76 @@ class ProfileSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Center(
         child: user.type == "creator"
-            ? Padding(
-                padding: .all(15),
-                child: Row(
-                  spacing: 15,
-                  children: [
-                    OutlinedButton(
-                      onPressed: () => onTabSelected(.instagram),
-                      child: Row(
-                        spacing: 5,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/instagram.svg",
-                            width: 25,
-                            height: 25,
-                            colorFilter: ColorFilter.mode(
-                              Colors.pink,
-                              BlendMode.srcIn,
-                            ),
+            ? Row(
+                spacing: 15,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => onTabSelected(.instagram),
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/instagram.svg",
+                          width: 25,
+                          height: 25,
+                          colorFilter: ColorFilter.mode(
+                            Colors.pink,
+                            BlendMode.srcIn,
                           ),
-                          user.instagramFollowers != null
-                              ? Text("${user.instagramFollowers}")
-                              : Icon(Icons.info_outline_rounded),
-                        ],
-                      ),
+                        ),
+                        user.instagramFollowers != null
+                            ? Text("${user.instagramFollowers}")
+                            : Icon(Icons.info_outline_rounded),
+                      ],
                     ),
-                    OutlinedButton(
-                      onPressed: () => onTabSelected(.youtube),
-                      child: Row(
-                        spacing: 5,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/youtube.svg",
-                            width: 25,
-                            height: 25,
-                            colorFilter: ColorFilter.mode(
-                              Colors.red,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          user.youtubeSubscribers != null
-                              ? Text("${user.youtubeSubscribers}")
-                              : Icon(Icons.info_outline_rounded),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : Padding(
-                padding: .all(15),
-                child: SegmentedButton<ProfileTab>(
-                  segments: [
-                    ButtonSegment(
-                      value: ProfileTab.posts,
-                      icon: Icon(ProfileTab.posts.icon),
-                      label: Text(ProfileTab.posts.label),
-                    ),
-
-                    ButtonSegment(
-                      value: ProfileTab.collabs,
-                      icon: Icon(ProfileTab.collabs.icon),
-                      label: Text(ProfileTab.collabs.label),
-                    ),
-                  ],
-                  selected: {selectedTab},
-                  onSelectionChanged: (newSelection) =>
-                      onTabSelected(newSelection.first),
-                  style: SegmentedButton.styleFrom(
-                    selectedBackgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.secondary,
-                    selectedForegroundColor: Colors.white,
                   ),
+                  OutlinedButton(
+                    onPressed: () => onTabSelected(.youtube),
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/youtube.svg",
+                          width: 25,
+                          height: 25,
+                          colorFilter: ColorFilter.mode(
+                            Colors.red,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        user.youtubeSubscribers != null
+                            ? Text("${user.youtubeSubscribers}")
+                            : Icon(Icons.info_outline_rounded),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : SegmentedButton<ProfileTab>(
+                segments: [
+                  ButtonSegment(
+                    value: ProfileTab.posts,
+                    icon: Icon(ProfileTab.posts.icon),
+                    label: Text(ProfileTab.posts.label),
+                  ),
+
+                  ButtonSegment(
+                    value: ProfileTab.collabs,
+                    icon: Icon(ProfileTab.collabs.icon),
+                    label: Text(ProfileTab.collabs.label),
+                  ),
+                ],
+                selected: {selectedTab},
+                onSelectionChanged: (newSelection) =>
+                    onTabSelected(newSelection.first),
+                style: SegmentedButton.styleFrom(
+                  selectedBackgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.secondary,
+                  selectedForegroundColor: Colors.white,
                 ),
               ),
       ),
