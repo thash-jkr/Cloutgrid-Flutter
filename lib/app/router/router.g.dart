@@ -21,6 +21,8 @@ List<RouteBase> get $appRoutes => [
   $postDetailRoute,
   $editProfileRoute,
   $otherProfileRoute,
+  $instagramRoute,
+  $youTubeRoute,
   $createPostRoute,
   $questionsRoute,
 ];
@@ -434,6 +436,58 @@ mixin $OtherProfileRoute on GoRouteData {
   @override
   void replace(BuildContext context) =>
       context.replace(location, extra: _self.$extra);
+}
+
+RouteBase get $instagramRoute => GoRouteData.$route(
+  path: '/instagram',
+  hasOverriddenOnExit: false,
+  factory: $InstagramRoute._fromState,
+);
+
+mixin $InstagramRoute on GoRouteData {
+  static InstagramRoute _fromState(GoRouterState state) => InstagramRoute();
+
+  @override
+  String get location => GoRouteData.$location('/instagram');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $youTubeRoute => GoRouteData.$route(
+  path: '/youtube',
+  hasOverriddenOnExit: false,
+  factory: $YouTubeRoute._fromState,
+);
+
+mixin $YouTubeRoute on GoRouteData {
+  static YouTubeRoute _fromState(GoRouterState state) => YouTubeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/youtube');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $createPostRoute => GoRouteData.$route(

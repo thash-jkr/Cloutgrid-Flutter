@@ -1,6 +1,4 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
-import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
@@ -10,7 +8,6 @@ import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dar
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
-import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,12 +16,16 @@ class ProfileScreen extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
   final VoidCallback onNavigateToEditProfile;
+  final VoidCallback onNavigateToInstagram;
+  final VoidCallback onNavigateToYouTube;
 
   const ProfileScreen({
     super.key,
     required this.onNavigateToSettings,
     required this.onNavigateToPostDetail,
     required this.onNavigateToEditProfile,
+    required this.onNavigateToInstagram,
+    required this.onNavigateToYouTube,
   });
 
   @override
@@ -62,10 +63,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     Future(() {
       final action = ref.read(deepLinkProvider).profileAction;
       if (action == ProfileAction.connectInstagram) {
-        _openInstagram();
+        widget.onNavigateToInstagram();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       } else if (action == ProfileAction.connectYoutube) {
-        _openYouTube();
+        widget.onNavigateToYouTube();
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       }
     });
@@ -76,27 +77,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       setState(() => _selectedTab = tab);
     } else {
       if (tab.label == "Instagram") {
-        _openInstagram();
+        widget.onNavigateToInstagram();
       } else if (tab.label == "YouTube") {
-        _openYouTube();
+        widget.onNavigateToYouTube();
       }
     }
-  }
-
-  void _openInstagram() {
-    cloutSheet(
-      context,
-      content: (context, scrollController) =>
-          Instagram(scrollController: scrollController),
-    );
-  }
-
-  void _openYouTube() {
-    cloutSheet(
-      context,
-      content: (context, scrollController) =>
-          Youtube(scrollController: scrollController),
-    );
   }
 
   Future<void> _onRefresh() async {

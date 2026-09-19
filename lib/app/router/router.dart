@@ -7,6 +7,8 @@ import 'package:cloutgrid_flutter/presentation/auth/reset_password.dart';
 import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
 import 'package:cloutgrid_flutter/presentation/chats/messages.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
+import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
+import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/change_password.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
@@ -102,6 +104,8 @@ class TabsRoute extends GoRouteData with $TabsRoute {
         CreatePostRoute($extra: bytes).push(context),
     onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
     onNavigateToConversations: () => ConversationsRoute().push(context),
+    onNavigateToInstagram: () => InstagramRoute().push(context),
+    onNavigateToYouTube: () => YouTubeRoute().push(context),
   );
 }
 
@@ -207,6 +211,19 @@ class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
         PostDetailRoute(id: id, other: other).push(context),
     user: $extra,
   );
+}
+
+@TypedGoRoute<InstagramRoute>(path: "/instagram")
+class InstagramRoute extends GoRouteData with $InstagramRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      Instagram(onNavigateBack: () => context.pop());
+}
+
+@TypedGoRoute<YouTubeRoute>(path: "/youtube")
+class YouTubeRoute extends GoRouteData with $YouTubeRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Youtube();
 }
 
 @TypedGoRoute<CreatePostRoute>(path: "/create-post")

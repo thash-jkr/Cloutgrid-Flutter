@@ -32,6 +32,8 @@ class TabNavigator extends ConsumerStatefulWidget {
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
   final void Function(int id) onNavigateToQuestions;
   final void Function() onNavigateToConversations;
+  final void Function() onNavigateToInstagram;
+  final void Function() onNavigateToYouTube;
 
   const TabNavigator({
     super.key,
@@ -42,6 +44,8 @@ class TabNavigator extends ConsumerStatefulWidget {
     required this.onNavigateToCreatePost,
     required this.onNavigateToQuestions,
     required this.onNavigateToConversations,
+    required this.onNavigateToInstagram,
+    required this.onNavigateToYouTube,
   });
 
   @override
@@ -108,6 +112,8 @@ class _TabNavigatorState extends ConsumerState<TabNavigator> {
             onNavigateToSettings: widget.onNavigateToSettings,
             onNavigateToPostDetail: widget.onNavigateToPostDetail,
             onNavigateToEditProfile: widget.onNavigateToEditProfile,
+            onNavigateToInstagram: widget.onNavigateToInstagram,
+            onNavigateToYouTube: widget.onNavigateToYouTube,
           ),
         ],
       ),

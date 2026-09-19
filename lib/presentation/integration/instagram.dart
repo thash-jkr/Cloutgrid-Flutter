@@ -16,9 +16,9 @@ import '../../widgets/clout_toast.dart';
 import 'integration_constants.dart';
 
 class Instagram extends ConsumerStatefulWidget {
-  final ScrollController? scrollController;
+  final VoidCallback onNavigateBack;
 
-  const Instagram({super.key, this.scrollController});
+  const Instagram({super.key, required this.onNavigateBack});
 
   @override
   ConsumerState<Instagram> createState() => _InstagramState();
@@ -116,10 +116,8 @@ class _InstagramState extends ConsumerState<Instagram> {
                 ),
               ]
             : [],
-        isSheet: true,
       ),
       body: SingleChildScrollView(
-        controller: widget.scrollController,
         padding: EdgeInsets.only(top: kToolbarHeight + topInset, bottom: 100),
         child: user?.instagramConnected == true
             ? Column(
