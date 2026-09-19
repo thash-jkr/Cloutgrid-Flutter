@@ -96,6 +96,11 @@ class _InstagramState extends ConsumerState<Instagram> {
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(
         title: 'Instagram Insights 📊',
+        icon: HeaderAction(
+          icon: Icons.arrow_back,
+          contentDescription: "Back",
+          onClick: widget.onNavigateBack,
+        ),
         actions: user?.instagramConnected == true
             ? [
                 HeaderAction(
@@ -118,7 +123,10 @@ class _InstagramState extends ConsumerState<Instagram> {
             : [],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: kToolbarHeight + topInset, bottom: 100),
+        padding: EdgeInsets.only(
+          top: kToolbarHeight + topInset + 15,
+          bottom: 100,
+        ),
         child: user?.instagramConnected == true
             ? Column(
                 spacing: 15,
@@ -168,51 +176,42 @@ class InstagramHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        spacing: 15,
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: page.profilePicture,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Image(
-                      image: AssetImage("assets/images/profile.png"),
-                    ),
-                    errorWidget: (context, url, error) => const Image(
-                      image: AssetImage("assets/images/profile.png"),
-                    ),
+          Column(
+            children: [
+              ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: page.profilePicture,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Image(
+                    image: AssetImage("assets/images/profile.png"),
+                  ),
+                  errorWidget: (context, url, error) => const Image(
+                    image: AssetImage("assets/images/profile.png"),
                   ),
                 ),
-                const SizedBox(height: 10),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text('@${page.username}'),
-                ),
-                Text(
-                  "Updated ${timeAgo(page.lastSync)}",
-                  style: TextStyle(color: Colors.grey, fontSize: 10),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 10),
+              FilledButton(onPressed: () {}, child: Text('@${page.username}')),
+              Text(
+                "Updated ${timeAgo(page.lastSync)}",
+                style: TextStyle(color: Colors.grey, fontSize: 10),
+              ),
+            ],
           ),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _StatItem(value: '${page.followers}', label: 'Followers'),
-                const SizedBox(height: 5),
-                _StatItem(value: '${page.followings}', label: 'Followings'),
-                const SizedBox(height: 5),
-                _StatItem(value: '${page.mediaCount}', label: 'Posts'),
-              ],
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: .spaceAround,
+            children: [
+              _StatItem(value: '${page.followers}', label: 'Followers'),
+              _StatItem(value: '${page.followings}', label: 'Followings'),
+              _StatItem(value: '${page.mediaCount}', label: 'Posts'),
+            ],
           ),
         ],
       ),
@@ -442,8 +441,8 @@ class _StatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Column(
+      mainAxisAlignment: .spaceBetween,
       children: [
         Text(
           value,
