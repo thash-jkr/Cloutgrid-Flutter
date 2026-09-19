@@ -26,8 +26,7 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 ClipOval(
                   child: CachedNetworkImage(
-                    imageUrl:
-                        user.profilePhoto,
+                    imageUrl: user.profilePhoto,
                     width: 75,
                     height: 75,
                     fit: BoxFit.cover,
@@ -94,30 +93,6 @@ class ProfileHeader extends StatelessWidget {
                         ),
                       ),
                     ],
-
-                    if (user.instagramConnected == true) ...[
-                      SvgPicture.asset(
-                        "assets/icons/instagram.svg",
-                        width: 25,
-                        height: 25,
-                        colorFilter: ColorFilter.mode(
-                          Colors.pink,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ],
-
-                    if (user.youtubeConnected == true) ...[
-                      SvgPicture.asset(
-                        "assets/icons/youtube.svg",
-                        width: 25,
-                        height: 25,
-                        colorFilter: ColorFilter.mode(
-                          Colors.red,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ],
                   ],
                 ),
               ],
@@ -130,10 +105,7 @@ class ProfileHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                _StatItem(
-                  value: '${user.followersCount}',
-                  label: 'Followers',
-                ),
+                _StatItem(value: '${user.followersCount}', label: 'Followers'),
                 const SizedBox(width: 5),
                 Text(
                   '•',
@@ -143,13 +115,56 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 5),
-                _StatItem(
-                  value: '${user.followingCount}',
-                  label: 'Following',
-                ),
+                _StatItem(value: '${user.followingCount}', label: 'Following'),
               ],
             ),
           ),
+
+          if (user.type == "creator")
+            Padding(
+              padding: .all(15),
+              child: Row(
+                spacing: 15,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/instagram.svg",
+                          width: 25,
+                          height: 25,
+                          colorFilter: ColorFilter.mode(
+                            Colors.pink,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        Text("111K"),
+                      ],
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/youtube.svg",
+                          width: 25,
+                          height: 25,
+                          colorFilter: ColorFilter.mode(
+                            Colors.red,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        Text("10K"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
