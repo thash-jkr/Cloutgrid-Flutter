@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$InstagramPageModel {
 
- int get id;@JsonKey(name: 'ig_user_id') String get igUserId; String get username;@JsonKey(name: 'profile_picture_url') String get profilePicture; int get followers; int get followings;@JsonKey(name: 'media_count') int get mediaCount;@JsonKey(name: 'insights_raw') List<ProfileInsightModel> get insights;@JsonKey(name: 'last_synced_at') String get lastSync;
+ int get id;@JsonKey(name: 'ig_user_id') String get igUserId; String get username;@JsonKey(name: 'profile_picture_url') String get profilePicture; int get followers; int get followings;@JsonKey(name: 'media_count') int get mediaCount; List<ProfileInsightModel> get insights;@JsonKey(name: 'last_synced_at') String get lastSync;
 /// Create a copy of InstagramPageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $InstagramPageModelCopyWith<$Res>  {
   factory $InstagramPageModelCopyWith(InstagramPageModel value, $Res Function(InstagramPageModel) _then) = _$InstagramPageModelCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount,@JsonKey(name: 'insights_raw') List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
+ int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
 });
 
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount, @JsonKey(name: 'insights_raw')  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InstagramPageModel() when $default != null:
 return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount, @JsonKey(name: 'insights_raw')  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)  $default,) {final _that = this;
 switch (_that) {
 case _InstagramPageModel():
 return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount, @JsonKey(name: 'insights_raw')  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,) {final _that = this;
 switch (_that) {
 case _InstagramPageModel() when $default != null:
 return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
@@ -217,7 +217,7 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 @JsonSerializable()
 
 class _InstagramPageModel implements InstagramPageModel {
-  const _InstagramPageModel({required this.id, @JsonKey(name: 'ig_user_id') required this.igUserId, required this.username, @JsonKey(name: 'profile_picture_url') required this.profilePicture, required this.followers, required this.followings, @JsonKey(name: 'media_count') required this.mediaCount, @JsonKey(name: 'insights_raw') required final  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at') required this.lastSync}): _insights = insights;
+  const _InstagramPageModel({required this.id, @JsonKey(name: 'ig_user_id') required this.igUserId, required this.username, @JsonKey(name: 'profile_picture_url') required this.profilePicture, required this.followers, required this.followings, @JsonKey(name: 'media_count') required this.mediaCount, required final  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at') required this.lastSync}): _insights = insights;
   factory _InstagramPageModel.fromJson(Map<String, dynamic> json) => _$InstagramPageModelFromJson(json);
 
 @override final  int id;
@@ -228,7 +228,7 @@ class _InstagramPageModel implements InstagramPageModel {
 @override final  int followings;
 @override@JsonKey(name: 'media_count') final  int mediaCount;
  final  List<ProfileInsightModel> _insights;
-@override@JsonKey(name: 'insights_raw') List<ProfileInsightModel> get insights {
+@override List<ProfileInsightModel> get insights {
   if (_insights is EqualUnmodifiableListView) return _insights;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_insights);
@@ -269,7 +269,7 @@ abstract mixin class _$InstagramPageModelCopyWith<$Res> implements $InstagramPag
   factory _$InstagramPageModelCopyWith(_InstagramPageModel value, $Res Function(_InstagramPageModel) _then) = __$InstagramPageModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount,@JsonKey(name: 'insights_raw') List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
+ int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
 });
 
 
@@ -571,7 +571,7 @@ as int,
 /// @nodoc
 mixin _$ProfileInsightModel {
 
- String get id; String get name; String get title; String get period; String get description;@JsonKey(name: 'total_value') InsightValue get totalValue;
+ String get name; String get title; String get description; int get value; double get change;
 /// Create a copy of ProfileInsightModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -584,16 +584,16 @@ $ProfileInsightModelCopyWith<ProfileInsightModel> get copyWith => _$ProfileInsig
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileInsightModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.period, period) || other.period == period)&&(identical(other.description, description) || other.description == description)&&(identical(other.totalValue, totalValue) || other.totalValue == totalValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileInsightModel&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.value, value) || other.value == value)&&(identical(other.change, change) || other.change == change));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,title,period,description,totalValue);
+int get hashCode => Object.hash(runtimeType,name,title,description,value,change);
 
 @override
 String toString() {
-  return 'ProfileInsightModel(id: $id, name: $name, title: $title, period: $period, description: $description, totalValue: $totalValue)';
+  return 'ProfileInsightModel(name: $name, title: $title, description: $description, value: $value, change: $change)';
 }
 
 
@@ -604,11 +604,11 @@ abstract mixin class $ProfileInsightModelCopyWith<$Res>  {
   factory $ProfileInsightModelCopyWith(ProfileInsightModel value, $Res Function(ProfileInsightModel) _then) = _$ProfileInsightModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String title, String period, String description,@JsonKey(name: 'total_value') InsightValue totalValue
+ String name, String title, String description, int value, double change
 });
 
 
-$InsightValueCopyWith<$Res> get totalValue;
+
 
 }
 /// @nodoc
@@ -621,27 +621,17 @@ class _$ProfileInsightModelCopyWithImpl<$Res>
 
 /// Create a copy of ProfileInsightModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? title = null,Object? period = null,Object? description = null,Object? totalValue = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? title = null,Object? description = null,Object? value = null,Object? change = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,totalValue: null == totalValue ? _self.totalValue : totalValue // ignore: cast_nullable_to_non_nullable
-as InsightValue,
+as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as int,change: null == change ? _self.change : change // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
-/// Create a copy of ProfileInsightModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$InsightValueCopyWith<$Res> get totalValue {
-  
-  return $InsightValueCopyWith<$Res>(_self.totalValue, (value) {
-    return _then(_self.copyWith(totalValue: value));
-  });
-}
+
 }
 
 
@@ -723,10 +713,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String title,  String period,  String description, @JsonKey(name: 'total_value')  InsightValue totalValue)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String title,  String description,  int value,  double change)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileInsightModel() when $default != null:
-return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_that.totalValue);case _:
+return $default(_that.name,_that.title,_that.description,_that.value,_that.change);case _:
   return orElse();
 
 }
@@ -744,10 +734,10 @@ return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String title,  String period,  String description, @JsonKey(name: 'total_value')  InsightValue totalValue)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String title,  String description,  int value,  double change)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileInsightModel():
-return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_that.totalValue);case _:
+return $default(_that.name,_that.title,_that.description,_that.value,_that.change);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -764,10 +754,10 @@ return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String title,  String period,  String description, @JsonKey(name: 'total_value')  InsightValue totalValue)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String title,  String description,  int value,  double change)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileInsightModel() when $default != null:
-return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_that.totalValue);case _:
+return $default(_that.name,_that.title,_that.description,_that.value,_that.change);case _:
   return null;
 
 }
@@ -779,15 +769,14 @@ return $default(_that.id,_that.name,_that.title,_that.period,_that.description,_
 @JsonSerializable()
 
 class _ProfileInsightModel implements ProfileInsightModel {
-  const _ProfileInsightModel({required this.id, required this.name, required this.title, required this.period, required this.description, @JsonKey(name: 'total_value') required this.totalValue});
+  const _ProfileInsightModel({required this.name, required this.title, required this.description, required this.value, required this.change});
   factory _ProfileInsightModel.fromJson(Map<String, dynamic> json) => _$ProfileInsightModelFromJson(json);
 
-@override final  String id;
 @override final  String name;
 @override final  String title;
-@override final  String period;
 @override final  String description;
-@override@JsonKey(name: 'total_value') final  InsightValue totalValue;
+@override final  int value;
+@override final  double change;
 
 /// Create a copy of ProfileInsightModel
 /// with the given fields replaced by the non-null parameter values.
@@ -802,16 +791,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileInsightModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.period, period) || other.period == period)&&(identical(other.description, description) || other.description == description)&&(identical(other.totalValue, totalValue) || other.totalValue == totalValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileInsightModel&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.value, value) || other.value == value)&&(identical(other.change, change) || other.change == change));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,title,period,description,totalValue);
+int get hashCode => Object.hash(runtimeType,name,title,description,value,change);
 
 @override
 String toString() {
-  return 'ProfileInsightModel(id: $id, name: $name, title: $title, period: $period, description: $description, totalValue: $totalValue)';
+  return 'ProfileInsightModel(name: $name, title: $title, description: $description, value: $value, change: $change)';
 }
 
 
@@ -822,11 +811,11 @@ abstract mixin class _$ProfileInsightModelCopyWith<$Res> implements $ProfileInsi
   factory _$ProfileInsightModelCopyWith(_ProfileInsightModel value, $Res Function(_ProfileInsightModel) _then) = __$ProfileInsightModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String title, String period, String description,@JsonKey(name: 'total_value') InsightValue totalValue
+ String name, String title, String description, int value, double change
 });
 
 
-@override $InsightValueCopyWith<$Res> get totalValue;
+
 
 }
 /// @nodoc
@@ -839,28 +828,18 @@ class __$ProfileInsightModelCopyWithImpl<$Res>
 
 /// Create a copy of ProfileInsightModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? title = null,Object? period = null,Object? description = null,Object? totalValue = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? title = null,Object? description = null,Object? value = null,Object? change = null,}) {
   return _then(_ProfileInsightModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,totalValue: null == totalValue ? _self.totalValue : totalValue // ignore: cast_nullable_to_non_nullable
-as InsightValue,
+as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as int,change: null == change ? _self.change : change // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 
-/// Create a copy of ProfileInsightModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$InsightValueCopyWith<$Res> get totalValue {
-  
-  return $InsightValueCopyWith<$Res>(_self.totalValue, (value) {
-    return _then(_self.copyWith(totalValue: value));
-  });
-}
+
 }
 
 

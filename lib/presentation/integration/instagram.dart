@@ -5,6 +5,7 @@ import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/integration/integration_models.dart';
@@ -196,7 +197,25 @@ class InstagramHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              FilledButton(onPressed: () {}, child: Text('@${page.username}')),
+              OutlinedButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisSize: .min,
+                  spacing: 5,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/instagram.svg",
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        Colors.pink,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    Text('@${page.username}'),
+                  ],
+                ),
+              ),
               Text(
                 "Updated ${timeAgo(page.lastSync)}",
                 style: TextStyle(color: Colors.grey, fontSize: 10),
@@ -208,9 +227,15 @@ class InstagramHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: .spaceAround,
             children: [
-              _StatItem(value: '${page.followers}', label: 'Followers'),
-              _StatItem(value: '${page.followings}', label: 'Followings'),
-              _StatItem(value: '${page.mediaCount}', label: 'Posts'),
+              _StatItem(
+                value: compactCount(page.followers),
+                label: 'Followers',
+              ),
+              _StatItem(
+                value: compactCount(page.followings),
+                label: 'Followings',
+              ),
+              _StatItem(value: compactCount(page.mediaCount), label: 'Posts'),
             ],
           ),
         ],
@@ -229,52 +254,70 @@ class InstagramInsights extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Padding(
-          padding: EdgeInsets.only(left: 15),
+          padding: EdgeInsets.only(bottom: 10),
           child: Text(
             'Profile Insights',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
         ),
-        SizedBox(
-          height: 125,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            itemCount: insights.length,
-            separatorBuilder: (context, index) => const SizedBox(width: 15),
-            itemBuilder: (context, index) {
-              final metric = insights[index];
-              return Container(
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.08),
-                      blurRadius: 0,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      compactCount(metric.totalValue.value),
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(metric.title, style: theme.textTheme.labelSmall),
-                  ],
-                ),
-              );
-            },
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          itemCount: insights.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 15,
+            crossAxisSpacing: 15,
+            childAspectRatio: 1.8,
           ),
+          itemBuilder: (context, index) {
+            final metric = insights[index];
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 0,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 5,
+                    children: [
+                      Text(
+                        compactCount(metric.value),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          height: 0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "${metric.change >= 0 ? "+" : "-"}${metric.change}%",
+                        style: TextStyle(
+                          color: metric.change >= 0 ? Colors.green : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(metric.title, style: theme.textTheme.labelSmall),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );

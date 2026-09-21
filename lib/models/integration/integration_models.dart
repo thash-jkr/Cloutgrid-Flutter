@@ -36,7 +36,7 @@ abstract class InstagramPageModel with _$InstagramPageModel {
     required int followers,
     required int followings,
     @JsonKey(name: 'media_count') required int mediaCount,
-    @JsonKey(name: 'insights_raw') required List<ProfileInsightModel> insights,
+    required List<ProfileInsightModel> insights,
     @JsonKey(name: 'last_synced_at') required String lastSync,
   }) = _InstagramPageModel;
 
@@ -55,12 +55,11 @@ abstract class InsightValue with _$InsightValue {
 @freezed
 abstract class ProfileInsightModel with _$ProfileInsightModel {
   const factory ProfileInsightModel({
-    required String id,
     required String name,
     required String title,
-    required String period,
     required String description,
-    @JsonKey(name: 'total_value') required InsightValue totalValue,
+    required int value,
+    required double change,
   }) = _ProfileInsightModel;
 
   factory ProfileInsightModel.fromJson(Map<String, dynamic> json) =>

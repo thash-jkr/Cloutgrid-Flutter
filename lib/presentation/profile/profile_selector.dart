@@ -1,4 +1,5 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/models/integration/integration_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -74,12 +75,14 @@ class ProfileSelector extends StatelessWidget {
                           width: 25,
                           height: 25,
                           colorFilter: ColorFilter.mode(
-                            Colors.pink,
+                            user.instagramFollowers != null
+                                ? Colors.pink
+                                : Colors.grey,
                             BlendMode.srcIn,
                           ),
                         ),
                         user.instagramFollowers != null
-                            ? Text("${user.instagramFollowers}")
+                            ? Text(compactCount(user.instagramFollowers!))
                             : Icon(Icons.info_outline_rounded),
                       ],
                     ),
@@ -94,12 +97,14 @@ class ProfileSelector extends StatelessWidget {
                           width: 25,
                           height: 25,
                           colorFilter: ColorFilter.mode(
-                            Colors.red,
+                            user.youtubeSubscribers != null
+                                ? Colors.red
+                                : Colors.grey,
                             BlendMode.srcIn,
                           ),
                         ),
                         user.youtubeSubscribers != null
-                            ? Text("${user.youtubeSubscribers}")
+                            ? Text(compactCount(user.youtubeSubscribers!))
                             : Icon(Icons.info_outline_rounded),
                       ],
                     ),

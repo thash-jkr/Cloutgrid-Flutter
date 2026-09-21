@@ -15,7 +15,7 @@ _InstagramPageModel _$InstagramPageModelFromJson(Map<String, dynamic> json) =>
       followers: (json['followers'] as num).toInt(),
       followings: (json['followings'] as num).toInt(),
       mediaCount: (json['media_count'] as num).toInt(),
-      insights: (json['insights_raw'] as List<dynamic>)
+      insights: (json['insights'] as List<dynamic>)
           .map((e) => ProfileInsightModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       lastSync: json['last_synced_at'] as String,
@@ -30,7 +30,7 @@ Map<String, dynamic> _$InstagramPageModelToJson(_InstagramPageModel instance) =>
       'followers': instance.followers,
       'followings': instance.followings,
       'media_count': instance.mediaCount,
-      'insights_raw': instance.insights,
+      'insights': instance.insights,
       'last_synced_at': instance.lastSync,
     };
 
@@ -42,25 +42,21 @@ Map<String, dynamic> _$InsightValueToJson(_InsightValue instance) =>
 
 _ProfileInsightModel _$ProfileInsightModelFromJson(Map<String, dynamic> json) =>
     _ProfileInsightModel(
-      id: json['id'] as String,
       name: json['name'] as String,
       title: json['title'] as String,
-      period: json['period'] as String,
       description: json['description'] as String,
-      totalValue: InsightValue.fromJson(
-        json['total_value'] as Map<String, dynamic>,
-      ),
+      value: (json['value'] as num).toInt(),
+      change: (json['change'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$ProfileInsightModelToJson(
   _ProfileInsightModel instance,
 ) => <String, dynamic>{
-  'id': instance.id,
   'name': instance.name,
   'title': instance.title,
-  'period': instance.period,
   'description': instance.description,
-  'total_value': instance.totalValue,
+  'value': instance.value,
+  'change': instance.change,
 };
 
 _InstagramMediaModel _$InstagramMediaModelFromJson(Map<String, dynamic> json) =>
