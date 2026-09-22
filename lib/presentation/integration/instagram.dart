@@ -3,6 +3,7 @@ import 'package:cloutgrid_flutter/app/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -148,17 +149,13 @@ class _InstagramState extends ConsumerState<Instagram> {
                       InstagramInsights(
                         insights: integrationState.instagramPage!.insights,
                       ),
+
+                      ReachGraph(
+                        reach: integrationState.instagramPage?.reach ?? [],
+                      ),
                     ],
 
-                    InstagramMedia(
-                      igMedia: integrationState.instagramMedia,
-                      isReel: true,
-                    ),
-
-                    InstagramMedia(
-                      igMedia: integrationState.instagramMedia,
-                      isReel: false,
-                    ),
+                    InstagramMedia(igMedia: integrationState.instagramMedia),
                   ],
                 ],
               )
@@ -306,7 +303,7 @@ class InstagramInsights extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${metric.change >= 0 ? "+" : "-"}${metric.change}%",
+                        "${metric.change >= 0 ? "+" : ""}${metric.change}%",
                         style: TextStyle(
                           color: metric.change >= 0 ? Colors.green : Colors.red,
                         ),
@@ -324,135 +321,248 @@ class InstagramInsights extends StatelessWidget {
   }
 }
 
-class InstagramMedia extends StatelessWidget {
-  final List<InstagramMediaModel> igMedia;
-  final bool isReel;
+class ReachGraph extends StatelessWidget {
+  final List<ReachValue> reach;
 
-  const InstagramMedia({
-    super.key,
-    required this.igMedia,
-    required this.isReel,
-  });
+  const ReachGraph({super.key, required this.reach});
+
+  double _niceInterval(List<ReachValue> data) {
+    final maxReach = data.map((d) => d.value).reduce((a, b) => a > b ? a : b);
+    return (maxReach / 4).ceilToDouble().clamp(1, double.infinity);
+  }
+
+  String _formatDate(String isoDate) {
+    final parts = isoDate.split('-');
+    if (parts.length != 3) return isoDate;
+    return '${parts[2]}-${parts[1]}';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final mediaList = igMedia
-        .where((m) => isReel ? m.mediaType == "VIDEO" : m.mediaType != "VIDEO")
-        .toList();
-    final label = isReel ? 'Recent Reels' : 'Recent Posts';
-    final emptyLabel = isReel ? 'reels' : 'posts';
+    final theme = Theme.of(context);
+    final spots = [
+      for (int i = 0; i < reach.length; i++)
+        FlSpot(i.toDouble(), reach[i].value.toDouble()),
+    ];
 
+    final middleIndex = reach.length ~/ 2;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        spacing: 15,
+        children: [
+          const Text(
+            "Reach",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          ),
+          SizedBox(
+            height: 220,
+            child: LineChart(
+              LineChartData(
+                minY: 0,
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: _niceInterval(reach),
+                ),
+                titlesData: FlTitlesData(
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 40,
+                      getTitlesWidget: (value, meta) => Text(
+                        compactCount(value.toInt()),
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                    ),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: 1,
+                      reservedSize: 28,
+                      getTitlesWidget: (value, meta) {
+                        final index = value.toInt();
+                        if (index < 0 || index >= reach.length) {
+                          return const SizedBox.shrink();
+                        }
+                        if (index != 0 && index != middleIndex) {
+                          return const SizedBox.shrink();
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            _formatDate(reach[index].date),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                borderData: FlBorderData(show: false),
+                lineBarsData: [
+                  LineChartBarData(
+                    preventCurveOverShooting: true,
+                    spots: spots,
+                    isCurved: true,
+                    color: theme.colorScheme.secondary,
+                    barWidth: 2.5,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: theme.colorScheme.secondary.withValues(
+                        alpha: 0.15,
+                      ),
+                    ),
+                  ),
+                ],
+                lineTouchData: LineTouchData(
+                  touchTooltipData: LineTouchTooltipData(
+                    getTooltipItems: (spots) => spots.map((spot) {
+                      final index = spot.x.toInt();
+                      return LineTooltipItem(
+                        _formatDate(reach[index].date),
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InstagramMedia extends StatelessWidget {
+  final List<InstagramMediaModel> igMedia;
+
+  const InstagramMedia({super.key, required this.igMedia});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15, bottom: 5),
+          padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            "Media Insights",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
         ),
-        if (mediaList.isEmpty)
+        if (igMedia.isEmpty)
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Text(
-              'No $emptyLabel found',
+              'No recent posts found',
               style: const TextStyle(color: Colors.grey),
             ),
           )
         else
-          SizedBox(
-            height: 300,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              itemCount: mediaList.length,
-              separatorBuilder: (context, index) => const SizedBox(width: 15),
-              itemBuilder: (context, index) {
-                final media = mediaList[index];
-                return Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Material(
-                      borderRadius: .circular(20),
-                      elevation: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(
-                          imageUrl: media.mediaType == 'VIDEO'
-                              ? media.thumbnailUrl
-                              : media.mediaUrl,
-                          width: 200,
-                          height: 300,
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            itemCount: igMedia.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+              childAspectRatio: 9 / 16,
+            ),
+            itemBuilder: (context, index) {
+              final media = igMedia[index];
+              return Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Material(
+                    borderRadius: BorderRadius.circular(20),
+                    elevation: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CachedNetworkImage(
+                        imageUrl: media.mediaType == 'VIDEO'
+                            ? media.thumbnailUrl
+                            : media.mediaUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Container(color: Colors.grey.shade200),
+                        errorWidget: (context, url, error) => const Image(
+                          image: AssetImage("assets/images/image_error.jpg"),
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            width: 200,
-                            height: 300,
-                            color: Colors.grey.shade200,
-                          ),
-                          errorWidget: (context, url, error) => const Image(
-                            image: AssetImage("assets/images/image_error.jpg"),
-                            fit: .cover,
-                          ),
                         ),
                       ),
                     ),
-                    Transform.translate(
-                      offset: const Offset(10, -10),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              compactCount(media.likeCount),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            ...media.insights.expand(
-                              (insight) => [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 6),
-                                  child: Icon(
-                                    _iconForMetric(insight.name),
-                                    size: 16,
-                                  ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(10, -10),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            compactCount(media.likeCount),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          ...media.insights.expand(
+                            (insight) => [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 6),
+                                child: Icon(
+                                  _iconForMetric(insight.name),
+                                  size: 16,
                                 ),
-                                ...insight.values.map(
-                                  (v) => Padding(
-                                    padding: const EdgeInsets.only(left: 2),
-                                    child: Text(
-                                      compactCount(v.value),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              ),
+                              ...insight.values.map(
+                                (v) => Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    compactCount(v.value),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         const SizedBox(height: 20),
       ],

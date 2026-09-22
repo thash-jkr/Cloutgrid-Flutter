@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$InstagramPageModel {
 
- int get id;@JsonKey(name: 'ig_user_id') String get igUserId; String get username;@JsonKey(name: 'profile_picture_url') String get profilePicture; int get followers; int get followings;@JsonKey(name: 'media_count') int get mediaCount; List<ProfileInsightModel> get insights;@JsonKey(name: 'last_synced_at') String get lastSync;
+ int get id;@JsonKey(name: 'ig_user_id') String get igUserId; String get username;@JsonKey(name: 'profile_picture_url') String get profilePicture; int get followers; int get followings;@JsonKey(name: 'media_count') int get mediaCount; List<ProfileInsightModel> get insights; List<ReachValue> get reach;@JsonKey(name: 'last_synced_at') String get lastSync;
 /// Create a copy of InstagramPageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $InstagramPageModelCopyWith<InstagramPageModel> get copyWith => _$InstagramPageM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InstagramPageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.igUserId, igUserId) || other.igUserId == igUserId)&&(identical(other.username, username) || other.username == username)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.followers, followers) || other.followers == followers)&&(identical(other.followings, followings) || other.followings == followings)&&(identical(other.mediaCount, mediaCount) || other.mediaCount == mediaCount)&&const DeepCollectionEquality().equals(other.insights, insights)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InstagramPageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.igUserId, igUserId) || other.igUserId == igUserId)&&(identical(other.username, username) || other.username == username)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.followers, followers) || other.followers == followers)&&(identical(other.followings, followings) || other.followings == followings)&&(identical(other.mediaCount, mediaCount) || other.mediaCount == mediaCount)&&const DeepCollectionEquality().equals(other.insights, insights)&&const DeepCollectionEquality().equals(other.reach, reach)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,igUserId,username,profilePicture,followers,followings,mediaCount,const DeepCollectionEquality().hash(insights),lastSync);
+int get hashCode => Object.hash(runtimeType,id,igUserId,username,profilePicture,followers,followings,mediaCount,const DeepCollectionEquality().hash(insights),const DeepCollectionEquality().hash(reach),lastSync);
 
 @override
 String toString() {
-  return 'InstagramPageModel(id: $id, igUserId: $igUserId, username: $username, profilePicture: $profilePicture, followers: $followers, followings: $followings, mediaCount: $mediaCount, insights: $insights, lastSync: $lastSync)';
+  return 'InstagramPageModel(id: $id, igUserId: $igUserId, username: $username, profilePicture: $profilePicture, followers: $followers, followings: $followings, mediaCount: $mediaCount, insights: $insights, reach: $reach, lastSync: $lastSync)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $InstagramPageModelCopyWith<$Res>  {
   factory $InstagramPageModelCopyWith(InstagramPageModel value, $Res Function(InstagramPageModel) _then) = _$InstagramPageModelCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
+ int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights, List<ReachValue> reach,@JsonKey(name: 'last_synced_at') String lastSync
 });
 
 
@@ -65,7 +65,7 @@ class _$InstagramPageModelCopyWithImpl<$Res>
 
 /// Create a copy of InstagramPageModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? igUserId = null,Object? username = null,Object? profilePicture = null,Object? followers = null,Object? followings = null,Object? mediaCount = null,Object? insights = null,Object? lastSync = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? igUserId = null,Object? username = null,Object? profilePicture = null,Object? followers = null,Object? followings = null,Object? mediaCount = null,Object? insights = null,Object? reach = null,Object? lastSync = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,igUserId: null == igUserId ? _self.igUserId : igUserId // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,8 @@ as String,followers: null == followers ? _self.followers : followers // ignore: 
 as int,followings: null == followings ? _self.followings : followings // ignore: cast_nullable_to_non_nullable
 as int,mediaCount: null == mediaCount ? _self.mediaCount : mediaCount // ignore: cast_nullable_to_non_nullable
 as int,insights: null == insights ? _self.insights : insights // ignore: cast_nullable_to_non_nullable
-as List<ProfileInsightModel>,lastSync: null == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
+as List<ProfileInsightModel>,reach: null == reach ? _self.reach : reach // ignore: cast_nullable_to_non_nullable
+as List<ReachValue>,lastSync: null == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights,  List<ReachValue> reach, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InstagramPageModel() when $default != null:
-return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
+return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.reach,_that.lastSync);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights,  List<ReachValue> reach, @JsonKey(name: 'last_synced_at')  String lastSync)  $default,) {final _that = this;
 switch (_that) {
 case _InstagramPageModel():
-return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
+return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.reach,_that.lastSync);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'ig_user_id')  String igUserId,  String username, @JsonKey(name: 'profile_picture_url')  String profilePicture,  int followers,  int followings, @JsonKey(name: 'media_count')  int mediaCount,  List<ProfileInsightModel> insights,  List<ReachValue> reach, @JsonKey(name: 'last_synced_at')  String lastSync)?  $default,) {final _that = this;
 switch (_that) {
 case _InstagramPageModel() when $default != null:
-return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.lastSync);case _:
+return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_that.followers,_that.followings,_that.mediaCount,_that.insights,_that.reach,_that.lastSync);case _:
   return null;
 
 }
@@ -217,7 +218,7 @@ return $default(_that.id,_that.igUserId,_that.username,_that.profilePicture,_tha
 @JsonSerializable()
 
 class _InstagramPageModel implements InstagramPageModel {
-  const _InstagramPageModel({required this.id, @JsonKey(name: 'ig_user_id') required this.igUserId, required this.username, @JsonKey(name: 'profile_picture_url') required this.profilePicture, required this.followers, required this.followings, @JsonKey(name: 'media_count') required this.mediaCount, required final  List<ProfileInsightModel> insights, @JsonKey(name: 'last_synced_at') required this.lastSync}): _insights = insights;
+  const _InstagramPageModel({required this.id, @JsonKey(name: 'ig_user_id') required this.igUserId, required this.username, @JsonKey(name: 'profile_picture_url') required this.profilePicture, required this.followers, required this.followings, @JsonKey(name: 'media_count') required this.mediaCount, required final  List<ProfileInsightModel> insights, required final  List<ReachValue> reach, @JsonKey(name: 'last_synced_at') required this.lastSync}): _insights = insights,_reach = reach;
   factory _InstagramPageModel.fromJson(Map<String, dynamic> json) => _$InstagramPageModelFromJson(json);
 
 @override final  int id;
@@ -232,6 +233,13 @@ class _InstagramPageModel implements InstagramPageModel {
   if (_insights is EqualUnmodifiableListView) return _insights;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_insights);
+}
+
+ final  List<ReachValue> _reach;
+@override List<ReachValue> get reach {
+  if (_reach is EqualUnmodifiableListView) return _reach;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_reach);
 }
 
 @override@JsonKey(name: 'last_synced_at') final  String lastSync;
@@ -249,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstagramPageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.igUserId, igUserId) || other.igUserId == igUserId)&&(identical(other.username, username) || other.username == username)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.followers, followers) || other.followers == followers)&&(identical(other.followings, followings) || other.followings == followings)&&(identical(other.mediaCount, mediaCount) || other.mediaCount == mediaCount)&&const DeepCollectionEquality().equals(other._insights, _insights)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstagramPageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.igUserId, igUserId) || other.igUserId == igUserId)&&(identical(other.username, username) || other.username == username)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.followers, followers) || other.followers == followers)&&(identical(other.followings, followings) || other.followings == followings)&&(identical(other.mediaCount, mediaCount) || other.mediaCount == mediaCount)&&const DeepCollectionEquality().equals(other._insights, _insights)&&const DeepCollectionEquality().equals(other._reach, _reach)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,igUserId,username,profilePicture,followers,followings,mediaCount,const DeepCollectionEquality().hash(_insights),lastSync);
+int get hashCode => Object.hash(runtimeType,id,igUserId,username,profilePicture,followers,followings,mediaCount,const DeepCollectionEquality().hash(_insights),const DeepCollectionEquality().hash(_reach),lastSync);
 
 @override
 String toString() {
-  return 'InstagramPageModel(id: $id, igUserId: $igUserId, username: $username, profilePicture: $profilePicture, followers: $followers, followings: $followings, mediaCount: $mediaCount, insights: $insights, lastSync: $lastSync)';
+  return 'InstagramPageModel(id: $id, igUserId: $igUserId, username: $username, profilePicture: $profilePicture, followers: $followers, followings: $followings, mediaCount: $mediaCount, insights: $insights, reach: $reach, lastSync: $lastSync)';
 }
 
 
@@ -269,7 +277,7 @@ abstract mixin class _$InstagramPageModelCopyWith<$Res> implements $InstagramPag
   factory _$InstagramPageModelCopyWith(_InstagramPageModel value, $Res Function(_InstagramPageModel) _then) = __$InstagramPageModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights,@JsonKey(name: 'last_synced_at') String lastSync
+ int id,@JsonKey(name: 'ig_user_id') String igUserId, String username,@JsonKey(name: 'profile_picture_url') String profilePicture, int followers, int followings,@JsonKey(name: 'media_count') int mediaCount, List<ProfileInsightModel> insights, List<ReachValue> reach,@JsonKey(name: 'last_synced_at') String lastSync
 });
 
 
@@ -286,7 +294,7 @@ class __$InstagramPageModelCopyWithImpl<$Res>
 
 /// Create a copy of InstagramPageModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? igUserId = null,Object? username = null,Object? profilePicture = null,Object? followers = null,Object? followings = null,Object? mediaCount = null,Object? insights = null,Object? lastSync = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? igUserId = null,Object? username = null,Object? profilePicture = null,Object? followers = null,Object? followings = null,Object? mediaCount = null,Object? insights = null,Object? reach = null,Object? lastSync = null,}) {
   return _then(_InstagramPageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,igUserId: null == igUserId ? _self.igUserId : igUserId // ignore: cast_nullable_to_non_nullable
@@ -296,7 +304,8 @@ as String,followers: null == followers ? _self.followers : followers // ignore: 
 as int,followings: null == followings ? _self.followings : followings // ignore: cast_nullable_to_non_nullable
 as int,mediaCount: null == mediaCount ? _self.mediaCount : mediaCount // ignore: cast_nullable_to_non_nullable
 as int,insights: null == insights ? _self._insights : insights // ignore: cast_nullable_to_non_nullable
-as List<ProfileInsightModel>,lastSync: null == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
+as List<ProfileInsightModel>,reach: null == reach ? _self._reach : reach // ignore: cast_nullable_to_non_nullable
+as List<ReachValue>,lastSync: null == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -561,6 +570,272 @@ class __$InsightValueCopyWithImpl<$Res>
   return _then(_InsightValue(
 value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$ReachValue {
+
+ int get value; String get date;
+/// Create a copy of ReachValue
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ReachValueCopyWith<ReachValue> get copyWith => _$ReachValueCopyWithImpl<ReachValue>(this as ReachValue, _$identity);
+
+  /// Serializes this ReachValue to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReachValue&&(identical(other.value, value) || other.value == value)&&(identical(other.date, date) || other.date == date));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,value,date);
+
+@override
+String toString() {
+  return 'ReachValue(value: $value, date: $date)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ReachValueCopyWith<$Res>  {
+  factory $ReachValueCopyWith(ReachValue value, $Res Function(ReachValue) _then) = _$ReachValueCopyWithImpl;
+@useResult
+$Res call({
+ int value, String date
+});
+
+
+
+
+}
+/// @nodoc
+class _$ReachValueCopyWithImpl<$Res>
+    implements $ReachValueCopyWith<$Res> {
+  _$ReachValueCopyWithImpl(this._self, this._then);
+
+  final ReachValue _self;
+  final $Res Function(ReachValue) _then;
+
+/// Create a copy of ReachValue
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? value = null,Object? date = null,}) {
+  return _then(_self.copyWith(
+value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as int,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ReachValue].
+extension ReachValuePatterns on ReachValue {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ReachValue value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ReachValue() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ReachValue value)  $default,){
+final _that = this;
+switch (_that) {
+case _ReachValue():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ReachValue value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ReachValue() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int value,  String date)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ReachValue() when $default != null:
+return $default(_that.value,_that.date);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int value,  String date)  $default,) {final _that = this;
+switch (_that) {
+case _ReachValue():
+return $default(_that.value,_that.date);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int value,  String date)?  $default,) {final _that = this;
+switch (_that) {
+case _ReachValue() when $default != null:
+return $default(_that.value,_that.date);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ReachValue implements ReachValue {
+  const _ReachValue({required this.value, required this.date});
+  factory _ReachValue.fromJson(Map<String, dynamic> json) => _$ReachValueFromJson(json);
+
+@override final  int value;
+@override final  String date;
+
+/// Create a copy of ReachValue
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ReachValueCopyWith<_ReachValue> get copyWith => __$ReachValueCopyWithImpl<_ReachValue>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ReachValueToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReachValue&&(identical(other.value, value) || other.value == value)&&(identical(other.date, date) || other.date == date));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,value,date);
+
+@override
+String toString() {
+  return 'ReachValue(value: $value, date: $date)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ReachValueCopyWith<$Res> implements $ReachValueCopyWith<$Res> {
+  factory _$ReachValueCopyWith(_ReachValue value, $Res Function(_ReachValue) _then) = __$ReachValueCopyWithImpl;
+@override @useResult
+$Res call({
+ int value, String date
+});
+
+
+
+
+}
+/// @nodoc
+class __$ReachValueCopyWithImpl<$Res>
+    implements _$ReachValueCopyWith<$Res> {
+  __$ReachValueCopyWithImpl(this._self, this._then);
+
+  final _ReachValue _self;
+  final $Res Function(_ReachValue) _then;
+
+/// Create a copy of ReachValue
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? value = null,Object? date = null,}) {
+  return _then(_ReachValue(
+value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as int,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
