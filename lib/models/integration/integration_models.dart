@@ -90,6 +90,7 @@ abstract class InstagramMediaModel with _$InstagramMediaModel {
     @JsonKey(name: 'like_count') required int likeCount,
     @JsonKey(name: 'comments_count') required int commentsCount,
     @JsonKey(name: 'insights_raw') required List<MediaInsightModel> insights,
+    required int views,
   }) = _InstagramMediaModel;
 
   factory InstagramMediaModel.fromJson(Map<String, dynamic> json) =>

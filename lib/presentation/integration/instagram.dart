@@ -7,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/integration/integration_models.dart';
@@ -534,28 +535,33 @@ class InstagramMedia extends StatelessWidget {
                             compactCount(media.likeCount),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          ...media.insights.expand(
-                            (insight) => [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 6),
-                                child: Icon(
-                                  _iconForMetric(insight.name),
-                                  size: 16,
-                                ),
+                          const SizedBox(width: 5),
+                          if (media.mediaType == "VIDEO") ...[
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedView,
+                              size: 15,
+                              strokeWidth: 2,
+                            ),
+                            const SizedBox(width: 2),
+                            Text(
+                              compactCount(media.views),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                              ...insight.values.map(
-                                (v) => Padding(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: Text(
-                                    compactCount(v.value),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
+                            ),
+                          ] else ...[
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedComment01,
+                              size: 15,
+                            ),
+                            const SizedBox(width: 2),
+                            Text(
+                              compactCount(media.commentsCount),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -567,21 +573,6 @@ class InstagramMedia extends StatelessWidget {
         const SizedBox(height: 20),
       ],
     );
-  }
-
-  IconData _iconForMetric(String metricName) {
-    switch (metricName.toLowerCase()) {
-      case 'engagement':
-      case 'reach':
-        return Icons.trending_up_rounded;
-      case 'impressions':
-      case 'views':
-        return Icons.visibility_rounded;
-      case 'saves':
-        return Icons.bookmark_border_rounded;
-      default:
-        return Icons.bar_chart_rounded;
-    }
   }
 }
 

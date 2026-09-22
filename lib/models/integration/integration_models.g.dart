@@ -86,6 +86,7 @@ _InstagramMediaModel _$InstagramMediaModelFromJson(Map<String, dynamic> json) =>
       insights: (json['insights_raw'] as List<dynamic>)
           .map((e) => MediaInsightModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      views: (json['views'] as num).toInt(),
     );
 
 Map<String, dynamic> _$InstagramMediaModelToJson(
@@ -102,6 +103,7 @@ Map<String, dynamic> _$InstagramMediaModelToJson(
   'like_count': instance.likeCount,
   'comments_count': instance.commentsCount,
   'insights_raw': instance.insights,
+  'views': instance.views,
 };
 
 _MediaInsightModel _$MediaInsightModelFromJson(Map<String, dynamic> json) =>

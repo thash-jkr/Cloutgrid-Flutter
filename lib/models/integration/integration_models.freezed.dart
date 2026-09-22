@@ -1121,7 +1121,7 @@ as double,
 /// @nodoc
 mixin _$InstagramMediaModel {
 
- int get id; int get owner;@JsonKey(name: 'media_id') String get mediaId;@JsonKey(name: 'media_type') String get mediaType;@JsonKey(name: 'media_url') String get mediaUrl;@JsonKey(name: 'thumbnail_url') String get thumbnailUrl; String get link; String get caption;@JsonKey(name: 'like_count') int get likeCount;@JsonKey(name: 'comments_count') int get commentsCount;@JsonKey(name: 'insights_raw') List<MediaInsightModel> get insights;
+ int get id; int get owner;@JsonKey(name: 'media_id') String get mediaId;@JsonKey(name: 'media_type') String get mediaType;@JsonKey(name: 'media_url') String get mediaUrl;@JsonKey(name: 'thumbnail_url') String get thumbnailUrl; String get link; String get caption;@JsonKey(name: 'like_count') int get likeCount;@JsonKey(name: 'comments_count') int get commentsCount;@JsonKey(name: 'insights_raw') List<MediaInsightModel> get insights; int get views;
 /// Create a copy of InstagramMediaModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1134,16 +1134,16 @@ $InstagramMediaModelCopyWith<InstagramMediaModel> get copyWith => _$InstagramMed
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InstagramMediaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.owner, owner) || other.owner == owner)&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.caption, caption) || other.caption == caption)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentsCount, commentsCount) || other.commentsCount == commentsCount)&&const DeepCollectionEquality().equals(other.insights, insights));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InstagramMediaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.owner, owner) || other.owner == owner)&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.caption, caption) || other.caption == caption)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentsCount, commentsCount) || other.commentsCount == commentsCount)&&const DeepCollectionEquality().equals(other.insights, insights)&&(identical(other.views, views) || other.views == views));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,owner,mediaId,mediaType,mediaUrl,thumbnailUrl,link,caption,likeCount,commentsCount,const DeepCollectionEquality().hash(insights));
+int get hashCode => Object.hash(runtimeType,id,owner,mediaId,mediaType,mediaUrl,thumbnailUrl,link,caption,likeCount,commentsCount,const DeepCollectionEquality().hash(insights),views);
 
 @override
 String toString() {
-  return 'InstagramMediaModel(id: $id, owner: $owner, mediaId: $mediaId, mediaType: $mediaType, mediaUrl: $mediaUrl, thumbnailUrl: $thumbnailUrl, link: $link, caption: $caption, likeCount: $likeCount, commentsCount: $commentsCount, insights: $insights)';
+  return 'InstagramMediaModel(id: $id, owner: $owner, mediaId: $mediaId, mediaType: $mediaType, mediaUrl: $mediaUrl, thumbnailUrl: $thumbnailUrl, link: $link, caption: $caption, likeCount: $likeCount, commentsCount: $commentsCount, insights: $insights, views: $views)';
 }
 
 
@@ -1154,7 +1154,7 @@ abstract mixin class $InstagramMediaModelCopyWith<$Res>  {
   factory $InstagramMediaModelCopyWith(InstagramMediaModel value, $Res Function(InstagramMediaModel) _then) = _$InstagramMediaModelCopyWithImpl;
 @useResult
 $Res call({
- int id, int owner,@JsonKey(name: 'media_id') String mediaId,@JsonKey(name: 'media_type') String mediaType,@JsonKey(name: 'media_url') String mediaUrl,@JsonKey(name: 'thumbnail_url') String thumbnailUrl, String link, String caption,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comments_count') int commentsCount,@JsonKey(name: 'insights_raw') List<MediaInsightModel> insights
+ int id, int owner,@JsonKey(name: 'media_id') String mediaId,@JsonKey(name: 'media_type') String mediaType,@JsonKey(name: 'media_url') String mediaUrl,@JsonKey(name: 'thumbnail_url') String thumbnailUrl, String link, String caption,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comments_count') int commentsCount,@JsonKey(name: 'insights_raw') List<MediaInsightModel> insights, int views
 });
 
 
@@ -1171,7 +1171,7 @@ class _$InstagramMediaModelCopyWithImpl<$Res>
 
 /// Create a copy of InstagramMediaModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? owner = null,Object? mediaId = null,Object? mediaType = null,Object? mediaUrl = null,Object? thumbnailUrl = null,Object? link = null,Object? caption = null,Object? likeCount = null,Object? commentsCount = null,Object? insights = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? owner = null,Object? mediaId = null,Object? mediaType = null,Object? mediaUrl = null,Object? thumbnailUrl = null,Object? link = null,Object? caption = null,Object? likeCount = null,Object? commentsCount = null,Object? insights = null,Object? views = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
@@ -1184,7 +1184,8 @@ as String,caption: null == caption ? _self.caption : caption // ignore: cast_nul
 as String,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,commentsCount: null == commentsCount ? _self.commentsCount : commentsCount // ignore: cast_nullable_to_non_nullable
 as int,insights: null == insights ? _self.insights : insights // ignore: cast_nullable_to_non_nullable
-as List<MediaInsightModel>,
+as List<MediaInsightModel>,views: null == views ? _self.views : views // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -1269,10 +1270,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights,  int views)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InstagramMediaModel() when $default != null:
-return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights);case _:
+return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights,_that.views);case _:
   return orElse();
 
 }
@@ -1290,10 +1291,10 @@ return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights,  int views)  $default,) {final _that = this;
 switch (_that) {
 case _InstagramMediaModel():
-return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights);case _:
+return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights,_that.views);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1310,10 +1311,10 @@ return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int owner, @JsonKey(name: 'media_id')  String mediaId, @JsonKey(name: 'media_type')  String mediaType, @JsonKey(name: 'media_url')  String mediaUrl, @JsonKey(name: 'thumbnail_url')  String thumbnailUrl,  String link,  String caption, @JsonKey(name: 'like_count')  int likeCount, @JsonKey(name: 'comments_count')  int commentsCount, @JsonKey(name: 'insights_raw')  List<MediaInsightModel> insights,  int views)?  $default,) {final _that = this;
 switch (_that) {
 case _InstagramMediaModel() when $default != null:
-return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights);case _:
+return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUrl,_that.thumbnailUrl,_that.link,_that.caption,_that.likeCount,_that.commentsCount,_that.insights,_that.views);case _:
   return null;
 
 }
@@ -1325,7 +1326,7 @@ return $default(_that.id,_that.owner,_that.mediaId,_that.mediaType,_that.mediaUr
 @JsonSerializable()
 
 class _InstagramMediaModel implements InstagramMediaModel {
-  const _InstagramMediaModel({required this.id, required this.owner, @JsonKey(name: 'media_id') required this.mediaId, @JsonKey(name: 'media_type') required this.mediaType, @JsonKey(name: 'media_url') required this.mediaUrl, @JsonKey(name: 'thumbnail_url') required this.thumbnailUrl, required this.link, required this.caption, @JsonKey(name: 'like_count') required this.likeCount, @JsonKey(name: 'comments_count') required this.commentsCount, @JsonKey(name: 'insights_raw') required final  List<MediaInsightModel> insights}): _insights = insights;
+  const _InstagramMediaModel({required this.id, required this.owner, @JsonKey(name: 'media_id') required this.mediaId, @JsonKey(name: 'media_type') required this.mediaType, @JsonKey(name: 'media_url') required this.mediaUrl, @JsonKey(name: 'thumbnail_url') required this.thumbnailUrl, required this.link, required this.caption, @JsonKey(name: 'like_count') required this.likeCount, @JsonKey(name: 'comments_count') required this.commentsCount, @JsonKey(name: 'insights_raw') required final  List<MediaInsightModel> insights, required this.views}): _insights = insights;
   factory _InstagramMediaModel.fromJson(Map<String, dynamic> json) => _$InstagramMediaModelFromJson(json);
 
 @override final  int id;
@@ -1345,6 +1346,7 @@ class _InstagramMediaModel implements InstagramMediaModel {
   return EqualUnmodifiableListView(_insights);
 }
 
+@override final  int views;
 
 /// Create a copy of InstagramMediaModel
 /// with the given fields replaced by the non-null parameter values.
@@ -1359,16 +1361,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstagramMediaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.owner, owner) || other.owner == owner)&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.caption, caption) || other.caption == caption)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentsCount, commentsCount) || other.commentsCount == commentsCount)&&const DeepCollectionEquality().equals(other._insights, _insights));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstagramMediaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.owner, owner) || other.owner == owner)&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.caption, caption) || other.caption == caption)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentsCount, commentsCount) || other.commentsCount == commentsCount)&&const DeepCollectionEquality().equals(other._insights, _insights)&&(identical(other.views, views) || other.views == views));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,owner,mediaId,mediaType,mediaUrl,thumbnailUrl,link,caption,likeCount,commentsCount,const DeepCollectionEquality().hash(_insights));
+int get hashCode => Object.hash(runtimeType,id,owner,mediaId,mediaType,mediaUrl,thumbnailUrl,link,caption,likeCount,commentsCount,const DeepCollectionEquality().hash(_insights),views);
 
 @override
 String toString() {
-  return 'InstagramMediaModel(id: $id, owner: $owner, mediaId: $mediaId, mediaType: $mediaType, mediaUrl: $mediaUrl, thumbnailUrl: $thumbnailUrl, link: $link, caption: $caption, likeCount: $likeCount, commentsCount: $commentsCount, insights: $insights)';
+  return 'InstagramMediaModel(id: $id, owner: $owner, mediaId: $mediaId, mediaType: $mediaType, mediaUrl: $mediaUrl, thumbnailUrl: $thumbnailUrl, link: $link, caption: $caption, likeCount: $likeCount, commentsCount: $commentsCount, insights: $insights, views: $views)';
 }
 
 
@@ -1379,7 +1381,7 @@ abstract mixin class _$InstagramMediaModelCopyWith<$Res> implements $InstagramMe
   factory _$InstagramMediaModelCopyWith(_InstagramMediaModel value, $Res Function(_InstagramMediaModel) _then) = __$InstagramMediaModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int owner,@JsonKey(name: 'media_id') String mediaId,@JsonKey(name: 'media_type') String mediaType,@JsonKey(name: 'media_url') String mediaUrl,@JsonKey(name: 'thumbnail_url') String thumbnailUrl, String link, String caption,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comments_count') int commentsCount,@JsonKey(name: 'insights_raw') List<MediaInsightModel> insights
+ int id, int owner,@JsonKey(name: 'media_id') String mediaId,@JsonKey(name: 'media_type') String mediaType,@JsonKey(name: 'media_url') String mediaUrl,@JsonKey(name: 'thumbnail_url') String thumbnailUrl, String link, String caption,@JsonKey(name: 'like_count') int likeCount,@JsonKey(name: 'comments_count') int commentsCount,@JsonKey(name: 'insights_raw') List<MediaInsightModel> insights, int views
 });
 
 
@@ -1396,7 +1398,7 @@ class __$InstagramMediaModelCopyWithImpl<$Res>
 
 /// Create a copy of InstagramMediaModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? owner = null,Object? mediaId = null,Object? mediaType = null,Object? mediaUrl = null,Object? thumbnailUrl = null,Object? link = null,Object? caption = null,Object? likeCount = null,Object? commentsCount = null,Object? insights = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? owner = null,Object? mediaId = null,Object? mediaType = null,Object? mediaUrl = null,Object? thumbnailUrl = null,Object? link = null,Object? caption = null,Object? likeCount = null,Object? commentsCount = null,Object? insights = null,Object? views = null,}) {
   return _then(_InstagramMediaModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
@@ -1409,7 +1411,8 @@ as String,caption: null == caption ? _self.caption : caption // ignore: cast_nul
 as String,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,commentsCount: null == commentsCount ? _self.commentsCount : commentsCount // ignore: cast_nullable_to_non_nullable
 as int,insights: null == insights ? _self._insights : insights // ignore: cast_nullable_to_non_nullable
-as List<MediaInsightModel>,
+as List<MediaInsightModel>,views: null == views ? _self.views : views // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
