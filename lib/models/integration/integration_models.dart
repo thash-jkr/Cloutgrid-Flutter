@@ -39,18 +39,12 @@ abstract class InstagramPageModel with _$InstagramPageModel {
     required List<ProfileInsightModel> insights,
     required List<ReachValue> reach,
     @JsonKey(name: 'last_synced_at') required String lastSync,
+    @JsonKey(name: 'media_insights')
+    required List<MediaInsightModel> mediaInsights,
   }) = _InstagramPageModel;
 
   factory InstagramPageModel.fromJson(Map<String, dynamic> json) =>
       _$InstagramPageModelFromJson(json);
-}
-
-@freezed
-abstract class InsightValue with _$InsightValue {
-  const factory InsightValue({required int value}) = _InsightValue;
-
-  factory InsightValue.fromJson(Map<String, dynamic> json) =>
-      _$InsightValueFromJson(json);
 }
 
 @freezed
@@ -89,7 +83,6 @@ abstract class InstagramMediaModel with _$InstagramMediaModel {
     required String caption,
     @JsonKey(name: 'like_count') required int likeCount,
     @JsonKey(name: 'comments_count') required int commentsCount,
-    @JsonKey(name: 'insights_raw') required List<MediaInsightModel> insights,
     required int views,
   }) = _InstagramMediaModel;
 
@@ -100,12 +93,9 @@ abstract class InstagramMediaModel with _$InstagramMediaModel {
 @freezed
 abstract class MediaInsightModel with _$MediaInsightModel {
   const factory MediaInsightModel({
-    required String id,
     required String name,
-    required String title,
-    required String period,
-    required String description,
-    required List<InsightValue> values,
+    required double change,
+    required double average,
   }) = _MediaInsightModel;
 
   factory MediaInsightModel.fromJson(Map<String, dynamic> json) =>

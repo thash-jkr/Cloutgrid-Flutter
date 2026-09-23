@@ -22,6 +22,9 @@ _InstagramPageModel _$InstagramPageModelFromJson(Map<String, dynamic> json) =>
           .map((e) => ReachValue.fromJson(e as Map<String, dynamic>))
           .toList(),
       lastSync: json['last_synced_at'] as String,
+      mediaInsights: (json['media_insights'] as List<dynamic>)
+          .map((e) => MediaInsightModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$InstagramPageModelToJson(_InstagramPageModel instance) =>
@@ -36,13 +39,8 @@ Map<String, dynamic> _$InstagramPageModelToJson(_InstagramPageModel instance) =>
       'insights': instance.insights,
       'reach': instance.reach,
       'last_synced_at': instance.lastSync,
+      'media_insights': instance.mediaInsights,
     };
-
-_InsightValue _$InsightValueFromJson(Map<String, dynamic> json) =>
-    _InsightValue(value: (json['value'] as num).toInt());
-
-Map<String, dynamic> _$InsightValueToJson(_InsightValue instance) =>
-    <String, dynamic>{'value': instance.value};
 
 _ReachValue _$ReachValueFromJson(Map<String, dynamic> json) => _ReachValue(
   value: (json['value'] as num).toInt(),
@@ -83,9 +81,6 @@ _InstagramMediaModel _$InstagramMediaModelFromJson(Map<String, dynamic> json) =>
       caption: json['caption'] as String,
       likeCount: (json['like_count'] as num).toInt(),
       commentsCount: (json['comments_count'] as num).toInt(),
-      insights: (json['insights_raw'] as List<dynamic>)
-          .map((e) => MediaInsightModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
       views: (json['views'] as num).toInt(),
     );
 
@@ -102,30 +97,21 @@ Map<String, dynamic> _$InstagramMediaModelToJson(
   'caption': instance.caption,
   'like_count': instance.likeCount,
   'comments_count': instance.commentsCount,
-  'insights_raw': instance.insights,
   'views': instance.views,
 };
 
 _MediaInsightModel _$MediaInsightModelFromJson(Map<String, dynamic> json) =>
     _MediaInsightModel(
-      id: json['id'] as String,
       name: json['name'] as String,
-      title: json['title'] as String,
-      period: json['period'] as String,
-      description: json['description'] as String,
-      values: (json['values'] as List<dynamic>)
-          .map((e) => InsightValue.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      change: (json['change'] as num).toDouble(),
+      average: (json['average'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$MediaInsightModelToJson(_MediaInsightModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
-      'title': instance.title,
-      'period': instance.period,
-      'description': instance.description,
-      'values': instance.values,
+      'change': instance.change,
+      'average': instance.average,
     };
 
 _YoutubeChannelModel _$YoutubeChannelModelFromJson(Map<String, dynamic> json) =>

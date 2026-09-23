@@ -154,6 +154,10 @@ class _InstagramState extends ConsumerState<Instagram> {
                       ReachGraph(
                         reach: integrationState.instagramPage?.reach ?? [],
                       ),
+
+                      InstagramMediaInsights(
+                        insights: integrationState.instagramPage!.mediaInsights,
+                      ),
                     ],
 
                     InstagramMedia(igMedia: integrationState.instagramMedia),
@@ -448,6 +452,105 @@ class ReachGraph extends StatelessWidget {
   }
 }
 
+class InstagramMediaInsights extends StatelessWidget {
+  final List<MediaInsightModel> insights;
+
+  const InstagramMediaInsights({super.key, required this.insights});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            "Media Insights",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          ),
+        ),
+        if (insights.isEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Text(
+              'No recent posts found',
+              style: const TextStyle(color: Colors.grey),
+            ),
+          )
+        else
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            itemCount: insights.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+              childAspectRatio: 1.8,
+            ),
+            itemBuilder: (context, index) {
+              final metric = insights[index];
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 0,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 5,
+                      children: [
+                        Text(
+                          metric.name == "Avg. Watch Time"
+                              ? "${compactCount((metric.average / 60).toInt())}s"
+                              : metric.name == "Skip Rate"
+                              ? "${compactCount(metric.average.toInt())}%"
+                              : compactCount(metric.average.toInt()),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            height: 0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "${metric.change >= 0 ? "+" : ""}${metric.change}%",
+                          style: TextStyle(
+                            color: metric.name == "Skip Rate"
+                                ? metric.change >= 0
+                                      ? Colors.red
+                                      : Colors.green
+                                : metric.change >= 0
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(metric.name, style: theme.textTheme.labelSmall),
+                  ],
+                ),
+              );
+            },
+          ),
+      ],
+    );
+  }
+}
+
 class InstagramMedia extends StatelessWidget {
   final List<InstagramMediaModel> igMedia;
 
@@ -461,7 +564,7 @@ class InstagramMedia extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            "Media Insights",
+            "Recent Posts",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
         ),
