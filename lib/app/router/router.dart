@@ -8,6 +8,7 @@ import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
 import 'package:cloutgrid_flutter/presentation/chats/messages.dart';
 import 'package:cloutgrid_flutter/presentation/create/create_post.dart';
 import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
+import 'package:cloutgrid_flutter/presentation/integration/other_instagram.dart';
 import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/change_password.dart';
@@ -209,6 +210,11 @@ class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
     onNavigateBack: () => context.pop(),
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
+    onNavigateToOtherInstagram: (String username, bool isConnected) =>
+        OtherInstagramRoute(
+          username: username,
+          isConnected: isConnected,
+        ).push(context),
     user: $extra,
   );
 }
@@ -218,6 +224,24 @@ class InstagramRoute extends GoRouteData with $InstagramRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       Instagram(onNavigateBack: () => context.pop());
+}
+
+@TypedGoRoute<OtherInstagramRoute>(path: "/other-instagram")
+class OtherInstagramRoute extends GoRouteData with $OtherInstagramRoute {
+  final String username;
+  final bool isConnected;
+
+  const OtherInstagramRoute({
+    required this.username,
+    required this.isConnected,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => OtherInstagram(
+    username: username,
+    isConnected: isConnected,
+    onNavigateBack: () => context.pop(),
+  );
 }
 
 @TypedGoRoute<YouTubeRoute>(path: "/youtube")

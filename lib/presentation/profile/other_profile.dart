@@ -1,5 +1,4 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/presentation/integration/other_instagram.dart';
 import 'package:cloutgrid_flutter/presentation/integration/other_youtube.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
@@ -16,12 +15,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class OtherProfile extends ConsumerStatefulWidget {
   final VoidCallback onNavigateBack;
   final void Function(int id, bool other) onNavigateToPostDetail;
+  final void Function(String username, bool isConnected)
+  onNavigateToOtherInstagram;
   final UserProfile user;
 
   const OtherProfile({
     super.key,
     required this.onNavigateBack,
     required this.onNavigateToPostDetail,
+    required this.onNavigateToOtherInstagram,
     required this.user,
   });
 
@@ -64,23 +66,14 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
       setState(() => _selectedTab = tab);
     } else {
       if (tab.label == "Instagram") {
-        _openInstagram();
+        widget.onNavigateToOtherInstagram(
+          username,
+          widget.user.instagramConnected == true,
+        );
       } else if (tab.label == "YouTube") {
         _openYouTube();
       }
     }
-  }
-
-  void _openInstagram() {
-    cloutSheet(
-      context,
-      content: (context, scrollController) => OtherInstagram(
-        username: username,
-        isConnected: widget.user.instagramConnected == true,
-        scrollController: scrollController,
-      ),
-      short: widget.user.instagramConnected != true,
-    );
   }
 
   void _openYouTube() {

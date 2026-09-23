@@ -22,6 +22,7 @@ List<RouteBase> get $appRoutes => [
   $editProfileRoute,
   $otherProfileRoute,
   $instagramRoute,
+  $otherInstagramRoute,
   $youTubeRoute,
   $createPostRoute,
   $questionsRoute,
@@ -449,6 +450,46 @@ mixin $InstagramRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/instagram');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $otherInstagramRoute => GoRouteData.$route(
+  path: '/other-instagram',
+  hasOverriddenOnExit: false,
+  factory: $OtherInstagramRoute._fromState,
+);
+
+mixin $OtherInstagramRoute on GoRouteData {
+  static OtherInstagramRoute _fromState(GoRouterState state) =>
+      OtherInstagramRoute(
+        username: state.uri.queryParameters['username']!,
+        isConnected: _$boolConverter(
+          state.uri.queryParameters['is-connected']!,
+        ),
+      );
+
+  OtherInstagramRoute get _self => this as OtherInstagramRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/other-instagram',
+    queryParams: {
+      'username': _self.username,
+      'is-connected': _self.isConnected.toString(),
+    },
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

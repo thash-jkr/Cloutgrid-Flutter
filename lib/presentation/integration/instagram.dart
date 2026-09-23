@@ -361,91 +361,93 @@ class ReachGraph extends StatelessWidget {
             "Reach",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
-          SizedBox(
-            height: 220,
-            child: LineChart(
-              LineChartData(
-                minY: 0,
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: false,
-                  horizontalInterval: _niceInterval(reach),
-                ),
-                titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 40,
-                      getTitlesWidget: (value, meta) => Text(
-                        compactCount(value.toInt()),
-                        style: const TextStyle(fontSize: 10),
+          reach.isEmpty
+              ? CloutEmpty(type: .instagram, message: "No reach data!")
+              : SizedBox(
+                  height: 220,
+                  child: LineChart(
+                    LineChartData(
+                      minY: 0,
+                      gridData: FlGridData(
+                        show: true,
+                        drawVerticalLine: false,
+                        horizontalInterval: _niceInterval(reach),
                       ),
-                    ),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      interval: 1,
-                      reservedSize: 28,
-                      getTitlesWidget: (value, meta) {
-                        final index = value.toInt();
-                        if (index < 0 || index >= reach.length) {
-                          return const SizedBox.shrink();
-                        }
-                        if (index != 0 && index != middleIndex) {
-                          return const SizedBox.shrink();
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Text(
-                            _formatDate(reach[index].date),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    preventCurveOverShooting: true,
-                    spots: spots,
-                    isCurved: true,
-                    color: theme.colorScheme.secondary,
-                    barWidth: 2.5,
-                    dotData: const FlDotData(show: false),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      color: theme.colorScheme.secondary.withValues(
-                        alpha: 0.15,
-                      ),
-                    ),
-                  ),
-                ],
-                lineTouchData: LineTouchData(
-                  touchTooltipData: LineTouchTooltipData(
-                    getTooltipItems: (spots) => spots.map((spot) {
-                      final index = spot.x.toInt();
-                      return LineTooltipItem(
-                        _formatDate(reach[index].date),
-                        const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      titlesData: FlTitlesData(
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
                         ),
-                      );
-                    }).toList(),
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 40,
+                            getTitlesWidget: (value, meta) => Text(
+                              compactCount(value.toInt()),
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1,
+                            reservedSize: 28,
+                            getTitlesWidget: (value, meta) {
+                              final index = value.toInt();
+                              if (index < 0 || index >= reach.length) {
+                                return const SizedBox.shrink();
+                              }
+                              if (index != 0 && index != middleIndex) {
+                                return const SizedBox.shrink();
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Text(
+                                  _formatDate(reach[index].date),
+                                  style: const TextStyle(fontSize: 10),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      borderData: FlBorderData(show: false),
+                      lineBarsData: [
+                        LineChartBarData(
+                          preventCurveOverShooting: true,
+                          spots: spots,
+                          isCurved: true,
+                          color: theme.colorScheme.secondary,
+                          barWidth: 2.5,
+                          dotData: const FlDotData(show: false),
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: theme.colorScheme.secondary.withValues(
+                              alpha: 0.15,
+                            ),
+                          ),
+                        ),
+                      ],
+                      lineTouchData: LineTouchData(
+                        touchTooltipData: LineTouchTooltipData(
+                          getTooltipItems: (spots) => spots.map((spot) {
+                            final index = spot.x.toInt();
+                            return LineTooltipItem(
+                              _formatDate(reach[index].date),
+                              const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );

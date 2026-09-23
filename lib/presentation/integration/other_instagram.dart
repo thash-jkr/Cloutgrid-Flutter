@@ -1,3 +1,4 @@
+import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/presentation/integration/instagram.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
@@ -8,13 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class OtherInstagram extends ConsumerStatefulWidget {
   final String username;
   final bool isConnected;
-  final ScrollController? scrollController;
+  final VoidCallback onNavigateBack;
 
   const OtherInstagram({
     super.key,
     required this.username,
     required this.isConnected,
-    this.scrollController,
+    required this.onNavigateBack,
   });
 
   @override
@@ -43,11 +44,17 @@ class _InstagramState extends ConsumerState<OtherInstagram> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: CloutHeader(title: "Instagram Insights 📊"),
+      appBar: CloutHeader(
+        title: "Instagram Insights 📊",
+        icon: HeaderAction(
+          icon: Icons.arrow_back,
+          contentDescription: "Back",
+          onClick: widget.onNavigateBack,
+        ),
+      ),
       body: SingleChildScrollView(
-        controller: widget.scrollController,
         padding: EdgeInsets.only(
-          top: kToolbarHeight + MediaQuery.of(context).padding.top,
+          top: kToolbarHeight + MediaQuery.of(context).padding.top + 15,
           bottom: 100,
         ),
         child: widget.isConnected
@@ -71,6 +78,10 @@ class _InstagramState extends ConsumerState<OtherInstagram> {
 
                       InstagramInsights(
                         insights: integrationState.otherInstagramPage!.insights,
+                      ),
+
+                      ReachGraph(
+                        reach: integrationState.instagramPage?.reach ?? [],
                       ),
                     ],
 
