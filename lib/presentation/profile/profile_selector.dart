@@ -2,6 +2,7 @@ import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/integration/integration_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 enum ProfileTab {
   posts(label: 'Posts', icon: Icons.grid_3x3_rounded),
@@ -115,13 +116,13 @@ class ProfileSelector extends StatelessWidget {
                 segments: [
                   ButtonSegment(
                     value: ProfileTab.posts,
-                    icon: Icon(ProfileTab.posts.icon),
+                    icon: HugeIcon(icon: HugeIcons.strokeRoundedAlbum02),
                     label: Text(ProfileTab.posts.label),
                   ),
 
                   ButtonSegment(
                     value: ProfileTab.collabs,
-                    icon: Icon(ProfileTab.collabs.icon),
+                    icon: HugeIcon(icon: HugeIcons.strokeRoundedAiCoEditing),
                     label: Text(ProfileTab.collabs.label),
                   ),
                 ],

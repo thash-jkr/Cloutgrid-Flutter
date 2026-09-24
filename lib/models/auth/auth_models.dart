@@ -53,7 +53,7 @@ abstract class EmptyResponse with _$EmptyResponse {
 
 class HeaderMenuItem {
   final String title;
-  final IconData icon;
+  final dynamic icon;
   final VoidCallback onClick;
 
   const HeaderMenuItem({
@@ -64,7 +64,7 @@ class HeaderMenuItem {
 }
 
 class HeaderAction {
-  final IconData? icon;
+  final dynamic icon;
   final ImageProvider? image;
   final String contentDescription;
   final VoidCallback onClick;

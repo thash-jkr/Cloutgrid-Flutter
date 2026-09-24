@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../providers/auth/auth_notifier.dart';
@@ -138,12 +139,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         ),
         actions: [
           HeaderAction(
-            icon: Icons.notifications_none_rounded,
+            icon: HugeIcons.strokeRoundedNotification01,
             contentDescription: "Notifications",
             onClick: _openNotifications,
           ),
           HeaderAction(
-            icon: Icons.messenger_outline_rounded,
+            icon: HugeIcons.strokeRoundedBubbleChat,
             contentDescription: "Chats",
             onClick: widget.onNavigateToConversations,
           ),

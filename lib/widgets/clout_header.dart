@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../models/auth/auth_models.dart';
 
@@ -34,6 +35,13 @@ class OutlinedText extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget _renderIcon(dynamic icon, {double size = 24, Color? color}) {
+  if (icon is IconData) {
+    return Icon(icon, size: size, color: color);
+  }
+  return HugeIcon(icon: icon, size: size, color: color ?? Colors.black);
 }
 
 class CloutHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -157,7 +165,7 @@ class _ToolbarButton extends StatelessWidget {
         icon: action.image != null
             ? Image(image: action.image!, width: 50, height: 50)
             : action.icon != null
-            ? Icon(action.icon, size: 25)
+            ? _renderIcon(action.icon, size: 25)
             : const SizedBox.shrink(),
         tooltip: action.contentDescription,
         onPressed: action.disabled ? null : action.onClick,
@@ -168,7 +176,7 @@ class _ToolbarButton extends StatelessWidget {
   }
 }
 
-Widget _badgedIcon(IconData? icon) {
+Widget _badgedIcon(dynamic icon) {
   const offWhite = Color(0xFFF2F0EF);
 
   return Container(
@@ -177,7 +185,7 @@ Widget _badgedIcon(IconData? icon) {
       color: offWhite.withValues(alpha: 0.4),
       shape: BoxShape.circle,
     ),
-    child: Icon(icon, color: Colors.black),
+    child: _renderIcon(icon, color: Colors.black),
   );
 }
 
@@ -218,7 +226,7 @@ class _ActionButton extends StatelessWidget {
                     onTap: item.onClick,
                     child: Row(
                       children: [
-                        Icon(item.icon, size: 25),
+                        _renderIcon(item.icon, size: 25),
                         SizedBox(width: 12),
                         Text(item.title),
                       ],
@@ -244,7 +252,7 @@ class _ActionButton extends StatelessWidget {
               ],
             ),
             child: PopupMenuButton<void>(
-              icon: Icon(action.icon),
+              icon: _renderIcon(action.icon),
               tooltip: action.contentDescription,
               color: Colors.white,
               offset: const Offset(0, 50),
@@ -260,7 +268,7 @@ class _ActionButton extends StatelessWidget {
                       onTap: item.onClick,
                       child: Row(
                         children: [
-                          Icon(item.icon, size: 25),
+                          _renderIcon(item.icon, size: 25),
                           SizedBox(width: 12),
                           Text(item.title),
                         ],
