@@ -4,6 +4,7 @@ import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import './create/create_screen.dart';
 import './jobs/job_screen.dart';
@@ -12,14 +13,14 @@ import './search/search_screen.dart';
 import './home/home_screen.dart';
 
 enum TabItem {
-  home('Home', Icons.home_rounded),
-  search('Search', Icons.search_rounded),
-  create('Create', Icons.add_circle_rounded),
-  jobs('Jobs', Icons.work_rounded),
-  profile('Profile', Icons.person_rounded);
+  home('Home', HugeIcons.strokeRoundedHome07),
+  search('Search', HugeIcons.strokeRoundedSearch01),
+  create('Create', HugeIcons.strokeRoundedPlusSignCircle),
+  jobs('Jobs', HugeIcons.strokeRoundedBriefcase01),
+  profile('Profile', HugeIcons.strokeRoundedUserCircle);
 
   final String title;
-  final IconData icon;
+  final dynamic icon;
 
   const TabItem(this.title, this.icon);
 }
@@ -179,12 +180,14 @@ class _PillBottomBar extends StatelessWidget {
                             ? theme.colorScheme.secondary
                             : Colors.transparent,
                       ),
-                      child: Icon(
-                        tab.icon,
-                        size: 25,
-                        color: isSelected
-                            ? Colors.white
-                            : theme.colorScheme.primary,
+                      child: Center(
+                        child: HugeIcon(
+                          icon: tab.icon,
+                          color: isSelected
+                              ? Colors.white
+                              : theme.colorScheme.primary,
+                          strokeWidth: 2,
+                        ),
                       ),
                     ),
                   ),
