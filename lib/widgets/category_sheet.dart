@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'category_list.dart';
 import 'clout_header.dart';
@@ -40,8 +41,8 @@ class CategorySheet extends StatelessWidget {
             count: categories.length,
             selected: isSelected,
             onTap: () => onCategorySelected(category),
-            trailing: Icon(
-              category.icon,
+            trailing: HugeIcon(
+              icon: category.icon,
               color: isSelected ? Colors.white : Colors.black,
             ),
             title: category.label,

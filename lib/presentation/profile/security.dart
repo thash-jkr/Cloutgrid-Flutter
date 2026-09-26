@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../../providers/auth/auth_notifier.dart';
 import '../../widgets/clout_header.dart';
@@ -115,7 +116,7 @@ class Security extends ConsumerWidget {
             SegmentedListItem(
               index: 0,
               count: 1,
-              leading: const Icon(Icons.lock_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedLocked),
               onTap: () => onNavigateToChangePassword(),
               title: 'Change Password',
             ),
@@ -125,7 +126,10 @@ class Security extends ConsumerWidget {
             SegmentedListItem(
               index: 0,
               count: 1,
-              leading: const Icon(Icons.delete_rounded, color: Colors.red),
+              leading: const HugeIcon(
+                icon: HugeIcons.strokeRoundedDelete02,
+                color: Colors.red,
+              ),
               onTap: () => _showDeleteDialog(context, ref),
               title: 'Delete Account',
               danger: true,

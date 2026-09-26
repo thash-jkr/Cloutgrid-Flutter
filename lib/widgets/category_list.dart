@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class CategoryList {
   final String value;
   final String label;
-  final IconData icon;
+  final dynamic icon; // was IconData — Hugeicons' icon data isn't IconData
 
   const CategoryList({
     required this.value,
@@ -18,105 +18,117 @@ class CategoryList {
     return "Choose a category";
   }
 
-  static IconData iconFor(String value) {
+  static dynamic iconFor(String value) {
     for (final option in allOptions) {
       if (option.value == value) return option.icon;
     }
-    return Icons.category_rounded;
+    return HugeIcons.strokeRoundedGrid; // fallback — VERIFY this name
   }
 
   static const List<CategoryList> allOptions = [
     CategoryList(
       value: 'art',
       label: 'Art and Photography',
-      icon: Icons.palette_rounded,
+      icon: HugeIcons.strokeRoundedPaintBoard, // VERIFY
     ),
     CategoryList(
       value: 'automotive',
       label: 'Automotive',
-      icon: Icons.directions_car_rounded,
+      icon: HugeIcons.strokeRoundedCar01, // VERIFY
     ),
     CategoryList(
       value: 'beauty',
       label: 'Beauty and Makeup',
-      icon: Icons.face_rounded,
+      icon: HugeIcons.strokeRoundedFaceId, // VERIFY — or strokeRoundedLipstick
     ),
     CategoryList(
       value: 'business',
       label: 'Business',
-      icon: Icons.business_center_rounded,
+      icon: HugeIcons.strokeRoundedBriefcase01, // VERIFY
     ),
     CategoryList(
       value: 'diversity',
       label: 'Diversity and Inclusion',
-      icon: Icons.diversity_3_rounded,
+      icon: HugeIcons.strokeRoundedUserGroup, // VERIFY
     ),
     CategoryList(
       value: 'education',
       label: 'Education',
-      icon: Icons.school_rounded,
+      icon: HugeIcons
+          .strokeRoundedGraduationScroll, // VERIFY — or strokeRoundedSchool01
     ),
     CategoryList(
       value: 'entertainment',
       label: 'Entertainment',
-      icon: Icons.theaters_rounded,
+      icon: HugeIcons.strokeRoundedTheater, // VERIFY — or strokeRoundedTicket01
     ),
     CategoryList(
       value: 'fashion',
       label: 'Fashion',
-      icon: Icons.checkroom_rounded,
+      icon: HugeIcons.strokeRoundedShirt01, // VERIFY — or strokeRoundedHanger
     ),
     CategoryList(
       value: 'finance',
       label: 'Finance',
-      icon: Icons.attach_money_rounded,
+      icon: HugeIcons
+          .strokeRoundedMoney03, // VERIFY — or strokeRoundedDollarCircle
     ),
     CategoryList(
       value: 'food',
       label: 'Food and Beverage',
-      icon: Icons.restaurant_rounded,
+      icon: HugeIcons.strokeRoundedRestaurant01, // VERIFY
     ),
     CategoryList(
       value: 'gaming',
       label: 'Gaming',
-      icon: Icons.sports_esports_rounded,
+      icon: HugeIcons.strokeRoundedGameController01, // VERIFY
     ),
     CategoryList(
       value: 'health',
       label: 'Health and Wellness',
-      icon: Icons.favorite_rounded,
+      icon: HugeIcons.strokeRoundedFavourite, // VERIFY — or strokeRoundedHealth
     ),
     CategoryList(
       value: 'home',
       label: 'Home and Gardening',
-      icon: Icons.yard_rounded,
+      icon: HugeIcons.strokeRoundedPlant02, // VERIFY — or strokeRoundedGarden
     ),
     CategoryList(
       value: 'outdoor',
       label: 'Outdoor and Nature',
-      icon: Icons.park_rounded,
+      icon: HugeIcons.strokeRoundedTree01, // VERIFY — or strokeRoundedForest
     ),
     CategoryList(
       value: 'parenting',
       label: 'Parenting and Family',
-      icon: Icons.family_restroom_rounded,
+      icon: HugeIcons.strokeRoundedHouseHeart, // VERIFY
     ),
-    CategoryList(value: 'pets', label: 'Pets', icon: Icons.pets_rounded),
+    CategoryList(
+      value: 'pets',
+      label: 'Pets',
+      icon: HugeIcons.strokeRoundedCat, // VERIFY — or strokeRoundedPaw
+    ),
     CategoryList(
       value: 'sports',
       label: 'Sports and Fitness',
-      icon: Icons.sports_basketball_rounded,
+      icon: HugeIcons
+          .strokeRoundedBicepsFlexed, // VERIFY — or strokeRoundedDumbbell01
     ),
     CategoryList(
       value: 'technology',
       label: 'Technology',
-      icon: Icons.computer_rounded,
+      icon: HugeIcons.strokeRoundedComputer, // VERIFY
     ),
-    CategoryList(value: 'travel', label: 'Travel', icon: Icons.flight_rounded),
+    CategoryList(
+      value: 'travel',
+      label: 'Travel',
+      icon: HugeIcons
+          .strokeRoundedAirplane01, // VERIFY — package docs confirm "AirplaneSeat" exists, this may differ
+    ),
     CategoryList(
       value: 'videography',
       label: 'Videography',
-      icon: Icons.videocam_rounded,
+      icon: HugeIcons.strokeRoundedVideo01, // VERIFY — or strokeRoundedCamera02
     ),
   ];
 }

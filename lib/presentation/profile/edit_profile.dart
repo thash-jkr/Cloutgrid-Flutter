@@ -5,6 +5,7 @@ import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../providers/auth/auth_notifier.dart';
@@ -126,7 +127,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
             ),
             actions: [
               HeaderAction(
-                icon: Icons.save_outlined,
+                icon: HugeIcons.strokeRoundedSave,
                 contentDescription: 'Save',
                 onClick: _handleSave,
               ),
@@ -143,56 +144,59 @@ class _EditProfileState extends ConsumerState<EditProfile> {
               children: [
                 const SizedBox(height: 10),
                 Center(
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      ClipOval(
-                        child: _selectedImageBytes != null
-                            ? Image.memory(
-                                _selectedImageBytes!,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : CachedNetworkImage(
-                                imageUrl: (user?.profilePhoto ?? ''),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => const Image(
-                                  image: AssetImage(
-                                    'assets/images/profile.png',
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Image(
-                                      image: AssetImage(
-                                        'assets/images/profile.png',
-                                      ),
+                  child: InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: _pickImage,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ClipOval(
+                          child: _selectedImageBytes != null
+                              ? Image.memory(
+                                  _selectedImageBytes!,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                )
+                              : CachedNetworkImage(
+                                  imageUrl: (user?.profilePhoto ?? ''),
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Image(
+                                    image: AssetImage(
+                                      'assets/images/profile.png',
                                     ),
-                              ),
-                      ),
-                      Positioned(
-                        bottom: -10,
-                        left: 0,
-                        right: 0,
-                        child: Center(
-                          child: Material(
-                            color: Colors.white,
-                            shape: const CircleBorder(),
-                            elevation: 2,
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: _pickImage,
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Image(
+                                        image: AssetImage(
+                                          'assets/images/profile.png',
+                                        ),
+                                      ),
+                                ),
+                        ),
+                        Positioned(
+                          bottom: -10,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Material(
+                              color: Colors.white,
+                              shape: const CircleBorder(),
+                              elevation: 2,
                               child: const Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Icon(Icons.edit_rounded, size: 15),
+                                child: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedEdit03,
+                                  size: 15,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 TextField(
@@ -227,6 +231,19 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                           labelText: 'Category',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
+                          ),
+                          suffixIconConstraints: const BoxConstraints(
+                            minWidth: 36,
+                            minHeight: 36,
+                          ),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(
+                              right: 12,
+                            ), // matches Material's typical trailing-icon inset
+                            child: HugeIcon(
+                              icon: CategoryList.iconFor(_category),
+                              size: 12,
+                            ),
                           ),
                         ),
                         child: Text(

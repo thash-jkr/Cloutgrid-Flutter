@@ -11,6 +11,7 @@ import 'package:cloutgrid_flutter/widgets/clout_header.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
@@ -212,12 +213,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         title: "@${user?.username ?? ""}",
         actions: [
           HeaderAction(
-            icon: Icons.edit_rounded,
+            icon: HugeIcons.strokeRoundedEditUser02,
             contentDescription: "Edit Profile",
             onClick: widget.onNavigateToEditProfile,
           ),
           HeaderAction(
-            icon: Icons.settings_rounded,
+            icon: HugeIcons.strokeRoundedSettings01,
             contentDescription: "Settings",
             onClick: widget.onNavigateToSettings,
           ),

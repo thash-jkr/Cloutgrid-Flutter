@@ -3,6 +3,7 @@ import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/auth/auth_notifier.dart';
@@ -56,7 +57,7 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 0,
               count: 4,
-              leading: const Icon(Icons.help_outline_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedHelpCircle),
               onTap: () => CloutAlert.show(
                 context,
                 title: "Need Help?",
@@ -71,8 +72,10 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 1,
               count: 4,
-              leading: const Icon(Icons.privacy_tip_rounded),
-              trailing: const Icon(Icons.open_in_new_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedShieldUser),
+              trailing: const HugeIcon(
+                icon: HugeIcons.strokeRoundedExternalLink,
+              ),
               onTap: () =>
                   _openUrl(context, 'https://cloutgrid.com/privacypolicy'),
               title: 'Privacy Policy',
@@ -81,8 +84,10 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 2,
               count: 4,
-              leading: const Icon(Icons.gavel_rounded),
-              trailing: const Icon(Icons.open_in_new_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedContracts),
+              trailing: const HugeIcon(
+                icon: HugeIcons.strokeRoundedExternalLink,
+              ),
               onTap: () => _openUrl(context, 'https://cloutgrid.com/eula'),
               title: "EULA",
             ),
@@ -90,7 +95,7 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 3,
               count: 4,
-              leading: const Icon(Icons.feedback_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedQuestion),
               onTap: () => CloutAlert.show(
                 context,
                 title: 'Feedback',
@@ -107,7 +112,7 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 0,
               count: 2,
-              leading: const Icon(Icons.security_rounded),
+              leading: const HugeIcon(icon: HugeIcons.strokeRoundedSecurity),
               onTap: onNavigateToSecurity,
               title: "Security",
             ),
@@ -115,7 +120,10 @@ class Settings extends ConsumerWidget {
             SegmentedListItem(
               index: 1,
               count: 2,
-              leading: const Icon(Icons.logout_rounded, color: Colors.red),
+              leading: const HugeIcon(
+                icon: HugeIcons.strokeRoundedLogoutSquare01,
+                color: Colors.red,
+              ),
               onTap: () => CloutAlert.show(
                 context,
                 title: 'Logout',
