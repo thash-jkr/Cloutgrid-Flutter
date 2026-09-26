@@ -155,9 +155,15 @@ class _InstagramState extends ConsumerState<Instagram> {
                         reach: integrationState.instagramPage?.reach ?? [],
                       ),
 
-                      InstagramMediaInsights(
-                        insights: integrationState.instagramPage!.mediaInsights,
-                      ),
+                      if (integrationState
+                          .instagramPage!
+                          .mediaInsights
+                          .isNotEmpty) ...[
+                        InstagramMediaInsights(
+                          insights:
+                              integrationState.instagramPage!.mediaInsights,
+                        ),
+                      ],
                     ],
 
                     InstagramMedia(igMedia: integrationState.instagramMedia),
