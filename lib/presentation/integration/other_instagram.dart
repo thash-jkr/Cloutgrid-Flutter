@@ -81,8 +81,19 @@ class _InstagramState extends ConsumerState<OtherInstagram> {
                       ),
 
                       ReachGraph(
-                        reach: integrationState.instagramPage?.reach ?? [],
+                        reach: integrationState.otherInstagramPage?.reach ?? [],
                       ),
+
+                      if (integrationState
+                          .otherInstagramPage!
+                          .mediaInsights
+                          .isNotEmpty) ...[
+                        InstagramMediaInsights(
+                          insights: integrationState
+                              .otherInstagramPage!
+                              .mediaInsights,
+                        ),
+                      ],
                     ],
 
                     InstagramMedia(
