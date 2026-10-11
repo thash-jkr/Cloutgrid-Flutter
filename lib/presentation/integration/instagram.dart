@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/app/network/api_config.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
+import 'package:cloutgrid_flutter/presentation/integration/insights_hero.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
+import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -132,7 +134,7 @@ class _InstagramState extends ConsumerState<Instagram> {
         ),
         child: user?.instagramConnected == true
             ? Column(
-                spacing: 15,
+                spacing: 30,
                 crossAxisAlignment: .start,
                 children: [
                   if ((integrationState.instagramPage == null ||
@@ -263,13 +265,35 @@ class InstagramInsights extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      spacing: 15,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text(
-            'Profile Insights',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+        GestureDetector(
+          child: Row(
+            mainAxisAlignment: .center,
+            spacing: 5,
+            children: [
+              Text(
+                'Profile Insights',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              ),
+              HugeIcon(
+                icon: HugeIcons.strokeRoundedInfo,
+                size: 17,
+                strokeWidth: 2,
+              ),
+            ],
           ),
+          onTap: () => {
+            cloutSheet(
+              context,
+              content: (_, _) => ProfileInsightsInfo(),
+              short: true,
+            ),
+          },
+        ),
+        Padding(
+          padding: .symmetric(horizontal: 15),
+          child: ProfileHero(insights: insights),
         ),
         GridView.builder(
           shrinkWrap: true,
@@ -363,9 +387,25 @@ class ReachGraph extends StatelessWidget {
       child: Column(
         spacing: 15,
         children: [
-          const Text(
-            "Reach",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          GestureDetector(
+            child: Row(
+              mainAxisAlignment: .center,
+              spacing: 5,
+              children: [
+                Text(
+                  'Reach over Time',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedInfo,
+                  size: 17,
+                  strokeWidth: 2,
+                ),
+              ],
+            ),
+            onTap: () => {
+              cloutSheet(context, content: (_, _) => ReachInfo(), short: true),
+            },
           ),
           reach.isEmpty
               ? CloutEmpty(type: .instagram, message: "No reach data!")
@@ -471,13 +511,31 @@ class InstagramMediaInsights extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      spacing: 15,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 5),
-          child: Text(
-            "Media Insights",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+        GestureDetector(
+          child: Row(
+            mainAxisAlignment: .center,
+            spacing: 5,
+            children: [
+              Text(
+                'Media Insights',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              ),
+              HugeIcon(
+                icon: HugeIcons.strokeRoundedInfo,
+                size: 17,
+                strokeWidth: 2,
+              ),
+            ],
           ),
+          onTap: () => {
+            cloutSheet(
+              context,
+              content: (_, _) => MediaInsightsInfo(),
+              short: true,
+            ),
+          },
         ),
         if (insights.isEmpty)
           Padding(
@@ -487,7 +545,11 @@ class InstagramMediaInsights extends StatelessWidget {
               style: const TextStyle(color: Colors.grey),
             ),
           )
-        else
+        else ...[
+          Padding(
+            padding: .symmetric(horizontal: 15),
+            child: MediaHero(insights: insights),
+          ),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -554,6 +616,7 @@ class InstagramMediaInsights extends StatelessWidget {
               );
             },
           ),
+        ],
       ],
     );
   }
