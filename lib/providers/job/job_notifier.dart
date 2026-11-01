@@ -45,10 +45,6 @@ class JobState {
   }
 }
 
-// NOTE: Kotlin's CollabManager also exposes `user`/`type` derived from
-// AuthRepository for convenience — not replicated here. Screens using this
-// notifier should read authProvider directly (same call as elsewhere in
-// this codebase) rather than duplicating that reference.
 @Riverpod(keepAlive: true)
 class JobNotifier extends _$JobNotifier {
   @override

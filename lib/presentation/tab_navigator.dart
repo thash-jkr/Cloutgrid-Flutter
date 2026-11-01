@@ -1,22 +1,22 @@
 import 'dart:typed_data';
 
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
+import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
+import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
 import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import './create/create_screen.dart';
 import './jobs/job_screen.dart';
 import './profile/profile_screen.dart';
-import './search/search_screen.dart';
 import './home/home_screen.dart';
 
 enum TabItem {
   home('Home', HugeIcons.strokeRoundedHome07),
-  search('Search', HugeIcons.strokeRoundedSearch01),
-  create('Create', HugeIcons.strokeRoundedPlusSignCircle),
+  notifications('Notifications', HugeIcons.strokeRoundedBell),
   jobs('Jobs', HugeIcons.strokeRoundedBriefcase01),
+  chats('Chats', HugeIcons.strokeRoundedBubbleChat),
   profile('Profile', HugeIcons.strokeRoundedUserCircle);
 
   final String title;
@@ -28,25 +28,35 @@ enum TabItem {
 class TabNavigator extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToSettings;
   final void Function(int id, bool other) onNavigateToPostDetail;
+  final void Function(String id, String username, String profilePhoto)
+  onNavigateToMessages;
   final VoidCallback onNavigateToEditProfile;
+  final void Function(
+    String title,
+    Map<String, int?> rates,
+    Future<void> Function(Map<String, int?> rates) onSave,
+  )
+  onNavigateToEditRates;
   final void Function(UserProfile user) onNavigateToOtherProfile;
   final void Function(Uint8List selectedImage) onNavigateToCreatePost;
   final void Function(int id) onNavigateToQuestions;
-  final void Function() onNavigateToConversations;
   final void Function() onNavigateToInstagram;
   final void Function() onNavigateToYouTube;
+  final void Function() onNavigateToTestScreen;
 
   const TabNavigator({
     super.key,
     required this.onNavigateToSettings,
     required this.onNavigateToPostDetail,
+    required this.onNavigateToMessages,
     required this.onNavigateToEditProfile,
+    required this.onNavigateToEditRates,
     required this.onNavigateToOtherProfile,
     required this.onNavigateToCreatePost,
     required this.onNavigateToQuestions,
-    required this.onNavigateToConversations,
     required this.onNavigateToInstagram,
     required this.onNavigateToYouTube,
+    required this.onNavigateToTestScreen,
   });
 
   @override
@@ -61,11 +71,7 @@ class _TabNavigatorState extends ConsumerState<TabNavigator> {
   TabItem _selectedTab = TabItem.home;
 
   void _selectTab(TabItem tab) {
-    _pageController.animateToPage(
-      tab.index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    _pageController.jumpToPage(tab.index);
   }
 
   @override
@@ -90,7 +96,7 @@ class _TabNavigatorState extends ConsumerState<TabNavigator> {
       extendBody: true,
       body: PageView(
         controller: _pageController,
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() => _selectedTab = TabItem.values[index]);
         },
@@ -98,23 +104,21 @@ class _TabNavigatorState extends ConsumerState<TabNavigator> {
           HomeScreen(
             onSelectTab: _selectTab,
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
-            onNavigateToConversations: widget.onNavigateToConversations,
+            onNavigateToTestScreen: widget.onNavigateToTestScreen,
           ),
-          SearchScreen(
-            onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
-            onSelectTab: _selectTab,
-          ),
-          CreateScreen(onNavigateToCreatePost: widget.onNavigateToCreatePost),
+          Notifications(),
           JobScreen(
             onNavigateToQuestions: widget.onNavigateToQuestions,
             onNavigateToOtherProfile: widget.onNavigateToOtherProfile,
           ),
+          Conversations(onNavigateToMessages: widget.onNavigateToMessages),
           ProfileScreen(
             onNavigateToSettings: widget.onNavigateToSettings,
             onNavigateToPostDetail: widget.onNavigateToPostDetail,
             onNavigateToEditProfile: widget.onNavigateToEditProfile,
             onNavigateToInstagram: widget.onNavigateToInstagram,
             onNavigateToYouTube: widget.onNavigateToYouTube,
+            onNavigateToEditRates: widget.onNavigateToEditRates,
           ),
         ],
       ),

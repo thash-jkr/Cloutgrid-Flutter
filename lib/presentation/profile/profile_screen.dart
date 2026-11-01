@@ -1,12 +1,10 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
-import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
+import 'package:cloutgrid_flutter/presentation/profile/rate_card.dart';
 import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
-import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +17,12 @@ class ProfileScreen extends ConsumerStatefulWidget {
   final VoidCallback onNavigateToEditProfile;
   final VoidCallback onNavigateToInstagram;
   final VoidCallback onNavigateToYouTube;
+  final void Function(
+    String title,
+    Map<String, int?> rates,
+    Future<void> Function(Map<String, int?> rates) onSave,
+  )
+  onNavigateToEditRates;
 
   const ProfileScreen({
     super.key,
@@ -27,6 +31,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
     required this.onNavigateToEditProfile,
     required this.onNavigateToInstagram,
     required this.onNavigateToYouTube,
+    required this.onNavigateToEditRates,
   });
 
   @override
@@ -38,7 +43,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   @override
   bool get wantKeepAlive => true;
 
-  ProfileTab _selectedTab = ProfileTab.posts;
+  // ProfileTab _selectedTab = ProfileTab.posts;
 
   UserProfile? get user => ref.read(authProvider).value?.user;
   IntegrationNotifier get integrationNotifier =>
@@ -71,18 +76,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         ref.read(deepLinkProvider.notifier).clearProfileAction();
       }
     });
-  }
-
-  void _onTabSelected(ProfileTab tab) {
-    if (tab.selectable) {
-      setState(() => _selectedTab = tab);
-    } else {
-      if (tab.label == "Instagram") {
-        widget.onNavigateToInstagram();
-      } else if (tab.label == "YouTube") {
-        widget.onNavigateToYouTube();
-      }
-    }
   }
 
   Future<void> _onRefresh() async {
@@ -140,52 +133,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     );
   }
 
-  List<Widget> _buildTabContent() {
-    final profile = ref.watch(profileProvider);
-
-    switch (_selectedTab) {
-      case ProfileTab.posts:
-        if (profile.posts.isEmpty) {
-          return [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: CloutEmpty(
-                type: .post,
-                message: 'No posts found',
-                isLoading: profile.isLoading,
-              ),
-            ),
-          ];
-        }
-        return [
-          PostGrid(
-            posts: profile.posts,
-            onPostTap: (post) {
-              widget.onNavigateToPostDetail(post.id, false);
-            },
-          ),
-        ];
-
-      case ProfileTab.collabs:
-        if (profile.collabs.isEmpty) {
-          return [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: CloutEmpty(
-                type: .post,
-                message: 'No collabs found',
-                isLoading: profile.isLoading,
-              ),
-            ),
-          ];
-        }
-        return [PostGrid(posts: profile.collabs, onPostTap: (post) => {})];
-
-      default:
-        return const [SliverToBoxAdapter(child: SizedBox.shrink())];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -230,32 +177,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         bottom: false,
         child: RefreshIndicator(
           onRefresh: _onRefresh,
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.only(
-                  top: kToolbarHeight + MediaQuery.of(context).padding.top,
-                  bottom: kBottomNavigationBarHeight + 70,
-                ),
-                sliver: SliverMainAxisGroup(
-                  slivers: [
-                    if (user != null) ...[
-                      SliverToBoxAdapter(child: ProfileHeader(user: user)),
-
-                      SliverToBoxAdapter(
-                        child: ProfileSelector(
-                          selectedTab: _selectedTab,
-                          onTabSelected: _onTabSelected,
-                          user: user,
-                        ),
-                      ),
-                    ],
-
-                    ..._buildTabContent(),
-                  ],
-                ),
-              ),
-            ],
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.only(
+              top: kToolbarHeight + MediaQuery.of(context).padding.top,
+              bottom: kBottomNavigationBarHeight + 70,
+            ),
+            child: Column(
+              spacing: 30,
+              children: [
+                if (user != null) ProfileHeader(user: user),
+                RateCard(onNavigateToEditRates: widget.onNavigateToEditRates),
+              ],
+            ),
           ),
         ),
       ),

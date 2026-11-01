@@ -1,16 +1,14 @@
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/presentation/integration/other_youtube.dart';
-import 'package:cloutgrid_flutter/presentation/profile/post_grid.dart';
+import 'package:cloutgrid_flutter/presentation/profile/brand_campaigns.dart';
 import 'package:cloutgrid_flutter/presentation/profile/profile_header.dart';
-import 'package:cloutgrid_flutter/presentation/profile/profile_selector.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
-import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class OtherProfile extends ConsumerStatefulWidget {
   final VoidCallback onNavigateBack;
@@ -18,6 +16,7 @@ class OtherProfile extends ConsumerStatefulWidget {
   final void Function(String username, bool isConnected)
   onNavigateToOtherInstagram;
   final UserProfile user;
+  final ValueChanged<int> onNavigateToQuestions;
 
   const OtherProfile({
     super.key,
@@ -25,6 +24,7 @@ class OtherProfile extends ConsumerStatefulWidget {
     required this.onNavigateToPostDetail,
     required this.onNavigateToOtherInstagram,
     required this.user,
+    required this.onNavigateToQuestions,
   });
 
   @override
@@ -32,8 +32,6 @@ class OtherProfile extends ConsumerStatefulWidget {
 }
 
 class _OtherProfileState extends ConsumerState<OtherProfile> {
-  ProfileTab _selectedTab = ProfileTab.posts;
-
   String get username => widget.user.username;
   String get type => widget.user.type;
 
@@ -61,33 +59,6 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
     super.dispose();
   }
 
-  void _onTabSelected(ProfileTab tab) {
-    if (tab.selectable) {
-      setState(() => _selectedTab = tab);
-    } else {
-      if (tab.label == "Instagram") {
-        widget.onNavigateToOtherInstagram(
-          username,
-          widget.user.instagramConnected == true,
-        );
-      } else if (tab.label == "YouTube") {
-        _openYouTube();
-      }
-    }
-  }
-
-  void _openYouTube() {
-    cloutSheet(
-      context,
-      content: (context, scrollController) => OtherYoutube(
-        username: username,
-        isConnected: widget.user.youtubeConnected == true,
-        scrollController: scrollController,
-      ),
-      short: widget.user.youtubeConnected != true,
-    );
-  }
-
   void _handleBlock(bool block) async {
     try {
       await ref.read(profileProvider.notifier).handleBlock(username, block);
@@ -96,62 +67,11 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
 
       showToast(
         context,
-        message: "${block ? "BLocked" : "Unblock"}ed @$username",
+        message: "${block ? "Blocked" : "Unblock"}ed @$username",
       );
     } catch (e) {
       if (!mounted) return;
       showToast(context, message: "Something went wrong: $e", isSuccess: false);
-    }
-  }
-
-  List<Widget> _buildTabContent() {
-    final profile = ref.watch(profileProvider);
-
-    switch (_selectedTab) {
-      case ProfileTab.posts:
-        if (profile.otherPosts.isEmpty) {
-          return [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: CloutEmpty(
-                type: .post,
-                message: 'No posts found',
-                isLoading: profile.isLoading,
-              ),
-            ),
-          ];
-        }
-        return [
-          PostGrid(
-            posts: profile.otherPosts,
-            onPostTap: (post) {
-              widget.onNavigateToPostDetail(post.id, true);
-            },
-          ),
-        ];
-
-      case ProfileTab.collabs:
-        if (profile.otherCollabs.isEmpty) {
-          return [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: CloutEmpty(
-                type: .post,
-                message: 'No collabs found',
-                isLoading: profile.isLoading,
-              ),
-            ),
-          ];
-        }
-        return [
-          PostGrid(
-            posts: profile.otherCollabs,
-            onPostTap: (post) => {widget.onNavigateToPostDetail(post.id, true)},
-          ),
-        ];
-
-      default:
-        return const [SliverToBoxAdapter(child: SizedBox.shrink())];
     }
   }
 
@@ -160,7 +80,7 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
     final profileState = ref.watch(profileProvider);
 
     final UserProfile? user = profileState.otherProfile;
-    bool isBlocked = user != null && user.isBlocking == true;
+    // bool isBlocked = user != null && user.isBlocking == true;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -175,26 +95,7 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
         actions: user != null
             ? [
                 HeaderAction(
-                  icon: user.isFollowing == true
-                      ? Icons.person_remove_rounded
-                      : Icons.person_add_alt_rounded,
-                  contentDescription: "follow",
-                  onClick: () => user.isFollowing == true
-                      ? CloutAlert.show(
-                          context,
-                          title: "Unfollow @$username?",
-                          body: "Do you want to unfollow @$username?",
-                          onSubmit: (_) => ref
-                              .watch(profileProvider.notifier)
-                              .handleFollow(user.username, false),
-                        )
-                      : ref
-                            .watch(profileProvider.notifier)
-                            .handleFollow(user.username, true),
-                  disabled: (user.isBlocker == true || user.isBlocking == true),
-                ),
-                HeaderAction(
-                  icon: Icons.menu_rounded,
+                  icon: HugeIcons.strokeRoundedEllipsis,
                   contentDescription: "Open menu",
                   menuItems: [
                     HeaderMenuItem(
@@ -224,18 +125,18 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
                         },
                       ),
                     ),
-                    HeaderMenuItem(
-                      title: "${isBlocked ? "Unblock" : "Block"} @$username",
-                      icon: Icons.block_rounded,
-                      onClick: () => CloutAlert.show(
-                        context,
-                        title: '${isBlocked ? "Unblock" : "Block"} @$username?',
-                        body:
-                            'Do you want to ${isBlocked ? "Unblock" : "Block"} @$username?',
-                        hasTextField: false,
-                        onSubmit: (_) => _handleBlock(isBlocked == false),
-                      ),
-                    ),
+                    // HeaderMenuItem(
+                    //   title: "${isBlocked ? "Unblock" : "Block"} @$username",
+                    //   icon: Icons.block_rounded,
+                    //   onClick: () => CloutAlert.show(
+                    //     context,
+                    //     title: '${isBlocked ? "Unblock" : "Block"} @$username?',
+                    //     body:
+                    //         'Do you want to ${isBlocked ? "Unblock" : "Block"} @$username?',
+                    //     hasTextField: false,
+                    //     onSubmit: (_) => _handleBlock(isBlocked == false),
+                    //   ),
+                    // ),
                   ],
                 ),
               ]
@@ -244,51 +145,40 @@ class _OtherProfileState extends ConsumerState<OtherProfile> {
       body: SafeArea(
         top: false,
         bottom: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: EdgeInsets.only(
-                top: kToolbarHeight + MediaQuery.of(context).padding.top,
-                bottom: kBottomNavigationBarHeight + 70,
-              ),
-              sliver: SliverMainAxisGroup(
-                slivers: [
-                  if (user != null) ...[
-                    if (user.isBlocker == false &&
-                        user.isBlocking == false) ...[
-                      SliverToBoxAdapter(child: ProfileHeader(user: user)),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final topPad = MediaQuery.paddingOf(context).top;
+            const bottomPad = kBottomNavigationBarHeight + 70;
 
-                      SliverToBoxAdapter(
-                        child: ProfileSelector(
-                          selectedTab: _selectedTab,
-                          onTabSelected: _onTabSelected,
-                          user: user,
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(top: topPad, bottom: bottomPad),
+              child: user == null
+                  ? CloutEmpty(
+                      type: .profile,
+                      message: "Loading...",
+                      isLoading: profileState.isLoading,
+                    )
+                  : (user.isBlocker == true || user.isBlocking == true)
+                  ? SizedBox(
+                      // fill the visible area, like SliverFillRemaining
+                      height: constraints.maxHeight - topPad - bottomPad,
+                      child: BlockedProfile(
+                        isBlocker: user.isBlocking == true,
+                        onBlockCLick: _handleBlock,
+                      ),
+                    )
+                  : Column(
+                      spacing: 30,
+                      children: [
+                        ProfileHeader(user: user),
+                        BrandCampaigns(
+                          username: user.username,
+                          onNavigateToQuestions: widget.onNavigateToQuestions,
                         ),
-                      ),
-
-                      ..._buildTabContent(),
-                    ] else ...[
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: BlockedProfile(
-                          isBlocker: user.isBlocking == true,
-                          onBlockCLick: _handleBlock,
-                        ),
-                      ),
-                    ],
-                  ] else ...[
-                    SliverToBoxAdapter(
-                      child: CloutEmpty(
-                        type: .profile,
-                        message: "Loading...",
-                        isLoading: profileState.isLoading,
-                      ),
+                      ],
                     ),
-                  ],
-                ],
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

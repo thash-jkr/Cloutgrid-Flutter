@@ -13,11 +13,13 @@ import 'package:cloutgrid_flutter/presentation/integration/youtube.dart';
 import 'package:cloutgrid_flutter/presentation/jobs/questions.dart';
 import 'package:cloutgrid_flutter/presentation/profile/change_password.dart';
 import 'package:cloutgrid_flutter/presentation/profile/edit_profile.dart';
+import 'package:cloutgrid_flutter/presentation/profile/edit_rates.dart';
 import 'package:cloutgrid_flutter/presentation/profile/other_profile.dart';
 import 'package:cloutgrid_flutter/presentation/profile/post_detail.dart';
 import 'package:cloutgrid_flutter/presentation/profile/security.dart';
 import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
 import 'package:cloutgrid_flutter/presentation/tab_navigator.dart';
+import 'package:cloutgrid_flutter/widgets/clout_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,13 @@ import '../../presentation/auth/landing_screen.dart';
 import '../../presentation/auth/login_screen.dart';
 
 part 'router.g.dart';
+
+class EditRatesArgs {
+  final Map<String, int?> rates;
+  final Future<void> Function(Map<String, int?> rates) onSave;
+
+  const EditRatesArgs({required this.rates, required this.onSave});
+}
 
 @TypedGoRoute<LandingRoute>(path: '/')
 class LandingRoute extends GoRouteData with $LandingRoute {
@@ -99,15 +108,38 @@ class TabsRoute extends GoRouteData with $TabsRoute {
     onNavigateToPostDetail: (int id, bool other) =>
         PostDetailRoute(id: id, other: other).push(context),
     onNavigateToEditProfile: () => EditProfileRoute().push(context),
+    onNavigateToEditRates:
+        (
+          String title,
+          Map<String, int?> rates,
+          Future<void> Function(Map<String, int?> rates) onSave,
+        ) => EditRatesRoute(
+          title: title,
+          $extra: EditRatesArgs(rates: rates, onSave: onSave),
+        ).push(context),
     onNavigateToOtherProfile: (UserProfile user) =>
         OtherProfileRoute($extra: user).push(context),
     onNavigateToCreatePost: (Uint8List bytes) =>
         CreatePostRoute($extra: bytes).push(context),
     onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
-    onNavigateToConversations: () => ConversationsRoute().push(context),
     onNavigateToInstagram: () => InstagramRoute().push(context),
     onNavigateToYouTube: () => YouTubeRoute().push(context),
+    onNavigateToTestScreen: () => TestRoute().push(context),
+    onNavigateToMessages: (String id, String username, String profilePhoto) =>
+        MessagesRoute(
+          id: id,
+          username: username,
+          profilePhoto: profilePhoto,
+        ).push(context),
   );
+}
+
+@TypedGoRoute<TestRoute>(path: '/test')
+class TestRoute extends GoRouteData with $TestRoute {
+  const TestRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Test();
 }
 
 @TypedGoRoute<ConversationsRoute>(path: '/conversations')
@@ -116,7 +148,6 @@ class ConversationsRoute extends GoRouteData with $ConversationsRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => Conversations(
-    onNavigateBack: () => context.pop(),
     onNavigateToMessages: (String id, String username, String profilePhoto) =>
         MessagesRoute(
           id: id,
@@ -199,6 +230,22 @@ class EditProfileRoute extends GoRouteData with $EditProfileRoute {
       EditProfile(onNavigateBack: () => context.pop());
 }
 
+@TypedGoRoute<EditRatesRoute>(path: "/edit-rates")
+class EditRatesRoute extends GoRouteData with $EditRatesRoute {
+  final String title;
+  final EditRatesArgs $extra;
+
+  const EditRatesRoute({required this.title, required this.$extra});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => EditRates(
+    title: title,
+    rates: $extra.rates,
+    onSave: $extra.onSave,
+    onNavigateBack: () => context.pop(),
+  );
+}
+
 @TypedGoRoute<OtherProfileRoute>(path: '/other-profile')
 class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
   final UserProfile $extra;
@@ -215,6 +262,8 @@ class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
           username: username,
           isConnected: isConnected,
         ).push(context),
+    onNavigateToQuestions: (int id) => QuestionsRoute(id: id).push(context),
+
     user: $extra,
   );
 }
@@ -222,8 +271,7 @@ class OtherProfileRoute extends GoRouteData with $OtherProfileRoute {
 @TypedGoRoute<InstagramRoute>(path: "/instagram")
 class InstagramRoute extends GoRouteData with $InstagramRoute {
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      Instagram(onNavigateBack: () => context.pop());
+  Widget build(BuildContext context, GoRouterState state) => Instagram();
 }
 
 @TypedGoRoute<OtherInstagramRoute>(path: "/other-instagram")

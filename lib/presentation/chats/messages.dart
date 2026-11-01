@@ -84,66 +84,78 @@ class _MessagesState extends ConsumerState<Messages> {
     final messages = chatState.messages;
     final user = ref.watch(authProvider.select((s) => s.value?.user));
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CloutHeader(
-        title: '@${widget.username}',
-        icon: HeaderAction(
-          icon: Icons.arrow_back,
-          contentDescription: 'back button',
-          onClick: widget.onNavigateBack,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset('assets/backgrounds/chat.jpg', fit: BoxFit.cover),
         ),
-      ),
-      body: messages.isEmpty
-          ? Padding(
-              padding: EdgeInsets.fromLTRB(
-                15,
-                kToolbarHeight + topInset,
-                15,
-                bottomInset + 75,
-              ),
-              child: CloutEmpty(
-                type: .chat,
-                message: "loading",
-                isLoading: chatState.isLoading,
-              ),
-            )
-          : Stack(
-              children: [
-                ListView.builder(
-                  controller: _scrollController,
-                  reverse: true,
+        Positioned.fill(
+          child: ColoredBox(color: Colors.white.withValues(alpha: 0.7)),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          extendBodyBehindAppBar: true,
+          appBar: CloutHeader(
+            title: '@${widget.username}',
+            icon: HeaderAction(
+              icon: Icons.arrow_back,
+              contentDescription: 'back button',
+              onClick: widget.onNavigateBack,
+            ),
+          ),
+          body: messages.isEmpty
+              ? Padding(
                   padding: EdgeInsets.fromLTRB(
                     15,
                     kToolbarHeight + topInset,
                     15,
                     bottomInset + 75,
                   ),
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message = messages[index];
-                    return _ChatRow(
-                      content: message.content,
-                      date: timeAgo(message.createdAt),
-                      isSender: message.sender == user?.id,
-                      profilePhoto: widget.profilePhoto,
-                    );
-                  },
-                ),
-                Positioned(
-                  left: 15,
-                  right: 15,
-                  bottom: MediaQuery.of(context).viewInsets.bottom > 0
-                      ? 15
-                      : MediaQuery.of(context).padding.bottom,
-                  child: CloutInput(
-                    onSend: (text) =>
-                        ref.read(chatProvider.notifier).sendLiveMessage(text),
-                    avatarUrl: user?.profilePhoto,
+                  child: CloutEmpty(
+                    type: .chat,
+                    message: "loading",
+                    isLoading: chatState.isLoading,
                   ),
+                )
+              : Stack(
+                  children: [
+                    ListView.builder(
+                      controller: _scrollController,
+                      reverse: true,
+                      padding: EdgeInsets.fromLTRB(
+                        15,
+                        kToolbarHeight + topInset,
+                        15,
+                        bottomInset + 75,
+                      ),
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        return _ChatRow(
+                          content: message.content,
+                          date: timeAgo(message.createdAt),
+                          isSender: message.sender == user?.id,
+                          profilePhoto: widget.profilePhoto,
+                        );
+                      },
+                    ),
+                    Positioned(
+                      left: 15,
+                      right: 15,
+                      bottom: MediaQuery.of(context).viewInsets.bottom > 0
+                          ? 15
+                          : MediaQuery.of(context).padding.bottom,
+                      child: CloutInput(
+                        onSend: (text) => ref
+                            .read(chatProvider.notifier)
+                            .sendLiveMessage(text),
+                        avatarUrl: user?.profilePhoto,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+        ),
+      ],
     );
   }
 }
@@ -215,7 +227,7 @@ class _ChatRow extends StatelessWidget {
 
                   Text(
                     date,
-                    style: const TextStyle(color: Colors.grey, fontSize: 10),
+                    style: const TextStyle(color: Colors.black38, fontSize: 10),
                   ),
                 ],
               ),

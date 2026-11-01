@@ -10,6 +10,16 @@ import '../../providers/auth/auth_notifier.dart';
 import '../../widgets/clout_header.dart';
 import '../../widgets/segmented_list.dart';
 
+Future<void> openUrl(BuildContext context, String url) async {
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } else {
+    if (!context.mounted) return;
+    showToast(context, message: "Failed to open $url", isSuccess: false);
+  }
+}
+
 class Settings extends ConsumerWidget {
   final VoidCallback onNavigateBack;
   final VoidCallback onNavigateToSecurity;
@@ -19,16 +29,6 @@ class Settings extends ConsumerWidget {
     required this.onNavigateBack,
     required this.onNavigateToSecurity,
   });
-
-  Future<void> _openUrl(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      if (!context.mounted) return;
-      showToast(context, message: "Failed to open $url", isSuccess: false);
-    }
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,7 +77,7 @@ class Settings extends ConsumerWidget {
                 icon: HugeIcons.strokeRoundedExternalLink,
               ),
               onTap: () =>
-                  _openUrl(context, 'https://cloutgrid.com/privacypolicy'),
+                  openUrl(context, 'https://cloutgrid.com/privacypolicy'),
               title: 'Privacy Policy',
             ),
 
@@ -88,7 +88,7 @@ class Settings extends ConsumerWidget {
               trailing: const HugeIcon(
                 icon: HugeIcons.strokeRoundedExternalLink,
               ),
-              onTap: () => _openUrl(context, 'https://cloutgrid.com/eula'),
+              onTap: () => openUrl(context, 'https://cloutgrid.com/eula'),
               title: "EULA",
             ),
 

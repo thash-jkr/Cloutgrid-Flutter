@@ -8,6 +8,7 @@ Future<void> cloutSheet(
   )
   content,
   bool short = false,
+  bool shorter = false,
 }) {
   final topInset = MediaQuery.of(context).padding.top;
 
@@ -21,6 +22,8 @@ Future<void> cloutSheet(
     constraints: BoxConstraints(
       maxHeight: short
           ? MediaQuery.of(context).size.height / 2
+          : shorter
+          ? MediaQuery.of(context).size.height / 4
           : MediaQuery.of(context).size.height - topInset,
     ),
     builder: (context) => DraggableScrollableSheet(

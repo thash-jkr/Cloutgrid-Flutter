@@ -32,14 +32,23 @@ class ProfileHeader extends StatelessWidget {
             ),
           ),
 
-          Text(
-            user.name,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
+          Column(
+            crossAxisAlignment: .start,
+            spacing: 0,
+            children: [
+              Text(
+                user.name,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-          Text(
-            user.bio,
-            style: TextStyle(fontSize: 14, color: colorScheme.onSurface),
+              Text(
+                user.bio,
+                style: TextStyle(fontSize: 14, color: colorScheme.onSurface),
+              ),
+            ],
           ),
 
           Row(
@@ -77,58 +86,8 @@ class ProfileHeader extends StatelessWidget {
               ],
             ],
           ),
-
-          Row(
-            spacing: 10,
-            children: [
-              _StatItem(value: '${user.followersCount}', label: 'Followers'),
-              Text(
-                '•',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-                ),
-              ),
-              _StatItem(value: '${user.followingCount}', label: 'Following'),
-            ],
-          ),
         ],
       ),
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  final String value;
-  final String label;
-
-  const _StatItem({required this.value, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 13, // Matches standard iOS .footnote metrics
-            fontWeight: FontWeight.w600,
-            color: colorScheme.onSurface,
-          ),
-        ),
-        const SizedBox(width: 5),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 13,
-            color: colorScheme
-                .onSurfaceVariant, // Matches iOS .secondary style token
-          ),
-        ),
-      ],
     );
   }
 }

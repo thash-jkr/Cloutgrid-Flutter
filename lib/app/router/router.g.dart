@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
   $loginRoute,
   $resetPasswordRoute,
   $tabsRoute,
+  $testRoute,
   $conversationsRoute,
   $messagesRoute,
   $settingsRoute,
@@ -20,6 +21,7 @@ List<RouteBase> get $appRoutes => [
   $changePasswordRoute,
   $postDetailRoute,
   $editProfileRoute,
+  $editRatesRoute,
   $otherProfileRoute,
   $instagramRoute,
   $otherInstagramRoute,
@@ -176,6 +178,32 @@ mixin $TabsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/tabs');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $testRoute => GoRouteData.$route(
+  path: '/test',
+  hasOverriddenOnExit: false,
+  factory: $TestRoute._fromState,
+);
+
+mixin $TestRoute on GoRouteData {
+  static TestRoute _fromState(GoRouterState state) => const TestRoute();
+
+  @override
+  String get location => GoRouteData.$location('/test');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -406,6 +434,40 @@ mixin $EditProfileRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $editRatesRoute => GoRouteData.$route(
+  path: '/edit-rates',
+  hasOverriddenOnExit: false,
+  factory: $EditRatesRoute._fromState,
+);
+
+mixin $EditRatesRoute on GoRouteData {
+  static EditRatesRoute _fromState(GoRouterState state) => EditRatesRoute(
+    title: state.uri.queryParameters['title']!,
+    $extra: state.extra as EditRatesArgs,
+  );
+
+  EditRatesRoute get _self => this as EditRatesRoute;
+
+  @override
+  String get location =>
+      GoRouteData.$location('/edit-rates', queryParams: {'title': _self.title});
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $otherProfileRoute => GoRouteData.$route(

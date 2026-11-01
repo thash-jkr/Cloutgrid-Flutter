@@ -223,3 +223,54 @@ _YoutubeMediaResponse _$YoutubeMediaResponseFromJson(
 Map<String, dynamic> _$YoutubeMediaResponseToJson(
   _YoutubeMediaResponse instance,
 ) => <String, dynamic>{'media_data': instance.data};
+
+_InstagramRatesModel _$InstagramRatesModelFromJson(Map<String, dynamic> json) =>
+    _InstagramRatesModel(
+      post: (json['post'] as num?)?.toInt(),
+      story: (json['story'] as num?)?.toInt(),
+      reel: (json['reel'] as num?)?.toInt(),
+      carousel: (json['carousel'] as num?)?.toInt(),
+      live: (json['live'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$InstagramRatesModelToJson(
+  _InstagramRatesModel instance,
+) => <String, dynamic>{
+  'post': instance.post,
+  'story': instance.story,
+  'reel': instance.reel,
+  'carousel': instance.carousel,
+  'live': instance.live,
+};
+
+_YouTubeRatesModel _$YouTubeRatesModelFromJson(Map<String, dynamic> json) =>
+    _YouTubeRatesModel(
+      post: (json['post'] as num?)?.toInt(),
+      shorts: (json['shorts'] as num?)?.toInt(),
+      video: (json['video'] as num?)?.toInt(),
+      live: (json['live'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$YouTubeRatesModelToJson(_YouTubeRatesModel instance) =>
+    <String, dynamic>{
+      'post': instance.post,
+      'shorts': instance.shorts,
+      'video': instance.video,
+      'live': instance.live,
+    };
+
+_RatesResponse _$RatesResponseFromJson(Map<String, dynamic> json) =>
+    _RatesResponse(
+      instagram: InstagramRatesModel.fromJson(
+        json['instagram'] as Map<String, dynamic>,
+      ),
+      youtube: YouTubeRatesModel.fromJson(
+        json['youtube'] as Map<String, dynamic>,
+      ),
+    );
+
+Map<String, dynamic> _$RatesResponseToJson(_RatesResponse instance) =>
+    <String, dynamic>{
+      'instagram': instance.instagram,
+      'youtube': instance.youtube,
+    };

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
-import 'package:cloutgrid_flutter/widgets/clout_alert.dart';
 import 'package:cloutgrid_flutter/widgets/clout_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,14 +9,11 @@ import '../../app/network/api_config.dart';
 import '../../models/integration/integration_models.dart';
 import '../../providers/auth/auth_notifier.dart';
 import '../../providers/integration/integration_notifier.dart';
-import '../../widgets/clout_header.dart';
 import '../../widgets/clout_toast.dart';
 import 'integration_constants.dart';
 
 class Youtube extends ConsumerStatefulWidget {
-  final ScrollController? scrollController;
-
-  const Youtube({super.key, this.scrollController});
+  const Youtube({super.key});
 
   @override
   ConsumerState<Youtube> createState() => _YoutubeState();
@@ -35,43 +31,43 @@ class _YoutubeState extends ConsumerState<Youtube> {
     integrationNotifier.loadOwnYoutubeMedia(username);
   }
 
-  Future<void> _handleSync() async {
-    if (user == null) return;
-    final username = user!.username;
+  // Future<void> _handleSync() async {
+  //   if (user == null) return;
+  //   final username = user!.username;
 
-    await showAsyncToast(
-      context,
-      loadingMessage: 'Syncing YouTube...',
-      successMessage: 'YouTube synced',
-      task: () async {
-        await Future.wait([
-          integrationNotifier.fetchYoutubeChannel(),
-          integrationNotifier.fetchYoutubeMedia(),
-        ]);
-        await Future.wait([
-          integrationNotifier.loadOwnYoutubeChannel(username),
-          integrationNotifier.loadOwnYoutubeMedia(username),
-        ]);
-      },
-    );
-  }
+  //   await showAsyncToast(
+  //     context,
+  //     loadingMessage: 'Syncing YouTube...',
+  //     successMessage: 'YouTube synced',
+  //     task: () async {
+  //       await Future.wait([
+  //         integrationNotifier.fetchYoutubeChannel(),
+  //         integrationNotifier.fetchYoutubeMedia(),
+  //       ]);
+  //       await Future.wait([
+  //         integrationNotifier.loadOwnYoutubeChannel(username),
+  //         integrationNotifier.loadOwnYoutubeMedia(username),
+  //       ]);
+  //     },
+  //   );
+  // }
 
-  Future<void> _showDisconnectAlert() async {
-    CloutAlert.show(
-      context,
-      title: "Disconnect YouTube",
-      body:
-          "Are you sure you want to disconnect YouTube integration and purge all your data with us?",
-      onSubmit: (_) async => await showAsyncToast(
-        context,
-        loadingMessage: 'Disconnecting...',
-        successMessage: 'Disconnected',
-        task: () async {
-          await ref.read(integrationProvider.notifier).disconnectYoutube();
-        },
-      ),
-    );
-  }
+  // Future<void> _showDisconnectAlert() async {
+  //   CloutAlert.show(
+  //     context,
+  //     title: "Disconnect YouTube",
+  //     body:
+  //         "Are you sure you want to disconnect YouTube integration and purge all your data with us?",
+  //     onSubmit: (_) async => await showAsyncToast(
+  //       context,
+  //       loadingMessage: 'Disconnecting...',
+  //       successMessage: 'Disconnected',
+  //       task: () async {
+  //         await ref.read(integrationProvider.notifier).disconnectYoutube();
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,59 +82,31 @@ class _YoutubeState extends ConsumerState<Youtube> {
       _loadTriggered = false;
     }
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CloutHeader(
-        title: 'YouTube Analytics 📈',
-        actions: user?.youtubeConnected == true
-            ? [
-                HeaderAction(
-                  icon: Icons.menu,
-                  contentDescription: 'Menu',
-                  menuItems: [
-                    HeaderMenuItem(
-                      title: 'Sync Profile',
-                      icon: Icons.sync_rounded,
-                      onClick: () => _handleSync(),
-                    ),
-                    HeaderMenuItem(
-                      title: 'Disconnect',
-                      icon: Icons.delete_outline,
-                      onClick: _showDisconnectAlert,
-                    ),
-                  ],
-                ),
-              ]
-            : [],
-        isSheet: true,
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top,
+        bottom: 100,
       ),
-      body: SingleChildScrollView(
-        controller: widget.scrollController,
-        padding: EdgeInsets.only(
-          top: isConnected ? 0 : kToolbarHeight,
-          bottom: 100,
-        ),
-        child: isConnected
-            ? Column(
-                children: [
-                  if ((integrationState.youtubeChannel == null ||
-                          integrationState.youtubeMedia.isEmpty) &&
-                      integrationState.isLoading) ...[
-                    const CloutEmpty(
-                      type: EmptyType.youtube,
-                      message: 'Loading...',
-                      isLoading: true,
-                    ),
-                  ] else ...[
-                    if (integrationState.youtubeChannel != null) ...[
-                      ChannelDetail(channel: integrationState.youtubeChannel!),
-                      YoutubeMediaRow(media: integrationState.youtubeMedia),
-                    ],
+      child: isConnected
+          ? Column(
+              children: [
+                if ((integrationState.youtubeChannel == null ||
+                        integrationState.youtubeMedia.isEmpty) &&
+                    integrationState.isLoading) ...[
+                  const CloutEmpty(
+                    type: EmptyType.youtube,
+                    message: 'Loading...',
+                    isLoading: true,
+                  ),
+                ] else ...[
+                  if (integrationState.youtubeChannel != null) ...[
+                    ChannelDetail(channel: integrationState.youtubeChannel!),
+                    YoutubeMediaRow(media: integrationState.youtubeMedia),
                   ],
                 ],
-              )
-            : const _NotConnected(),
-      ),
+              ],
+            )
+          : const _NotConnected(),
     );
   }
 }
@@ -372,6 +340,11 @@ class _NotConnected extends ConsumerWidget {
     return Column(
       spacing: 15,
       children: [
+        Text(
+          "YouTube Analytics 📈",
+          style: TextStyle(fontSize: 20, fontWeight: .bold),
+        ),
+
         FilledButton(
           onPressed: () => _openUrl(
             context,

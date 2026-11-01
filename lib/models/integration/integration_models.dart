@@ -187,3 +187,48 @@ abstract class YoutubeMediaResponse with _$YoutubeMediaResponse {
   factory YoutubeMediaResponse.fromJson(Map<String, dynamic> json) =>
       _$YoutubeMediaResponseFromJson(json);
 }
+
+@freezed
+abstract class InstagramRatesModel with _$InstagramRatesModel {
+  const factory InstagramRatesModel({
+    int? post,
+    int? story,
+    int? reel,
+    int? carousel,
+    int? live,
+  }) = _InstagramRatesModel;
+
+  factory InstagramRatesModel.fromJson(Map<String, dynamic> json) =>
+      _$InstagramRatesModelFromJson(json);
+}
+
+@freezed
+abstract class YouTubeRatesModel with _$YouTubeRatesModel {
+  const factory YouTubeRatesModel({
+    int? post,
+    int? shorts,
+    int? video,
+    int? live,
+  }) = _YouTubeRatesModel;
+
+  factory YouTubeRatesModel.fromJson(Map<String, dynamic> json) =>
+      _$YouTubeRatesModelFromJson(json);
+}
+
+@freezed
+abstract class RatesResponse with _$RatesResponse {
+  const factory RatesResponse({
+    @JsonKey(name: 'instagram') required InstagramRatesModel instagram,
+    @JsonKey(name: 'youtube') required YouTubeRatesModel youtube,
+  }) = _RatesResponse;
+
+  factory RatesResponse.fromJson(Map<String, dynamic> json) =>
+      _$RatesResponseFromJson(json);
+}
+
+extension RatesMapX on Map<String, dynamic> {
+  Map<String, int?> toDeliverables() => {
+    for (final e in entries)
+      e.key[0].toUpperCase() + e.key.substring(1): e.value as int?,
+  };
+}

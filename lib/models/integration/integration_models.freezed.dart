@@ -3362,4 +3362,853 @@ as List<YoutubeMediaModel>,
 
 }
 
+
+/// @nodoc
+mixin _$InstagramRatesModel {
+
+ int? get post; int? get story; int? get reel; int? get carousel; int? get live;
+/// Create a copy of InstagramRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InstagramRatesModelCopyWith<InstagramRatesModel> get copyWith => _$InstagramRatesModelCopyWithImpl<InstagramRatesModel>(this as InstagramRatesModel, _$identity);
+
+  /// Serializes this InstagramRatesModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InstagramRatesModel&&(identical(other.post, post) || other.post == post)&&(identical(other.story, story) || other.story == story)&&(identical(other.reel, reel) || other.reel == reel)&&(identical(other.carousel, carousel) || other.carousel == carousel)&&(identical(other.live, live) || other.live == live));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,post,story,reel,carousel,live);
+
+@override
+String toString() {
+  return 'InstagramRatesModel(post: $post, story: $story, reel: $reel, carousel: $carousel, live: $live)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $InstagramRatesModelCopyWith<$Res>  {
+  factory $InstagramRatesModelCopyWith(InstagramRatesModel value, $Res Function(InstagramRatesModel) _then) = _$InstagramRatesModelCopyWithImpl;
+@useResult
+$Res call({
+ int? post, int? story, int? reel, int? carousel, int? live
+});
+
+
+
+
+}
+/// @nodoc
+class _$InstagramRatesModelCopyWithImpl<$Res>
+    implements $InstagramRatesModelCopyWith<$Res> {
+  _$InstagramRatesModelCopyWithImpl(this._self, this._then);
+
+  final InstagramRatesModel _self;
+  final $Res Function(InstagramRatesModel) _then;
+
+/// Create a copy of InstagramRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? post = freezed,Object? story = freezed,Object? reel = freezed,Object? carousel = freezed,Object? live = freezed,}) {
+  return _then(_self.copyWith(
+post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as int?,story: freezed == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
+as int?,reel: freezed == reel ? _self.reel : reel // ignore: cast_nullable_to_non_nullable
+as int?,carousel: freezed == carousel ? _self.carousel : carousel // ignore: cast_nullable_to_non_nullable
+as int?,live: freezed == live ? _self.live : live // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [InstagramRatesModel].
+extension InstagramRatesModelPatterns on InstagramRatesModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InstagramRatesModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InstagramRatesModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InstagramRatesModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _InstagramRatesModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InstagramRatesModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InstagramRatesModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? post,  int? story,  int? reel,  int? carousel,  int? live)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InstagramRatesModel() when $default != null:
+return $default(_that.post,_that.story,_that.reel,_that.carousel,_that.live);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? post,  int? story,  int? reel,  int? carousel,  int? live)  $default,) {final _that = this;
+switch (_that) {
+case _InstagramRatesModel():
+return $default(_that.post,_that.story,_that.reel,_that.carousel,_that.live);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? post,  int? story,  int? reel,  int? carousel,  int? live)?  $default,) {final _that = this;
+switch (_that) {
+case _InstagramRatesModel() when $default != null:
+return $default(_that.post,_that.story,_that.reel,_that.carousel,_that.live);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _InstagramRatesModel implements InstagramRatesModel {
+  const _InstagramRatesModel({this.post, this.story, this.reel, this.carousel, this.live});
+  factory _InstagramRatesModel.fromJson(Map<String, dynamic> json) => _$InstagramRatesModelFromJson(json);
+
+@override final  int? post;
+@override final  int? story;
+@override final  int? reel;
+@override final  int? carousel;
+@override final  int? live;
+
+/// Create a copy of InstagramRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InstagramRatesModelCopyWith<_InstagramRatesModel> get copyWith => __$InstagramRatesModelCopyWithImpl<_InstagramRatesModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$InstagramRatesModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InstagramRatesModel&&(identical(other.post, post) || other.post == post)&&(identical(other.story, story) || other.story == story)&&(identical(other.reel, reel) || other.reel == reel)&&(identical(other.carousel, carousel) || other.carousel == carousel)&&(identical(other.live, live) || other.live == live));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,post,story,reel,carousel,live);
+
+@override
+String toString() {
+  return 'InstagramRatesModel(post: $post, story: $story, reel: $reel, carousel: $carousel, live: $live)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InstagramRatesModelCopyWith<$Res> implements $InstagramRatesModelCopyWith<$Res> {
+  factory _$InstagramRatesModelCopyWith(_InstagramRatesModel value, $Res Function(_InstagramRatesModel) _then) = __$InstagramRatesModelCopyWithImpl;
+@override @useResult
+$Res call({
+ int? post, int? story, int? reel, int? carousel, int? live
+});
+
+
+
+
+}
+/// @nodoc
+class __$InstagramRatesModelCopyWithImpl<$Res>
+    implements _$InstagramRatesModelCopyWith<$Res> {
+  __$InstagramRatesModelCopyWithImpl(this._self, this._then);
+
+  final _InstagramRatesModel _self;
+  final $Res Function(_InstagramRatesModel) _then;
+
+/// Create a copy of InstagramRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? post = freezed,Object? story = freezed,Object? reel = freezed,Object? carousel = freezed,Object? live = freezed,}) {
+  return _then(_InstagramRatesModel(
+post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as int?,story: freezed == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
+as int?,reel: freezed == reel ? _self.reel : reel // ignore: cast_nullable_to_non_nullable
+as int?,carousel: freezed == carousel ? _self.carousel : carousel // ignore: cast_nullable_to_non_nullable
+as int?,live: freezed == live ? _self.live : live // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$YouTubeRatesModel {
+
+ int? get post; int? get shorts; int? get video; int? get live;
+/// Create a copy of YouTubeRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$YouTubeRatesModelCopyWith<YouTubeRatesModel> get copyWith => _$YouTubeRatesModelCopyWithImpl<YouTubeRatesModel>(this as YouTubeRatesModel, _$identity);
+
+  /// Serializes this YouTubeRatesModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is YouTubeRatesModel&&(identical(other.post, post) || other.post == post)&&(identical(other.shorts, shorts) || other.shorts == shorts)&&(identical(other.video, video) || other.video == video)&&(identical(other.live, live) || other.live == live));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,post,shorts,video,live);
+
+@override
+String toString() {
+  return 'YouTubeRatesModel(post: $post, shorts: $shorts, video: $video, live: $live)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $YouTubeRatesModelCopyWith<$Res>  {
+  factory $YouTubeRatesModelCopyWith(YouTubeRatesModel value, $Res Function(YouTubeRatesModel) _then) = _$YouTubeRatesModelCopyWithImpl;
+@useResult
+$Res call({
+ int? post, int? shorts, int? video, int? live
+});
+
+
+
+
+}
+/// @nodoc
+class _$YouTubeRatesModelCopyWithImpl<$Res>
+    implements $YouTubeRatesModelCopyWith<$Res> {
+  _$YouTubeRatesModelCopyWithImpl(this._self, this._then);
+
+  final YouTubeRatesModel _self;
+  final $Res Function(YouTubeRatesModel) _then;
+
+/// Create a copy of YouTubeRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? post = freezed,Object? shorts = freezed,Object? video = freezed,Object? live = freezed,}) {
+  return _then(_self.copyWith(
+post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as int?,shorts: freezed == shorts ? _self.shorts : shorts // ignore: cast_nullable_to_non_nullable
+as int?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as int?,live: freezed == live ? _self.live : live // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [YouTubeRatesModel].
+extension YouTubeRatesModelPatterns on YouTubeRatesModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _YouTubeRatesModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _YouTubeRatesModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _YouTubeRatesModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _YouTubeRatesModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _YouTubeRatesModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _YouTubeRatesModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? post,  int? shorts,  int? video,  int? live)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _YouTubeRatesModel() when $default != null:
+return $default(_that.post,_that.shorts,_that.video,_that.live);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? post,  int? shorts,  int? video,  int? live)  $default,) {final _that = this;
+switch (_that) {
+case _YouTubeRatesModel():
+return $default(_that.post,_that.shorts,_that.video,_that.live);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? post,  int? shorts,  int? video,  int? live)?  $default,) {final _that = this;
+switch (_that) {
+case _YouTubeRatesModel() when $default != null:
+return $default(_that.post,_that.shorts,_that.video,_that.live);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _YouTubeRatesModel implements YouTubeRatesModel {
+  const _YouTubeRatesModel({this.post, this.shorts, this.video, this.live});
+  factory _YouTubeRatesModel.fromJson(Map<String, dynamic> json) => _$YouTubeRatesModelFromJson(json);
+
+@override final  int? post;
+@override final  int? shorts;
+@override final  int? video;
+@override final  int? live;
+
+/// Create a copy of YouTubeRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$YouTubeRatesModelCopyWith<_YouTubeRatesModel> get copyWith => __$YouTubeRatesModelCopyWithImpl<_YouTubeRatesModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$YouTubeRatesModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _YouTubeRatesModel&&(identical(other.post, post) || other.post == post)&&(identical(other.shorts, shorts) || other.shorts == shorts)&&(identical(other.video, video) || other.video == video)&&(identical(other.live, live) || other.live == live));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,post,shorts,video,live);
+
+@override
+String toString() {
+  return 'YouTubeRatesModel(post: $post, shorts: $shorts, video: $video, live: $live)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$YouTubeRatesModelCopyWith<$Res> implements $YouTubeRatesModelCopyWith<$Res> {
+  factory _$YouTubeRatesModelCopyWith(_YouTubeRatesModel value, $Res Function(_YouTubeRatesModel) _then) = __$YouTubeRatesModelCopyWithImpl;
+@override @useResult
+$Res call({
+ int? post, int? shorts, int? video, int? live
+});
+
+
+
+
+}
+/// @nodoc
+class __$YouTubeRatesModelCopyWithImpl<$Res>
+    implements _$YouTubeRatesModelCopyWith<$Res> {
+  __$YouTubeRatesModelCopyWithImpl(this._self, this._then);
+
+  final _YouTubeRatesModel _self;
+  final $Res Function(_YouTubeRatesModel) _then;
+
+/// Create a copy of YouTubeRatesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? post = freezed,Object? shorts = freezed,Object? video = freezed,Object? live = freezed,}) {
+  return _then(_YouTubeRatesModel(
+post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as int?,shorts: freezed == shorts ? _self.shorts : shorts // ignore: cast_nullable_to_non_nullable
+as int?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as int?,live: freezed == live ? _self.live : live // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$RatesResponse {
+
+@JsonKey(name: 'instagram') InstagramRatesModel get instagram;@JsonKey(name: 'youtube') YouTubeRatesModel get youtube;
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RatesResponseCopyWith<RatesResponse> get copyWith => _$RatesResponseCopyWithImpl<RatesResponse>(this as RatesResponse, _$identity);
+
+  /// Serializes this RatesResponse to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RatesResponse&&(identical(other.instagram, instagram) || other.instagram == instagram)&&(identical(other.youtube, youtube) || other.youtube == youtube));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,instagram,youtube);
+
+@override
+String toString() {
+  return 'RatesResponse(instagram: $instagram, youtube: $youtube)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RatesResponseCopyWith<$Res>  {
+  factory $RatesResponseCopyWith(RatesResponse value, $Res Function(RatesResponse) _then) = _$RatesResponseCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'instagram') InstagramRatesModel instagram,@JsonKey(name: 'youtube') YouTubeRatesModel youtube
+});
+
+
+$InstagramRatesModelCopyWith<$Res> get instagram;$YouTubeRatesModelCopyWith<$Res> get youtube;
+
+}
+/// @nodoc
+class _$RatesResponseCopyWithImpl<$Res>
+    implements $RatesResponseCopyWith<$Res> {
+  _$RatesResponseCopyWithImpl(this._self, this._then);
+
+  final RatesResponse _self;
+  final $Res Function(RatesResponse) _then;
+
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? instagram = null,Object? youtube = null,}) {
+  return _then(_self.copyWith(
+instagram: null == instagram ? _self.instagram : instagram // ignore: cast_nullable_to_non_nullable
+as InstagramRatesModel,youtube: null == youtube ? _self.youtube : youtube // ignore: cast_nullable_to_non_nullable
+as YouTubeRatesModel,
+  ));
+}
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InstagramRatesModelCopyWith<$Res> get instagram {
+  
+  return $InstagramRatesModelCopyWith<$Res>(_self.instagram, (value) {
+    return _then(_self.copyWith(instagram: value));
+  });
+}/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$YouTubeRatesModelCopyWith<$Res> get youtube {
+  
+  return $YouTubeRatesModelCopyWith<$Res>(_self.youtube, (value) {
+    return _then(_self.copyWith(youtube: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [RatesResponse].
+extension RatesResponsePatterns on RatesResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RatesResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _RatesResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RatesResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _RatesResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RatesResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _RatesResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'instagram')  InstagramRatesModel instagram, @JsonKey(name: 'youtube')  YouTubeRatesModel youtube)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _RatesResponse() when $default != null:
+return $default(_that.instagram,_that.youtube);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'instagram')  InstagramRatesModel instagram, @JsonKey(name: 'youtube')  YouTubeRatesModel youtube)  $default,) {final _that = this;
+switch (_that) {
+case _RatesResponse():
+return $default(_that.instagram,_that.youtube);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'instagram')  InstagramRatesModel instagram, @JsonKey(name: 'youtube')  YouTubeRatesModel youtube)?  $default,) {final _that = this;
+switch (_that) {
+case _RatesResponse() when $default != null:
+return $default(_that.instagram,_that.youtube);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _RatesResponse implements RatesResponse {
+  const _RatesResponse({@JsonKey(name: 'instagram') required this.instagram, @JsonKey(name: 'youtube') required this.youtube});
+  factory _RatesResponse.fromJson(Map<String, dynamic> json) => _$RatesResponseFromJson(json);
+
+@override@JsonKey(name: 'instagram') final  InstagramRatesModel instagram;
+@override@JsonKey(name: 'youtube') final  YouTubeRatesModel youtube;
+
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$RatesResponseCopyWith<_RatesResponse> get copyWith => __$RatesResponseCopyWithImpl<_RatesResponse>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$RatesResponseToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RatesResponse&&(identical(other.instagram, instagram) || other.instagram == instagram)&&(identical(other.youtube, youtube) || other.youtube == youtube));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,instagram,youtube);
+
+@override
+String toString() {
+  return 'RatesResponse(instagram: $instagram, youtube: $youtube)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$RatesResponseCopyWith<$Res> implements $RatesResponseCopyWith<$Res> {
+  factory _$RatesResponseCopyWith(_RatesResponse value, $Res Function(_RatesResponse) _then) = __$RatesResponseCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'instagram') InstagramRatesModel instagram,@JsonKey(name: 'youtube') YouTubeRatesModel youtube
+});
+
+
+@override $InstagramRatesModelCopyWith<$Res> get instagram;@override $YouTubeRatesModelCopyWith<$Res> get youtube;
+
+}
+/// @nodoc
+class __$RatesResponseCopyWithImpl<$Res>
+    implements _$RatesResponseCopyWith<$Res> {
+  __$RatesResponseCopyWithImpl(this._self, this._then);
+
+  final _RatesResponse _self;
+  final $Res Function(_RatesResponse) _then;
+
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? instagram = null,Object? youtube = null,}) {
+  return _then(_RatesResponse(
+instagram: null == instagram ? _self.instagram : instagram // ignore: cast_nullable_to_non_nullable
+as InstagramRatesModel,youtube: null == youtube ? _self.youtube : youtube // ignore: cast_nullable_to_non_nullable
+as YouTubeRatesModel,
+  ));
+}
+
+/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InstagramRatesModelCopyWith<$Res> get instagram {
+  
+  return $InstagramRatesModelCopyWith<$Res>(_self.instagram, (value) {
+    return _then(_self.copyWith(instagram: value));
+  });
+}/// Create a copy of RatesResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$YouTubeRatesModelCopyWith<$Res> get youtube {
+  
+  return $YouTubeRatesModelCopyWith<$Res>(_self.youtube, (value) {
+    return _then(_self.copyWith(youtube: value));
+  });
+}
+}
+
 // dart format on

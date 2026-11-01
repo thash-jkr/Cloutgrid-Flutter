@@ -8,8 +8,7 @@ import '../../../providers/home/home_notifier.dart';
 import '../../../widgets/clout_header.dart';
 
 class Notifications extends ConsumerStatefulWidget {
-  final ScrollController? scrollController;
-  const Notifications({super.key, this.scrollController});
+  const Notifications({super.key});
 
   @override
   ConsumerState<Notifications> createState() => _NotificationsState();
@@ -41,59 +40,58 @@ class _NotificationsState extends ConsumerState<Notifications> {
     final notifications = ref.watch(
       homeProvider.select((s) => s.notifications),
     );
+    final topInset = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CloutHeader(title: 'Notifications'),
       body: notifications.isEmpty
-          ? CloutEmpty(type: .general, message: "No new notifications")
-          : ListView.separated(
-              controller: widget.scrollController,
-              padding: const EdgeInsets.fromLTRB(15, kToolbarHeight, 15, 100),
+          ? Padding(
+              padding: .only(top: topInset + kToolbarHeight),
+              child: CloutEmpty(
+                type: .general,
+                message: "No new notifications",
+              ),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.fromLTRB(
+                0,
+                kToolbarHeight + topInset + 15,
+                0,
+                150,
+              ),
               itemCount: notifications.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 1),
               itemBuilder: (context, index) {
                 final item = notifications[index];
 
-                return Material(
-                  elevation: 1,
-                  borderRadius: segmentRadius(index, notifications.length),
-                  child: ClipRRect(
-                    borderRadius: segmentRadius(index, notifications.length),
-                    child: Dismissible(
-                      key: ValueKey(item.id),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        decoration: BoxDecoration(color: Colors.red),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        alignment: Alignment.centerRight,
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        ref
-                            .read(homeProvider.notifier)
-                            .readNotification(item.id);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(color: Colors.white),
-                        child: ListTile(
-                          title: Text(item.message),
-                          subtitle: Text(timeAgo(item.createdAt)),
-                          leading: ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: item.photo,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => const Image(
-                                image: AssetImage('assets/images/profile.png'),
-                              ),
-                              errorWidget: (context, url, error) => const Image(
-                                image: AssetImage('assets/images/profile.png'),
-                              ),
-                            ),
+                return Dismissible(
+                  key: ValueKey(item.id),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    decoration: BoxDecoration(color: Colors.red),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.centerRight,
+                    child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+                  onDismissed: (direction) {
+                    ref.read(homeProvider.notifier).readNotification(item.id);
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ListTile(
+                      title: Text(item.message),
+                      subtitle: Text(timeAgo(item.createdAt)),
+                      leading: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: item.photo,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Image(
+                            image: AssetImage('assets/images/profile.png'),
+                          ),
+                          errorWidget: (context, url, error) => const Image(
+                            image: AssetImage('assets/images/profile.png'),
                           ),
                         ),
                       ),

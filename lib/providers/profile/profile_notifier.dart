@@ -1,5 +1,8 @@
+import 'package:cloutgrid_flutter/models/integration/integration_models.dart';
+import 'package:cloutgrid_flutter/models/job/job_models.dart';
 import 'package:cloutgrid_flutter/providers/auth/auth_notifier.dart';
 import 'package:cloutgrid_flutter/providers/home/home_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../app/providers/core_providers.dart';
@@ -57,6 +60,57 @@ class ProfileState {
     );
   }
 }
+
+final brandCampaignsProvider = FutureProvider.autoDispose
+    .family<List<JobModel>, String>((ref, username) {
+      return ref
+          .read(apiServiceProvider)
+          .request(
+            "/jobs/brand/$username/",
+            method: "GET",
+            fromJson: (json) => (json as List)
+                .map((e) => JobModel.fromJson(e as Map<String, dynamic>))
+                .toList(),
+            requireAuth: true,
+          );
+    });
+
+class RatesNotifier extends AsyncNotifier<RatesResponse> {
+  @override
+  Future<RatesResponse> build() => _fetch();
+
+  Future<RatesResponse> _fetch() {
+    return ref
+        .read(apiServiceProvider)
+        .request(
+          "/rates/",
+          method: "GET",
+          fromJson: (json) =>
+              RatesResponse.fromJson(json as Map<String, dynamic>),
+          requireAuth: true,
+        );
+  }
+
+  Future<void> saveRates(String social, Map<String, int?> values) async {
+    await ref
+        .read(apiServiceProvider)
+        .request(
+          "/rates/",
+          method: "POST",
+          body: {"social": social, "values": values},
+          fromJson: (json) {},
+          requireAuth: true,
+        );
+
+    ref.invalidateSelf();
+    await future;
+  }
+}
+
+final ratesProvider =
+    AsyncNotifierProvider.autoDispose<RatesNotifier, RatesResponse>(
+      RatesNotifier.new,
+    );
 
 @Riverpod(keepAlive: true)
 class ProfileNotifier extends _$ProfileNotifier {

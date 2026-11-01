@@ -94,12 +94,12 @@ class ProfileHero extends StatelessWidget {
 
     if (active.isNotEmpty) {
       final picked = _pick(active, (i) => i.change);
-      final num? change = picked.change;
+      final num change = picked.change;
       final trend = _trendOf(change);
       final noun =
           _nouns[_normalize(picked.name)] ?? picked.title.toLowerCase();
       final count = _hl(compactCount(picked.value), accent);
-      final percent = _hl('${(change ?? 0).abs().round()}%', accent);
+      final percent = _hl('${(change).abs().round()}%', accent);
 
       icon = _trendIcon(trend);
       headline = switch (trend) {
@@ -191,10 +191,10 @@ class MediaHero extends StatelessWidget {
 
     if (active.isNotEmpty) {
       final picked = _pick(active, (i) => i.change);
-      final num? change = picked.change;
+      final num change = picked.change;
       final trend = _trendOf(change);
       final phrase = _describe(picked, accent);
-      final percent = _hl('${(change ?? 0).abs().round()}%', accent);
+      final percent = _hl('${(change).abs().round()}%', accent);
 
       icon = _trendIcon(trend);
       headline = switch (trend) {
