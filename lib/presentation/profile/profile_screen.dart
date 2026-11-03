@@ -6,7 +6,6 @@ import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:cloutgrid_flutter/providers/profile/profile_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_header.dart';
-import 'package:cloutgrid_flutter/widgets/clout_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -89,49 +88,27 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     ]);
   }
 
-  Future<void> _connectInstagram() async {
-    if (user == null) return;
-    final username = user!.username;
+  // Future<void> _connectYouTube() async {
+  //   if (user == null) return;
+  //   final username = user!.username;
 
-    await showAsyncToast(
-      context,
-      loadingMessage: 'Connecting Instagram...',
-      successMessage: 'Instagram Connected',
-      task: () async {
-        await integrationNotifier.fetchInstagramProfile();
-        await integrationNotifier.fetchInstagramMedia();
+  //   await showAsyncToast(
+  //     context,
+  //     loadingMessage: 'Connecting YouTube...',
+  //     successMessage: 'YouTube Connected',
+  //     task: () async {
+  //       await integrationNotifier.fetchYoutubeChannel();
+  //       await integrationNotifier.fetchYoutubeMedia();
 
-        await Future.wait([
-          integrationNotifier.loadOwnInstagramProfile(username),
-          integrationNotifier.loadOwnInstagramMedia(username),
-        ]);
+  //       await Future.wait([
+  //         integrationNotifier.loadOwnYoutubeChannel(username),
+  //         integrationNotifier.loadOwnYoutubeMedia(username),
+  //       ]);
 
-        await ref.read(authProvider.notifier).setInstagramConnected(true);
-      },
-    );
-  }
-
-  Future<void> _connectYouTube() async {
-    if (user == null) return;
-    final username = user!.username;
-
-    await showAsyncToast(
-      context,
-      loadingMessage: 'Connecting YouTube...',
-      successMessage: 'YouTube Connected',
-      task: () async {
-        await integrationNotifier.fetchYoutubeChannel();
-        await integrationNotifier.fetchYoutubeMedia();
-
-        await Future.wait([
-          integrationNotifier.loadOwnYoutubeChannel(username),
-          integrationNotifier.loadOwnYoutubeMedia(username),
-        ]);
-
-        await ref.read(authProvider.notifier).setYoutubeConnected(true);
-      },
-    );
-  }
+  //       await ref.read(authProvider.notifier).setYoutubeConnected(true);
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -140,19 +117,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     final auth = ref.watch(authProvider);
 
     final UserProfile? user = auth.value?.user;
-
-    ref.listen(deepLinkProvider.select((s) => s.profileAction), (
-      previous,
-      next,
-    ) {
-      if (next == ProfileAction.connectInstagram) {
-        _connectInstagram();
-        ref.read(deepLinkProvider.notifier).clearProfileAction();
-      } else if (next == ProfileAction.connectYoutube) {
-        _connectYouTube();
-        ref.read(deepLinkProvider.notifier).clearProfileAction();
-      }
-    });
 
     return Scaffold(
       extendBodyBehindAppBar: true,

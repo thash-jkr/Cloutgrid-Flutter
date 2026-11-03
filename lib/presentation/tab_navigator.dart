@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/presentation/chats/conversations.dart';
 import 'package:cloutgrid_flutter/presentation/home/notifications.dart';
-import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -83,13 +82,6 @@ class _TabNavigatorState extends ConsumerState<TabNavigator> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    ref.listen(deepLinkProvider.select((s) => s.targetTab), (previous, next) {
-      if (next != null) {
-        _selectTab(next);
-        ref.read(deepLinkProvider.notifier).clearTargetTab();
-      }
-    });
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,

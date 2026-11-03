@@ -4,6 +4,7 @@ import 'package:cloutgrid_flutter/models/auth/auth_models.dart';
 import 'package:cloutgrid_flutter/models/home/home_models.dart';
 import 'package:cloutgrid_flutter/presentation/integration/insights_hero.dart';
 import 'package:cloutgrid_flutter/presentation/profile/settings.dart';
+import 'package:cloutgrid_flutter/providers/auth/deep_link_notifier.dart';
 import 'package:cloutgrid_flutter/providers/integration/integration_notifier.dart';
 import 'package:cloutgrid_flutter/widgets/clout_sheet.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -90,6 +91,28 @@ class _InstagramState extends ConsumerState<Instagram> {
     );
   }
 
+  Future<void> _connectInstagram() async {
+    if (user == null) return;
+    final username = user!.username;
+
+    await showAsyncToast(
+      context,
+      loadingMessage: 'Connecting Instagram...',
+      successMessage: 'Instagram Connected',
+      task: () async {
+        await integrationNotifier.fetchInstagramProfile();
+        await integrationNotifier.fetchInstagramMedia();
+
+        await Future.wait([
+          integrationNotifier.loadOwnInstagramProfile(username),
+          integrationNotifier.loadOwnInstagramMedia(username),
+        ]);
+
+        await ref.read(authProvider.notifier).setInstagramConnected(true);
+      },
+    );
+  }
+
   void _copyToClipboard() async {
     await Clipboard.setData(
       ClipboardData(text: "https://cloutgrid/vitae/${user?.username}/"),
@@ -108,6 +131,9 @@ class _InstagramState extends ConsumerState<Instagram> {
     final topInset = MediaQuery.of(context).padding.top;
 
     final integrationState = ref.watch(integrationProvider);
+
+    final auth = ref.watch(authProvider);
+    final UserProfile? user = auth.value?.user;
     final isConnected = user?.instagramConnected == true;
 
     if (isConnected && !_loadTriggered) {
@@ -117,9 +143,19 @@ class _InstagramState extends ConsumerState<Instagram> {
       _loadTriggered = false;
     }
 
+    ref.listen(deepLinkProvider.select((s) => s.profileAction), (
+      previous,
+      next,
+    ) {
+      if (next == ProfileAction.connectInstagram) {
+        _connectInstagram();
+        ref.read(deepLinkProvider.notifier).clearProfileAction();
+      }
+    });
+
     return SingleChildScrollView(
       padding: EdgeInsets.only(top: topInset, bottom: 100),
-      child: user?.instagramConnected == true
+      child: isConnected
           ? Column(
               spacing: 30,
               crossAxisAlignment: .start,
